@@ -1,0 +1,48 @@
+{
+  "name": "jobboard",
+  "version": "1.0.0",
+  "description": "description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --progress --inline --hot --config webpack.config.js",
+    "build": "webpack --progress --config webpack.config.js",
+    "server": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.1.1",
+    "webpack": "^1.13.1",
+    "webpack-bundle-tracker": "0.0.93",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "normalizr": "^2.1.0",
+    "react": "^15.2.0",
+    "react-addons-update": "^15.2.0",
+    "react-dnd": "^2.1.4",
+    "react-dnd-html5-backend": "^2.1.2",
+    "react-dom": "^15.2.0",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.5.2",
+    "react-router-redux": "^4.0.5",
+    "redux": "^3.5.2",
+    "redux-api-middleware": "^1.0.2"
+  }
+}
