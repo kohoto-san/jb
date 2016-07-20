@@ -4,5 +4,5 @@
 #
 #    pip-compile prod-requirements.in
 #
-gunicorn==19.3.0
-psycopg2==2.6.1
+gunicorn
+psycopg2
