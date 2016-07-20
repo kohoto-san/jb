@@ -15,4 +15,5 @@ COPY . /webapp/
 
 EXPOSE 5000
 
-CMD ["./project/deploy/deploy_script.sh"]
+CMD python ./project/manage.py runserver 0.0.0.0:8080
+# CMD ["./project/deploy/deploy_script.sh"]
