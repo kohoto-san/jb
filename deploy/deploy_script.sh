@@ -2,4 +2,4 @@
 
 python project/manage.py collectstatic --noinput
 
-gunicorn --config deploy/gunicorn.conf.py project.project.wsgi
+gunicorn project.project.wsgi --bind 127.0.0.1:8000 --daemon --workers=3
