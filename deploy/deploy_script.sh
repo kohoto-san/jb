@@ -2,4 +2,4 @@
 
 python project/manage.py collectstatic --noinput
 
-gunicorn --config deploy/gunicorn.conf.py project.wsgi
+gunicorn --config deploy/gunicorn.conf.py project/project.wsgi
