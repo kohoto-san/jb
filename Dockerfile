@@ -15,4 +15,4 @@ COPY . /webapp/
 
 EXPOSE 5000
 
-CMD ["./deploy/deploy_script.sh"]
+CMD ["./project/deploy/deploy_script.sh"]
