@@ -90,6 +90,7 @@ body {
 }
 .lane {
   margin: auto;
+  padding-bottom: 100px;
 }
 .lane .header {
   margin-bottom: 15px;
