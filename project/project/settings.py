@@ -17,7 +17,8 @@ from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
+    ALLOWED_HOSTS=(list, ['*'])
+    # ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
 )
 
 environ.Env.read_env('.env.project')
