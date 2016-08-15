@@ -13,17 +13,20 @@ class KeywordSerializer(serializers.ModelSerializer):
 
 
 class JobSerializer(serializers.ModelSerializer):
-    # skills = SkillSerializer(many=True, read_only=True)
-    # keywords = KeywordSerializer(many=True, read_only=True)
+    skills = SkillSerializer(many=True, read_only=True)
+    keywords = KeywordSerializer(many=True, read_only=True)
 
     class Meta:
         model = Job
-        fields = ('id', 'name', 'company', 'salary', 'exp', 'text')
+        fields = ('id', 'slug', 'name', 'company', 'salary', 'exp', 'text', 'skills', 'keywords')
 
 
 class LaneSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Lane
+        fields = ('name', 'user')
 
 
 class MetaJobSerializer(serializers.ModelSerializer):

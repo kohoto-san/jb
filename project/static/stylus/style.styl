@@ -2,8 +2,37 @@ bc = lighten(#000, 98%);
 grey-color = #bdbdbd;
 
 body
-    padding-top 20px;
     background-color: bc;
+
+.login-popup
+    display block;
+    position fixed;
+    width 100%;
+    height 100vh;
+    background-color rgba(0, 0, 0, 50%);
+    z-index 100;
+    
+    .close
+        position absolute;
+        top 0px;
+        right 0px;
+        color #000;
+        width auto;
+    
+    .valign-wrapper
+        height 100%;
+
+        .soc-button
+            display block;
+            width 200px;
+            color #fff;
+            padding 10px;
+            margin auto;
+            
+        .twitter
+            background-color #1da1f2;
+        
+
 
 .my-jobs
     color darken(#fff, 50%);
@@ -32,77 +61,129 @@ body
             .right-align
                 float right;
 
+
+.job_list
+    position relative;
+
+job-actions-right = 10px;
+
 .grid__item
     @extend .job;
+    
+    width 200px;
+    position relative;
+
+    a
+        color #000;
 
     .card
+        display block;
+        padding-bottom 25px;        
+        // padding-bottom 45px;        
+
+    .card-body
         padding 10px 15px 10px;
+        text-transform capitalize;
+        // height 400px;
     
         p
             margin 10px 0;
 
-        .job-keys
-            text-align center;
-            border-top 1px solid grey-color;
+    .job-keys
+        text-align center;
+        border-top 1px solid grey-color;
 
-        .job-skills
-            padding 20px 0;
+    .job-skills
+        padding 20px 0;
+        right-padding = job-actions-right + 46;
+        padding 10px 60px 0 10px;
+        text-align left;
 
-            span
-                display inline-block;
-                margin-right 4px;
-                
-                // background-color #90caf9;
-                color darken(grey-color, 90%);
-                border 1px solid grey-color;
-                border-radius 3px;
-                padding 3px 5px;
-                font-size 12px;
-                
-                &:last-child
-                    margin-right 0;
-                
-        .job-keywords
-            padding 10px 0;
+    .job-keywords,
+    .job-skills
+        span
+            display inline-block;
+            margin-right 4px;
+            margin-top 5px;
             
-            p
-                text-align left;
-                padding-left 15px;
+            // background-color #90caf9;
+            color darken(grey-color, 90%);
+            border 1px solid grey-color;
+            border-radius 3px;
+            padding 3px 5px;
+            font-size 12px;
+            
+            &:last-child
+                margin-right 0;
+            
+    .job-keywords
+        padding 10px 0;
         
-        .job-actions
-            text-align right;
-            i
-                vertical-align middle;
-                padding 10px;
-                border-radius 50%;
-                border 1px solid #000;
-                color #000;
-            
-                &:first-child
-                    margin-right 10px;
-                
-                &:hover
+        p
+            text-align left;
+            padding-left 15px;
+        
+    .job-actions
+        position: absolute;
+        bottom: 25px;
+        right: job-actions-right;
+        i
+            vertical-align middle;
+            padding 10px;
+            border-radius 50%;
+            border 1px solid #000;
+            color #000;
+
+            ../ .is_liked i
                     background-color darken(#fff, 5%);
+        
+            &:first-child
+                margin-right 10px;
+            
+            &:hover
+                background-color darken(#fff, 5%);
+            
+        
+            
 
 .lane
     @extend .job;
+    width 20%;
+    margin-left auto;
+    left auto;
+    right auto;
+    
+    background-color darken(bc, 5%);
 
     margin auto;
     padding-bottom: 100px;
     .header
         margin-bottom 15px;
-        span
+        p
             padding 4px 15px;
             background-color #fff;
             font-size 20px;
+            text-align center;
     
     .job
         padding 0;
         margin-bottom 20px;
+        text-align left;
+
         .card
-            padding 5px 0 0;
+            padding 5px 0 0 5px;
             margin 0;
+            display block;
             
+            .job-name
+                font-size 17px;
+                margin-top 0;
+                margin-bottom 0;
+
+            .company-name
+                font-size 15px;
+                margin-top 5px;
+
             .job-details
                 margin-bottom 0;
             

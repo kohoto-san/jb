@@ -2,23 +2,77 @@ import { combineReducers } from 'redux'
 import update from 'react-addons-update'
 import merge from 'lodash/merge'
 
+import * as types from '../constants/ActionTypes';
 
-const initialState = [
-    {
-        name: 'Fuck you Job',
-        company: 'Google',
-        salary: '100k',
-        exp: 'Middle',
-        keywords: ['html', 'css', 'js']
+
+function data(state=[], action){
+
+    switch(action.type){
+        case 'INIT':
+            console.log('case type')
+            console.log(action)
+            return action;
+
+        default:
+            return state
     }
-]
 
-// const initialState = ['fuck you']
+    /*
+    console.log("ACTION")
+    console.log(action)
 
-const initState = {
-    initJobs: [],
-    likeJobs: []
+    if( action.type == 'INIT' ){
+        return action;
+    }
+    else{
+        return state;
+    }
+    */
+
 }
+
+function loginPopup(state={isShow: false}, action){
+    switch(action.type){
+        case 'LOGIN_POPUP':
+            return { isShow: action.isShow }
+
+        default:
+            return state
+    }
+}
+
+// const isAuth = localStorage.getItem('sagfi_token') ? true : false;
+// function user( state={isAuth: false, first_name: ''}, action){
+function user(state={}, action){
+    switch(action.type){
+
+        case types.GET_USER_SUCCESS:
+            // console.log('               ')
+            // console.log(action)
+            // console.log('               ')
+            return Object.assign({}, state, {
+                first_name: action.payload.first_name,
+                isAuth: true
+            })
+
+        case types.LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                isAuth: true
+            })
+
+        case types.LOGOUT:
+            return Object.assign({}, state, {
+                isAuth: false
+            })
+
+        default:
+            return state
+
+    }
+}
+
+
+
 
 // const jobs = (state=[], action) => {
 function jobs1 (state=[], action){
@@ -156,8 +210,13 @@ function lanesOld(state=[], action){
 function move (state, action) {
     const lanes = state.lanes
 
-    const sourceLane = lanes.filter(lane => lane.jobs && lane.jobs.includes(action.sourceId))[0]
-    const targetLane = lanes.filter(lane => lane.jobs && lane.jobs.includes(action.targetId))[0]
+    const sourceLane = lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.sourceId) )[0]
+    const targetLane = lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.targetId) )[0]
+    
+    console.log('!!!!!!!!!!!1')
+    console.log(sourceLane)
+    console.log(targetLane)
+
     const sourceNoteIndex = sourceLane.jobs.indexOf(action.sourceId)
     const targetNoteIndex = targetLane.jobs.indexOf(action.targetId)
 
@@ -165,8 +224,8 @@ function move (state, action) {
     let newTargetLane
     let newLane
 
-    const sourceJob = state.jobs.filter(job => job.id == action.sourceId)[0]
-    const targetJob = state.jobs.filter(job => job.id == action.targetId)[0]
+    const sourceJob = state.jobs.filter(job => job && job.id == action.sourceId)[0]
+    const targetJob = state.jobs.filter(job => job && job.id == action.targetId)[0]
     
     const sourcePosition = sourceJob.position
     const targetPosition = targetJob.position
@@ -175,12 +234,12 @@ function move (state, action) {
     // const currentJobs = new Set([sourceJob.id, targetJob.id])
 
     let newJobs = state.jobs.map(job => {
-        if(job.id == sourceJob.id){
+        if(job && job.id == sourceJob.id){
             return update(job, {
                 position: {$set: targetPosition}
             })
         }
-        else if (job.id == targetJob.id){
+        else if (job && job.id == targetJob.id){
             return update(job, {
                 position: {$set: sourcePosition}
             })
@@ -194,7 +253,7 @@ function move (state, action) {
     if(sourceLane != targetLane) {
 
         newLanes = state.lanes.map(lane => {
-            if( sourceLane.id === lane.id ){
+            if( lane && sourceLane.id === lane.id ){
                 return update(lane, {
                     jobs: {
                         $splice: [
@@ -203,7 +262,7 @@ function move (state, action) {
                     }
                 });
             }
-            else if ( targetLane.id === lane.id ){
+            else if ( lane && targetLane.id === lane.id ){
                 return update(lane, {
                     jobs: {
                         $splice: [
@@ -275,13 +334,17 @@ function move (state, action) {
 function attachToLane(state, action){
     const lanes = state.lanes
 
-    const targetLane = lanes.filter(lane => lane.id == action.laneId)[0]
-    const sourceLane = lanes.filter(lane => lane.jobs && lane.jobs.includes(action.sourceId))[0]
+    const targetLane = lanes.filter(lane => lane && lane.id == action.laneId)[0]
+    const sourceLane = lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.sourceId))[0]
+
+    // console.log(lanes)
+    // console.log(sourceLane)
+    // console.log(action.sourceId)
 
     const sourceNoteIndex = sourceLane.jobs.indexOf(action.sourceId)
     const targetNoteIndex = targetLane.jobs.indexOf(action.targetId)
 
-    const sourceJob = state.jobs.filter(job => job.id == action.sourceId)[0]
+    const sourceJob = state.jobs.filter(job => { if(job) return job.id == action.sourceId })[0]
 
     let newSourceLane
     let newTargetLane
@@ -294,7 +357,7 @@ function attachToLane(state, action){
     // const currentJobs = new Set([sourceJob.id, targetJob.id])
 
     let newJobs = state.jobs.map(job => {
-        if(job.id == sourceJob.id){
+        if(job && job.id == sourceJob.id){
             return update(job, {
                 position: {$set: targetPosition}
             })
@@ -308,7 +371,8 @@ function attachToLane(state, action){
     // if(sourceLane != targetLane) {
 
         newLanes = state.lanes.map(lane => {
-            if( sourceLane.id === lane.id && lane.jobs){
+
+            if( lane && sourceLane.id === lane.id && lane.jobs){
                 return update(lane, {
                     jobs: {
                         $splice: [
@@ -317,7 +381,7 @@ function attachToLane(state, action){
                     }
                 });
             }
-            else if ( targetLane.id === lane.id && lane.jobs){
+            else if ( lane && targetLane.id === lane.id && lane.jobs){
                 return update(lane, {
                     jobs: {
                         $splice: [
@@ -340,6 +404,113 @@ function attachToLane(state, action){
     return newState;
 }
 
+
+function likeJob(state, action){
+    const lanes = state.lanes
+
+    const targetLane = lanes.filter(lane => lane && lane.id == action.laneId)[0]
+    const targetNoteIndex = targetLane.jobs.indexOf(action.targetId)
+    const sourceJob = state.jobs.filter(job => job.id == action.sourceId)[0]
+
+    let newLane
+    const targetPosition = 0
+
+    let newJobs = state.jobs.map(job => {
+
+        // if(job.id == sourceJob.id){
+        if(job.id == action.sourceId){
+            return update(job, {
+                position: {$set: targetPosition}
+            })
+        }
+        else{
+            return job
+        }
+    })
+
+    let newLanes
+    // if(sourceLane != targetLane) {
+
+        newLanes = state.lanes.map(lane => {
+
+            if ( targetLane.id === lane.id && lane.jobs){
+                return update(lane, {
+                    jobs: {
+                        $splice: [
+                            [targetNoteIndex, 0, action.sourceId]
+                        ]
+                    }
+                });
+            }
+            else{
+                return lane;
+            }
+        })
+    // }
+
+    const newState = {
+        lanes: newLanes ? newLanes : state.lanes,
+        jobs: newJobs
+    }
+
+    return newState;
+}
+
+
+function dislikeJob(state, action){
+    const lanes = state.lanes
+
+    const targetLane = lanes.filter(lane => lane.id == action.laneId)[0]
+    const targetNoteIndex = targetLane.jobs.indexOf(action.targetId)
+    const sourceJob = state.jobs.filter(job => job.id == action.sourceId)[0]
+
+    let newLane
+    const targetPosition = 0
+
+    let newJobs = update(this.state.jobs, {
+                $splice: [
+                    [targetNoteIndex, 1]
+                ]
+            });
+    
+    /*
+    let newJobs = state.jobs.map(job => {
+
+        if(job.id == action.sourceId){
+            return update(job, {
+                position: {$set: targetPosition}
+            })
+        }
+        else{
+            return job
+        }
+    })
+    */
+
+    let newLanes
+
+    newLanes = state.lanes.map(lane => {
+        if( targetLane.id === lane.id && lane.jobs){
+            return update(lane, {
+                jobs: {
+                    $splice: [
+                        [targetNoteIndex, 1]
+                    ]
+                }
+            });
+        }
+        else{
+            return lane;
+        }
+    });
+
+    const newState = {
+        lanes: newLanes ? newLanes : state.lanes,
+        jobs: newJobs
+    }
+
+    return newState;
+}
 
 function entities(state = { lanes: [], jobs: [] }, action) {
     if (action.response && action.response.entities) {
@@ -367,6 +538,13 @@ function entities(state = { lanes: [], jobs: [] }, action) {
 
         case 'ATTACH_TO_LANE':
             return attachToLane(state, action.payload)
+
+        case 'LIKE_SUCCESS':
+            return likeJob(state, action.payload)
+
+        case 'DISLIKE_SUCCESS':
+            return dislikeJob(state, action.payload)
+
         default:
             return state
     }
@@ -419,7 +597,33 @@ function allJobs(state=[], action){
     return state
 }
 
-export {entities, allJobs}
+
+
+
+
+
+
+
+
+export {entities, allJobs, user, data, loginPopup}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // export { jobs, lanes }
 

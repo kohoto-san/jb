@@ -10,7 +10,29 @@
 		<meta name="author" content="Michael Sinov" />
 		<!-- <link rel="shortcut icon" href="../favicon.ico"> -->
 
-		<title></title>
+		<title>Sagfi</title>
+
+
+    	<!---------------------------->
+
+    	<!--
+		<meta property="og:type" content="article" />
+	    <meta property="og:title" content="Sagfi" />
+	    <meta property="og:description" content="{{post.text_entry}}" />
+	    <meta property="og:url" content="http://startupden.ru{{ request.path }}" />
+	    <meta property="og:image" content="http://startupden.ru/media/{{post.image}}" />
+	    <meta property="og:site_name" content="sagfi.com" />
+	    
+	    <meta property="twitter:card" content="summary_large_image" />
+	    <meta property="twitter:title" content="Sagfi" />
+	    <meta property="twitter:description" content="Sagfi" />
+	    <meta property="twitter:image" content="http://startupden.ru/media/{{post.image}}" />
+
+	    <meta property="twitter:url" content="http://startupden.ru{{ request.path }}" />
+	    <meta property="author" content="Михаил Синов" />
+	    -->
+
+    	<!---------------------------->
 
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -39,9 +61,11 @@
 
         <div id="app"></div>
 
-		<link rel="stylesheet" href="{% static 'bundles/style.css' %}">
-		<script type="text/javascript" src="{% static 'bundles/main.js' %}"></script>
-
-        {% render_bundle 'main' %}
+        {% comment %}
+			<link rel="stylesheet" href="{% static 'bundles/style.css' %}">
+			<script type="text/javascript" src="{% static 'bundles/main.js' %}"></script>
+        {% endcomment %}
+        
+	        {% render_bundle 'main' %}
     </body>
 </html>

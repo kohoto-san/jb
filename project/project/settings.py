@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import environ
+from django.core.exceptions import ImproperlyConfigured
+
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
+)
+
+environ.Env.read_env('.env.project')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +30,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'an*r-w2igycw-bdujbxg=$8n*9#d1o%bcb=xu1x(5=*doy+z6p'
+# SECRET_KEY = 'an*r-w2igycw-bdujbxg=$8n*9#d1o%bcb=xu1x(5=*doy+z6p'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -37,12 +50,60 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'webpack_loader',
     'rest_framework',
+    'rest_framework.authtoken',  # only if you use token authentication
 
-    'apps.core'
+    'rest_auth',
+
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.twitter',
+
+
+
+    'social.apps.django_app.default',  # python social auth
+    'rest_social_auth',  # this package
+
+    'apps.core',
+    'apps.profiles'
 ]
+
+SITE_ID = 1
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
+SOCIAL_AUTH_TWITTER_KEY = 'Zw47ilsTPZSp1FzIptuIT8J6d'
+SOCIAL_AUTH_TWITTER_SECRET = '0lDuDH2MIJVjSRtFR5qsuYBXuxQwBkWzN885gURXqt8gvRNfiP'
+SESSION_COOKIE_NAME = 'HeyHey'
+
+TWITTER_TOKEN = 'Zw47ilsTPZSp1FzIptuIT8J6d'
+TWITTER_SECRET = '0lDuDH2MIJVjSRtFR5qsuYBXuxQwBkWzN885gURXqt8gvRNfiP'
+
+# REST_SOCIAL_OAUTH_ABSOLUTE_REDIRECT_URI = ''
+
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,12 +141,26 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+'''
+
+try:
+    DATABASES = {
+        'default': env.db()
+    }
+except ImproperlyConfigured:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation
@@ -118,7 +193,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -135,14 +210,12 @@ STATICFILES_STORAGE = (
     'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 )
 
-'''
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': 'bundles/', # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, '../', 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        # 'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
 }
-'''

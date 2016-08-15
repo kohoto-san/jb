@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --progress --inline --hot --config webpack.config.js",
-    "build": "webpack --progress --config webpack.config.js",
+    "dev": "webpack-dev-server --progress --inline --hot --config webpack.dev.config.js",
+    "build": "webpack --progress --config webpack.prod.config.js",
     "server": "node server.js"
   },
   "author": "",
@@ -17,10 +17,10 @@
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-native-modules": "^6.9.2",
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
-    "babel-preset-stage-1": "^6.5.0",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "react-hot-loader": "^1.3.0",
@@ -31,7 +31,10 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "lodash": "^4.13.1",
+    "classnames": "^2.2.5",
+    "isomorphic-fetch": "^2.2.1",
+    "jquery": "^3.1.0",
+    "lodash": "^4.14.1",
     "normalizr": "^2.1.0",
     "react": "^15.2.0",
     "react-addons-update": "^15.2.0",
@@ -43,6 +46,8 @@
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-api-middleware": "^1.0.2",
+    "redux-auth": "0.0.5-beta5",
+    "redux-thunk": "^2.1.0",
     "webpack": "^1.13.1"
   }
 }

@@ -10,7 +10,10 @@ import {VisibleJob} from '../containers/pipeline.js'
 
 const jobSource = {
 	beginDrag(props){
-		return{ id: props.id };
+		return{
+			jobId: props.job.job_id,
+			id: props.id
+		};
 	}
 };
 
@@ -28,7 +31,7 @@ const jobTarget = {
 
 
 	drop(targetProps, monitor) {
-		const targetId = targetProps.id;
+		const targetId = targetProps.job.id;
 	    const sourceId = monitor.getItem().id;
 
 	    // Don't replace items with themselves
@@ -37,7 +40,6 @@ const jobTarget = {
 	    }
 
 		targetProps.onMove(sourceId, targetId);
-
 	}
 };
 
@@ -53,22 +55,21 @@ class Job extends React.Component{
 	render() {
 		const { connectDragSource, connectDropTarget, isDragging, isOver } = this.props;
 
-		// alert(JSON.stringify(this.props.job, null, 4));
-
-
 		return connectDragSource(connectDropTarget(
 			<div className="job col s12" style={{opacity: isDragging || isOver ? 0.2 : 1}}>
-				<div className="card z-depth-1">
+				<a className="card z-depth-1">
 					
-					<p className="job-name center-align">{this.props.job.job__name}</p>
-			    	<p className="company-name center-align">{this.props.job.job__company}</p>
+					<p className="job-name">{this.props.job.job__name}</p>
+			    	<p className="company-name">{this.props.job.job__company}</p>
 
+			    	{/*
 			    	<div className="job-details">
 			    		<p className="left-align">{this.props.job.job__salary}</p>
 			    		<p className="right-align">{this.props.job.job__exp}</p>
 			    	</div>
-			    	
-				</div>
+			    	*/}
+
+				</a>
 			</div>
 		));
 	}
@@ -88,8 +89,7 @@ const laneTarget = {
 	    // a note can belong only to a single lane at a time.
 	    
 	    // if length == 0
-	    console.log(targetProps.lane);
-	    if(!targetProps.lane.jobs.length) {
+	    if( ! targetProps.lane.jobs.length) {
 			targetProps.attachToLane(
 				targetProps.lane.id,
 				sourceId
@@ -108,24 +108,23 @@ class Lane extends React.Component{
 		const { connectDropTarget } = this.props;
 
 		return connectDropTarget(
-			<div className="lane col s4">
+			<div className="lane col">
 				<div className="header center-align">
-					<span className="card z-depth-1 ">
+					<p className="card z-depth-1 ">
 						{this.props.lane.name}
-					</span>
+					</p>
 				</div>
 
 				
 					{this.props.jobs.map(job =>{
-							// alert(job);
 							return(
 								<Job
 									id={job.id}
 									key={job.id}
 									job={job}
-									onFuck={ ({sourceId, targetId}) =>{return true}
+									// onFuck={ ({sourceId, targetId}) =>{return true}
 							            // console.log(`source: ${sourceId}, target: ${targetId}`)
-							        }
+							        // }
 							        onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
 								/>
 							)
@@ -145,10 +144,10 @@ function selectJobsByIds(allJobs, jobsIds = []) {
 
     const ids = new Set(jobsIds);
 
-    // console.log(allJobs)
-
     let selectJobs = allJobs.filter( (job) =>{
-    					if(job) return ids.has(job.id)
+    					if(job){
+    					 	return ids.has(job.id)
+    					}
 					}).sort(
 					    (a, b) => a.position - b.position
 					)
@@ -171,24 +170,37 @@ class Pipeline extends React.Component{
         this.props.getLanes();
 	}
 
+	renderLanes(){
+		if(this.props.entities.jobs.length){
+			return this.props.entities.lanes.map(lane => {
+
+				if(lane){
+					return(
+						<Lane 
+							key={lane['name']}
+							lane={lane}
+							jobs={selectJobsByIds(this.props.entities.jobs, lane.jobs)}
+							onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
+							attachToLane={ (laneId, jobId) => this.props.attachToLane(laneId, jobId) }
+						/>
+					)
+				}
+			})
+		}
+		else{
+			return(
+				<p>First like job</p>
+			)
+		}
+	}
+
 	render() {
 		// alert(JSON.stringify(this.props.entities, null, 4));
 
 		return (
-			<div className="container">
-				<div id="grid" className="grid row">
-					{this.props.entities.lanes.map(lane => {
-						// alert(JSON.stringify(lane, null, 4));
-						return(
-							<Lane 
-								key={lane['name']}
-								lane={lane}
-								jobs={selectJobsByIds(this.props.entities.jobs, lane.jobs)}
-								onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
-								attachToLane={ (laneId, jobId) => this.props.attachToLane(laneId, jobId) }
-							/>
-						)
-					})}
+			<div id="grid" className="grid row">
+				<div className="col s10 offset-s1">
+					{this.renderLanes()}
 				</div>
 			</div>
 		);

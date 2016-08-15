@@ -3,21 +3,21 @@ var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-var isDev = false;
+var isDev;
 
-module.exports = {
+var config = {
   context: __dirname,
   entry: [
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-      './project/static/js/index'
+    './project/static/js/index'
   ],
 
   output: {
       path: path.resolve('./project/static/bundles/'),
       filename: 'main.js',
-      publicPath: 'http://localhost:3000/static/bundles/', // Tell django to use this URL to load packages and not use STATIC_URL + bundle_name
-      // filename: '[name]-[hash].js',
+      chunkFilename: "chunk.js",
+      // publicPath: '/static/bundles/'
+      // publicPath: 'http://localhost:3000/static/bundles/'
+      // filename: '[name]-[hash]-[id].js',
   },
 
   plugins: [
@@ -36,9 +36,9 @@ module.exports = {
 
       { test: /\.js?$/, loader: 'babel', exclude: /node_modules/,
         query: {
-          cacheDirectory: true,
-          plugins: ['transform-decorators-legacy' ],
+          plugins: ['transform-decorators-legacy', ],
           presets: ['es2015', 'stage-0', 'react', 'react-hmre']
+          // cacheDirectory: true,
         }
       },
 
@@ -57,6 +57,19 @@ module.exports = {
 
   resolve: {
     modulesDirectories: ['node_modules', 'bower_components'],
-    extensions: ['', '.js', '.jsx', '.styl', 'css']
-  }
+    extensions: ['', '.js', '.jsx', '.styl', 'css'],
+    alias: {
+      'react-redux': path.join(__dirname, '/node_modules/react-redux/dist/react-redux.min')
+    }
+  },
+
+  cache: false,
+  debug: true
 }
+
+if(isDev){
+  config.entry.push('webpack-dev-server/client?http://localhost:3000', 'webpack/hot/only-dev-server');
+  config.output['publicPath'] = 'http://localhost:3000/static/bundles/'; // Tell django to use this URL to load packages and not use STATIC_URL + bundle_name
+}
+
+module.exports = config;

@@ -3,9 +3,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Pipeline, Lane} from '../components/pipeline.js'
 
-import { move, attachToLane, getLanes } from '../actions/actions.js'
+import { move, attachToLane, getLanes } from '../actions'
 
 const mapStateToProps = (state) => {
+
     return{
         entities: state.entities
         // jobs: state.entities.jobs,
