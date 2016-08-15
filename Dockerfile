@@ -9,7 +9,7 @@ WORKDIR /webapp/
 # Install pip dependencies
 COPY requirements.txt requirements.txt
 COPY prod-requirements.txt prod-requirements.txt
-RUN sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev
+# RUN sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev
 RUN pip install -r requirements.txt \
     && pip install -r prod-requirements.txt
 
