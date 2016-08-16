@@ -17,9 +17,9 @@ from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, ['*'])
-    # ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
 )
+# ALLOWED_HOSTS=(list, ['*'])
+# ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
 
 environ.Env.read_env('../.env')
 
@@ -35,12 +35,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+# DEBUG = False
 DEBUG = env('DEBUG')
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+# ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
+# ALLOWED_HOSTS = ['*', '127.0.0.1:8000', 'localhost:8000', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
