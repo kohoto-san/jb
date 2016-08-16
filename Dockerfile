@@ -23,5 +23,5 @@ CMD python ./project/manage.py migrate
 
 EXPOSE 80
 
-CMD python ./project/manage.py runserver 0.0.0.0:5000
+CMD python ./project/manage.py runserver 0.0.0.0:8000
 # CMD ["./project/deploy/deploy_script.sh"]
