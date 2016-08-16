@@ -3,8 +3,8 @@
 FROM python:3.4
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir /sagfi
-WORKDIR /sagfi/
+RUN mkdir /webapp
+WORKDIR /webapp/
 
 # Install pip dependencies
 COPY requirements.txt requirements.txt
@@ -16,7 +16,7 @@ RUN pip install -r requirements.txt \
 CMD python -c "import nltk; nltk.download('all')"
 
 # Copy the project
-COPY . /sagfi/
+COPY . /webapp/
 
 CMD python ./project/manage.py makemigrations
 CMD python ./project/manage.py migrate
