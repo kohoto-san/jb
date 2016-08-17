@@ -16,7 +16,7 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 CMD python project/manage.py migrate
-RUN python ./project/manage.py crontab add
+CMD python ./project/manage.py crontab add
 
 RUN python -c "import nltk; nltk.download('all')"
 
