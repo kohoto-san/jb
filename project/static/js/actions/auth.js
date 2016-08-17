@@ -28,7 +28,7 @@ function getPopupDimensions(provider) {
 }
 
 function openPopup(provider, url, name) {
-	return window.open(url, name, `${popupSettings},${getPopupDimensions(provider)}`)
+    return window.open(url, name, `${popupSettings},${getPopupDimensions(provider)}`)
 }
 
 ///////////////////////////////////
@@ -37,7 +37,7 @@ function openPopup(provider, url, name) {
 
 
 const headers = {
-	'Accept': 'application/json',
+    'Accept': 'application/json',
     'Content-Type': 'application/json'
 }
 
@@ -58,76 +58,76 @@ function getUserToken (oauthToken, oauthVerifier, oauth_token_secret, resolve, r
 }
 
 function listenForCredentials (endpointKey, popup, provider, oauth_token_secret, resolve, reject) {
-	
-	if (!resolve) {
-		return new Promise((resolve, reject) => {
-			listenForCredentials(endpointKey, popup, provider, oauth_token_secret, resolve, reject);
-		});
-	}
-	else{
-		let creds;
+    
+    if (!resolve) {
+        return new Promise((resolve, reject) => {
+            listenForCredentials(endpointKey, popup, provider, oauth_token_secret, resolve, reject);
+        });
+    }
+    else{
+        let creds;
 
-		try {
-			creds = getUrlParams(popup.location.search);
-		} catch (err) {}
+        try {
+            creds = getUrlParams(popup.location.search);
+        } catch (err) {}
 
-	    if (creds && creds.oauth_verifier) {
-			popup.close();
+        if (creds && creds.oauth_verifier) {
+            popup.close();
 
-			let oauthToken = creds.oauth_token
-			let oauthVerifier = creds.oauth_verifier
+            let oauthToken = creds.oauth_token
+            let oauthVerifier = creds.oauth_verifier
 
-			let body = JSON.stringify({
-				"oauth_token": oauthToken,
-				"oauth_verifier": oauthVerifier,
-				"oauth_token_secret": oauth_token_secret
-			});
+            let body = JSON.stringify({
+                "oauth_token": oauthToken,
+                "oauth_verifier": oauthVerifier,
+                "oauth_token_secret": oauth_token_secret
+            });
 
-			fetch('/auth/login/', {method: 'POST', headers: headers, body: body})
-			    .then(function(response) { 
-					if (response.status >= 400) {
-			            throw new Error("Bad response from server");
-			        }
+            fetch('/auth/login/', {method: 'POST', headers: headers, body: body})
+                .then(function(response) { 
+                    if (response.status >= 400) {
+                        throw new Error("Bad response from server");
+                    }
 
-			        return response.json();
-			   	})
-			   	.then( function(data){
-			    	resolve(data['key']);
-			   	})
-			    .catch(({errors}) => reject({errors}));
+                    return response.json();
+                })
+                .then( function(data){
+                    resolve(data['key']);
+                })
+                .catch(({errors}) => reject({errors}));
 
-			    /*
-			    .then(function(response) {
-			        if (response.status >= 400) {
-				      	reject({errors: "Bad response from server"});
-			        }
-			        return response.json();
-			    })
-			    .then(function(data) {
-			    	console.log(data['key']);
-			    	return resolve(data['key']);
-			    });
-				*/
+                /*
+                .then(function(response) {
+                    if (response.status >= 400) {
+                        reject({errors: "Bad response from server"});
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    console.log(data['key']);
+                    return resolve(data['key']);
+                });
+                */
 
 
-			// return getUserToken(creds.oauth_token, creds.oauth_verifier, oauth_token_secret, resolve, reject);
+            // return getUserToken(creds.oauth_token, creds.oauth_verifier, oauth_token_secret, resolve, reject);
 
-			/*
-			persistData(C.SAVED_CREDS_KEY, normalizeTokenKeys(creds));
-			fetch(getTokenValidationPath(endpointKey))
-				.then(parseResponse)
-				.then(({data}) => resolve(data))
-				.catch(({errors}) => reject({errors}));
-			*/
-	    } else if (popup.closed) {
-	      	reject({errors: "Authentication was cancelled"});
-	    	// throw new Error("Authentication was cancelled");
-	    } else {
-		    setTimeout(() => {
-		        listenForCredentials(endpointKey, popup, provider, oauth_token_secret, resolve, reject);
-		    }, 0);
-	    }
-	}
+            /*
+            persistData(C.SAVED_CREDS_KEY, normalizeTokenKeys(creds));
+            fetch(getTokenValidationPath(endpointKey))
+                .then(parseResponse)
+                .then(({data}) => resolve(data))
+                .catch(({errors}) => reject({errors}));
+            */
+        } else if (popup.closed) {
+            reject({errors: "Authentication was cancelled"});
+            // throw new Error("Authentication was cancelled");
+        } else {
+            setTimeout(() => {
+                listenForCredentials(endpointKey, popup, provider, oauth_token_secret, resolve, reject);
+            }, 0);
+        }
+    }
 
 }
 
@@ -135,59 +135,59 @@ function listenForCredentials (endpointKey, popup, provider, oauth_token_secret,
 // function authenticate({endpointKey, provider, url, tab=false}) {
 function authenticate({provider, url, tab=false}) {
 
-	let oauthToken
+    let oauthToken
 
-	let name = (tab) ? "_blank" : provider;
-	let popup = openPopup(provider, url='about:blank', name);
+    let name = (tab) ? "_blank" : provider;
+    let popup = openPopup(provider, url='about:blank', name);
 
-	return fetch('/auth/token/', {method: 'POST', headers: headers})
-	    .then(function(response) {
-	        if (response.status >= 400) {
-	            throw new Error("Bad response from server");
-	        }
+    return fetch('/auth/token/', {method: 'POST', headers: headers})
+        .then(function(response) {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
 
-	        return response.json();
-	    })
-	    .then(function(data) {
-	    	let twitter_url = data['oauth_token'];
+            return response.json();
+        })
+        .then(function(data) {
+            let twitter_url = data['oauth_token'];
 
-	    	// url = 'http://api.twitter.com/oauth/authenticate?oauth_token=' + oauthToken;
+            // url = 'http://api.twitter.com/oauth/authenticate?oauth_token=' + oauthToken;
 
-	    	popup.location.href = twitter_url;
-			let oauth_token_secret = data['oauth_token_secret']
+            popup.location.href = twitter_url;
+            let oauth_token_secret = data['oauth_token_secret']
 
-			let endpointKey = 'endpointKey';
-			return listenForCredentials(endpointKey, popup, provider, oauth_token_secret);
-	    });
+            let endpointKey = 'endpointKey';
+            return listenForCredentials(endpointKey, popup, provider, oauth_token_secret);
+        });
 
 
 /*
-	try{
-		var heyhey = await fetch(url, {'POST', headers});
-	}
-	catch(e){
-		alert('error');
-	}
+    try{
+        var heyhey = await fetch(url, {'POST', headers});
+    }
+    catch(e){
+        alert('error');
+    }
 
-	if(res.ok){
-		console.log(res);
+    if(res.ok){
+        console.log(res);
 
-		let name = (tab) ? "_blank" : provider;
-		let popup = openPopup(provider, url, name);
-	}
-	else{
-		console.log('not ok');
-	}
+        let name = (tab) ? "_blank" : provider;
+        let popup = openPopup(provider, url, name);
+    }
+    else{
+        console.log('not ok');
+    }
 */
-	
+    
 }
 
 
 export function oAuthSignInComplete(key) {
-	return { 
-		type: types.TWITTER_LOGIN_SUCCESS,
-		key
-	};
+    return { 
+        type: types.TWITTER_LOGIN_SUCCESS,
+        key
+    };
 }
 
 /*
@@ -207,69 +207,69 @@ export function getUser() {
 */
 
 export function getUser() {
-	return {
-	    [CALL_API]: {
-	        endpoint: '/auth/get-user/',
-	        method: 'GET',
-	        types: [
-	            types.GET_USER_REQUEST,
-	            {
-	                type: types.GET_USER_SUCCESS,
-	                payload: (action, state, res) => {
-	                	return getJSON(res);
-	                }
-	            },
-	            {
-	            	localStorage.removeItem('sagfi_token');
-	            	return(
-		            	types.GET_USER_FAILURE
-	            	);
-	            }
-	        ]
-	    }
-	};
+    return {
+        [CALL_API]: {
+            endpoint: '/auth/get-user/',
+            method: 'GET',
+            types: [
+                types.GET_USER_REQUEST,
+                {
+                    type: types.GET_USER_SUCCESS,
+                    payload: (action, state, res) => {
+                        return getJSON(res);
+                    }
+                },
+                {
+                    type: types.GET_USER_FAILURE,
+                    remove: () => {
+                        localStorage.removeItem('sagfi_token');
+                    }
+                }
+            ]
+        }
+    };
 }
 
 // export function auth ({provider, params, endpointKey}) {
 export function auth () {
 
-	return dispatch => {
-	    // save previous endpoint key in case of failure
-		    // var prevEndpointKey = getCurrentEndpointKey();
+    return dispatch => {
+        // save previous endpoint key in case of failure
+            // var prevEndpointKey = getCurrentEndpointKey();
 
-	    // necessary for `fetch` to recognize the response as an api request
-		    // setCurrentEndpointKey(endpointKey);
-		    // dispatch(storeCurrentEndpointKey(endpointKey));
+        // necessary for `fetch` to recognize the response as an api request
+            // setCurrentEndpointKey(endpointKey);
+            // dispatch(storeCurrentEndpointKey(endpointKey));
 
-		    // var currentEndpointKey = getCurrentEndpointKey();
+            // var currentEndpointKey = getCurrentEndpointKey();
 
-		    // dispatch(oAuthSignInStart(provider, currentEndpointKey));
+            // dispatch(oAuthSignInStart(provider, currentEndpointKey));
 
-	    // let url = getOAuthUrl({provider, params, currentEndpointKey});
+        // let url = getOAuthUrl({provider, params, currentEndpointKey});
 
-	    let url = '/auth/token/';
-	    let provider = 'twitter';
+        let url = '/auth/token/';
+        let provider = 'twitter';
 
-	    let oauthToken
+        let oauthToken
 
-	    authenticate({provider, url})
-		    .then(function (key) {
+        authenticate({provider, url})
+            .then(function (key) {
                 localStorage.setItem('sagfi_token', key);
                 dispatch(getUser());
-		    	// dispatch(oAuthSignInComplete(key));
-		    });
+                // dispatch(oAuthSignInComplete(key));
+            });
 
 
 
-	  //   return authenticate({endpointKey, provider, url})
-			// .then(user => dispatch(oAuthSignInComplete(user, currentEndpointKey)))
-			// .catch(({ errors }) => {
-			// // revert endpoint key to what it was before failed request
-			// setCurrentEndpointKey(prevEndpointKey);
-			// dispatch(storeCurrentEndpointKey(prevEndpointKey));
-			// dispatch(oAuthSignInError(errors, currentEndpointKey))
-			// throw errors;
-	  //     });
-	};
+      //   return authenticate({endpointKey, provider, url})
+            // .then(user => dispatch(oAuthSignInComplete(user, currentEndpointKey)))
+            // .catch(({ errors }) => {
+            // // revert endpoint key to what it was before failed request
+            // setCurrentEndpointKey(prevEndpointKey);
+            // dispatch(storeCurrentEndpointKey(prevEndpointKey));
+            // dispatch(oAuthSignInError(errors, currentEndpointKey))
+            // throw errors;
+      //     });
+    };
 
 }
