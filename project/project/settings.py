@@ -75,7 +75,13 @@ INSTALLED_APPS = [
     'rest_social_auth',  # this package
 
     'apps.core',
-    'apps.profiles'
+    'apps.profiles',
+
+    'django_crontab',
+]
+
+CRONJOBS = [
+    ('0 */4 * * *', 'apps.core.parseJobs.parseJobs')
 ]
 
 SITE_ID = 1

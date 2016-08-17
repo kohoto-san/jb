@@ -29,6 +29,18 @@ const jobTarget = {
 	}
 	*/
 
+	/*
+	hover(targetProps, monitor) {
+		const targetId = targetProps.job.id;
+	    const sourceId = monitor.getItem().id;
+
+	    if (targetId === sourceId) {
+		    return;
+	    }
+
+		targetProps.onMove(sourceId, targetId);
+	}
+	*/
 
 	drop(targetProps, monitor) {
 		const targetId = targetProps.job.id;
@@ -109,27 +121,28 @@ class Lane extends React.Component{
 
 		return connectDropTarget(
 			<div className="lane col">
-				<div className="header center-align">
-					<p className="card z-depth-1 ">
-						{this.props.lane.name}
-					</p>
-				</div>
+				<div className="lane-content">
+					<div className="header center-align">
+						<p className="card z-depth-1 ">
+							{this.props.lane.name}
+						</p>
+					</div>
 
-				
-					{this.props.jobs.map(job =>{
-							return(
-								<Job
-									id={job.id}
-									key={job.id}
-									job={job}
-									// onFuck={ ({sourceId, targetId}) =>{return true}
-							            // console.log(`source: ${sourceId}, target: ${targetId}`)
-							        // }
-							        onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
-								/>
-							)
-					})}
-				
+					
+						{this.props.jobs.map(job =>{
+								return(
+									<Job
+										id={job.id}
+										key={job.id}
+										job={job}
+										// onFuck={ ({sourceId, targetId}) =>{return true}
+								            // console.log(`source: ${sourceId}, target: ${targetId}`)
+								        // }
+								        onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
+									/>
+								)
+						})}
+				</div>
 			</div>
 		);
 	}
@@ -167,7 +180,14 @@ function selectJobsByIds(allJobs, jobsIds = []) {
 @DragDropContext(HTML5Backend)
 class Pipeline extends React.Component{
 	componentDidMount() {
-        this.props.getLanes();
+
+        if( localStorage.getItem('sagfi_token') ){
+	        this.props.getLanes();
+		}
+		else{
+			this.props.loginPopupShow();
+		}
+
 	}
 
 	renderLanes(){
@@ -189,7 +209,7 @@ class Pipeline extends React.Component{
 		}
 		else{
 			return(
-				<p>First like job</p>
+				<p>No jobs yet.</p>
 			)
 		}
 	}

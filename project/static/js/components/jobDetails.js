@@ -68,7 +68,7 @@ class JobDetails extends React.Component{
             return false;
 	}
 
-	renderText() { 
+	renderText() {
 		return {__html: this.state.job.text};
 	};
 	
@@ -91,7 +91,7 @@ class JobDetails extends React.Component{
 				    	    		<p className="right-align">{this.state.job.exp}</p>
 				    	    	</div>
 
-								<p dangerouslySetInnerHTML={ this.renderText() }></p>
+								<div dangerouslySetInnerHTML={ this.renderText() }></div>
 
 							</div>
 						</div>
@@ -113,18 +113,19 @@ class JobDetails extends React.Component{
 						</div>
 
 						<div className="card">
-							<div className="card-content">
+							<div className="card-content share-btns-wrapper">
 								<span>Share</span>
 
 				                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
-				                    Twitter
+				                    <i className="fa fa-twitter" aria-hidden="true"></i>
+				                    {/* Twitter */}
 				                </a>
 				            
-				                <hr/>
-
 				                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
-				                	Facebook
+				                	<i className="fa fa-facebook" aria-hidden="true"></i>
+				                	{/* Facebook */}
 				                </a>
+
 
 								{/*
 								<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
@@ -143,14 +144,42 @@ class JobDetails extends React.Component{
 							</div>
 						</div>
 
-					</div>
+						<a className="waves-effect waves-light btn" href={this.state.job.url} target="_blank">Apply</a>
+					
+						<br />
+						<br />
 
-				</div>
+						<a className="waves-effect waves-light btn" href="#" onClick={(e) => {
+                            e.preventDefault();
+                            if( localStorage.getItem('sagfi_token') ){
+                                this.props.onLike(this.state.job.id);
+                               
+                                /*
+                                if(this.props.isLiked){
+                                    // this.props.onDislike();
+                                }
+                                else{
+                                    // this.setState({ isLiked: true });
+                                    this.props.onLike();
+                                }
+                                */
+                            }
+                            else{
+                                this.props.loginPopup('show');
+                            } 
+                        }}>Like</a>
+					
+					</div> {/* \col */}
+				</div> {/* \grid */}
 			</div>				
 
 		);
 	}
 }
+
+
+
+import { likeJob, loginPopup } from '../actions'
 
 
 
@@ -160,6 +189,20 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return{
+		onLike: (jobId) => {
+			dispatch(likeJob(jobId))
+		},
+
+		loginPopup: (step) => {
+			dispatch( loginPopup(step) )
+		}
+	}
+}
+
+
 export default connect(
 	mapStateToProps,
+	mapDispatchToProps
 )(JobDetails)

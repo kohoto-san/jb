@@ -9,7 +9,7 @@ body
     position fixed;
     width 100%;
     height 100vh;
-    background-color rgba(0, 0, 0, 50%);
+    background-color rgba(255, 255, 255, 96%);
     z-index 100;
     
     .close
@@ -18,7 +18,10 @@ body
         right 0px;
         color #000;
         width auto;
-    
+
+        i
+            font-size: 40px;
+
     .valign-wrapper
         height 100%;
 
@@ -32,7 +35,13 @@ body
         .twitter
             background-color #1da1f2;
         
-
+.share-btns-wrapper
+    font-size 20px;
+    a
+        padding 10px;
+        color #000;
+        &:hover
+            opacity 0.5;
 
 .my-jobs
     color darken(#fff, 50%);
@@ -67,6 +76,11 @@ body
 
 job-actions-right = 10px;
 
+.autogrid
+    .grid__item
+        .card
+            height auto;
+
 .grid__item
     @extend .job;
     
@@ -78,7 +92,8 @@ job-actions-right = 10px;
 
     .card
         display block;
-        padding-bottom 25px;        
+        padding-bottom 25px;
+        height 380px;
         // padding-bottom 45px;        
 
     .card-body
@@ -145,18 +160,20 @@ job-actions-right = 10px;
             
         
             
-
-.lane
+.grid .lane
     @extend .job;
     width 20%;
     margin-left auto;
     left auto;
     right auto;
     
-    background-color darken(bc, 5%);
-
     margin auto;
     padding-bottom: 100px;
+    background-color darken(bc, 5%);
+    
+    .lane-content
+        background-color darken(bc, 5%);
+
     .header
         margin-bottom 15px;
         p

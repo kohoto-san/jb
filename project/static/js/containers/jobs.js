@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { JobList } from '../components/jobs.js'
 
-import { likeJob, getJobs, loginPopup } from '../actions'
+import { likeJob, getJobs, loginPopupShow } from '../actions'
 
 const mapStateToProps = (state) => {
 
@@ -31,8 +31,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(getJobs())
 		},
 
-		loginPopup: (step) => {
-			dispatch( loginPopup(step) )
+		loginPopupShow: () => {
+			dispatch( loginPopupShow() )
 		}
 	}
 }

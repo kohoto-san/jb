@@ -18,7 +18,16 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ('id', 'slug', 'name', 'company', 'salary', 'exp', 'text', 'skills', 'keywords')
+        fields = ('id', 'slug', 'name', 'company', 'salary', 'exp', 'text', 'skills', 'keywords', 'url', 'source')
+
+
+class JobListSerializer(serializers.ModelSerializer):
+    skills = SkillSerializer(many=True, read_only=True)
+    keywords = KeywordSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Job
+        fields = ('id', 'slug', 'name', 'company', 'salary', 'exp', 'skills', 'keywords')
 
 
 class LaneSerializer(serializers.ModelSerializer):

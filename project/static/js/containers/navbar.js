@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Navbar } from '../components/navbar.js'
 
 // import { likeJob } from '../actions/actions.js'
-import { auth, getUser, loginPopup } from '../actions'
+import { auth, getUser, loginPopup, loginPopupClose } from '../actions'
 
 const mapStateToProps = (state) => {
 
@@ -34,6 +34,10 @@ const mapDispatchToProps = (dispatch) => {
 
 		loginPopup: (step) => {
 			dispatch( loginPopup(step) )
+		},
+
+		loginPopupClose: () => {
+			dispatch( loginPopupClose() )
 		}
 
 	}

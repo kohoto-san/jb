@@ -40,6 +40,7 @@ class Job(models.Model):
     exp = models.CharField(max_length=250, blank=True, null=True)
     text = models.TextField()
     url = models.URLField()
+    source = models.CharField(max_length=250)
 
     skills = models.ManyToManyField(Skill)
     keywords = models.ManyToManyField(Keyword)

@@ -23,8 +23,18 @@ export function init () {
 	}
 }
 
-export function loginPopup(step){
+export function loginPopupClose(){
+	return{
+		type: 'LOGIN_POPUP_CLOSE',
+	}
+}
 
+export function loginPopupShow(step){
+	return{
+		type: 'LOGIN_POPUP_SHOW',
+	}
+
+/*
 	let isShow;
 	if(step == 'close'){
 		isShow = false;
@@ -37,6 +47,7 @@ export function loginPopup(step){
 		type: 'LOGIN_POPUP',
 		isShow
 	}
+*/
 }
 
 

@@ -20,10 +20,9 @@ import JobDetails from './components/jobDetails.js'
 
 import { init, addJob, addLane, attachToLane, getUser, getLanes } from './actions/index.js'
 
-
-// Create an enhanced history that syncs navigation events with the store
 const token = localStorage.getItem('sagfi_token') || null;
-import configureStore from './store/configureStore'
+
+/*
 
 let parsedData = undefined;
 if( ! token ){
@@ -31,15 +30,15 @@ if( ! token ){
     if( JSON.parse(data_local) ){
         parsedData = JSON.parse(data_local);
     }
-    console.log(parsedData);
 }
-
-
-const store = configureStore(parsedData);
-// const store = configureStore(undefined);
+*/
+// Create an enhanced history that syncs navigation events with the store
+import configureStore from './store/configureStore'
+// const store = configureStore(parsedData);
+const store = configureStore(undefined);
 const history = syncHistoryWithStore(browserHistory, store)
 
-
+/*
 function handleChange() {
     
     if( ! token){    
@@ -62,28 +61,7 @@ function handleChange() {
 }
 
 let unsubscribe = store.subscribe(handleChange)
-
-/*
-store.dispatch( addLane('Like') )
-store.dispatch( addLane('Interview') )
-store.dispatch( addLane('Offer') )
-
-store.dispatch( addJob({ name: 'Fuck fuck 111', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-store.dispatch( addJob({ name: 'Fuck fuck 222', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-store.dispatch( addJob({ name: 'Fuck fuck 333', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-store.dispatch( addJob({ name: 'Fuck fuck 444', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-
-const laneId = 0
-
-store.dispatch( attachToLane(laneId, 11) )
-store.dispatch( attachToLane(laneId, 12) )
-store.dispatch( attachToLane(laneId, 13) )
-store.dispatch( attachToLane(laneId, 13) )
-
-store.dispatch( attachToLane(1, 14) )
 */
-
-// console.log(store.getState())
 
 const userAuth = (nextState, replace, callback) => {
 

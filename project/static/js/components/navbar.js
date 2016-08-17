@@ -37,14 +37,15 @@ class Navbar extends React.Component{
 
                     <a href="#" className="close" onClick={(e) => {
                             e.preventDefault();
-                            this.props.loginPopup('close');
+                            this.props.loginPopupClose();
+                            // this.props.loginPopup('close');
                     }}>
                         <i className="material-icons">close</i>
                     </a>
 
                     <div className="valign-wrapper">
                         <a href="#" className="valign soc-button twitter" onClick={e => this._auth(e) }>
-                            Twitter
+                            Login via Twitter
                         </a>
                     </div>
 

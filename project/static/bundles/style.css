@@ -6,7 +6,7 @@ body {
   position: fixed;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,0.96);
   z-index: 100;
 }
 .login-popup .close {
@@ -15,6 +15,9 @@ body {
   right: 0px;
   color: #000;
   width: auto;
+}
+.login-popup .close i {
+  font-size: 40px;
 }
 .login-popup .valign-wrapper {
   height: 100%;
@@ -29,6 +32,16 @@ body {
 .login-popup .valign-wrapper .twitter {
   background-color: #1da1f2;
 }
+.share-btns-wrapper {
+  font-size: 20px;
+}
+.share-btns-wrapper a {
+  padding: 10px;
+  color: #000;
+}
+.share-btns-wrapper a:hover {
+  opacity: 0.5;
+}
 .my-jobs {
   color: #808080;
   text-align: right;
@@ -39,36 +52,39 @@ body {
 }
 .job .card .job-name,
 .grid__item .card .job-name,
-.lane .card .job-name {
+.grid .lane .card .job-name {
   font-size: 20px;
 }
 .job .card .company-name,
 .grid__item .card .company-name,
-.lane .card .company-name {
+.grid .lane .card .company-name {
   font-size: 18px;
   margin-bottom: 0;
   color: #666;
 }
 .job .card .job-details,
 .grid__item .card .job-details,
-.lane .card .job-details {
+.grid .lane .card .job-details {
   font-size: 16px;
   padding: 0 20px;
   margin-bottom: 10px;
 }
 .job .card .job-details p,
 .grid__item .card .job-details p,
-.lane .card .job-details p {
+.grid .lane .card .job-details p {
   display: inline-block;
   margin-top: 0;
 }
 .job .card .job-details .right-align,
 .grid__item .card .job-details .right-align,
-.lane .card .job-details .right-align {
+.grid .lane .card .job-details .right-align {
   float: right;
 }
 .job_list {
   position: relative;
+}
+.autogrid .grid__item .card {
+  height: auto;
 }
 .grid__item {
   width: 200px;
@@ -80,6 +96,7 @@ body {
 .grid__item .card {
   display: block;
   padding-bottom: 25px;
+  height: 380px;
 }
 .grid__item .card-body {
   padding: 10px 15px 10px;
@@ -140,44 +157,47 @@ body {
 .grid__item .job-actions i:hover {
   background-color: #f2f2f2;
 }
-.lane {
+.grid .lane {
   width: 20%;
   margin-left: auto;
   left: auto;
   right: auto;
-  background-color: #ededed;
   margin: auto;
   padding-bottom: 100px;
+  background-color: #ededed;
 }
-.lane .header {
+.grid .lane .lane-content {
+  background-color: #ededed;
+}
+.grid .lane .header {
   margin-bottom: 15px;
 }
-.lane .header p {
+.grid .lane .header p {
   padding: 4px 15px;
   background-color: #fff;
   font-size: 20px;
   text-align: center;
 }
-.lane .job {
+.grid .lane .job {
   padding: 0;
   margin-bottom: 20px;
   text-align: left;
 }
-.lane .job .card {
+.grid .lane .job .card {
   padding: 5px 0 0 5px;
   margin: 0;
   display: block;
 }
-.lane .job .card .job-name {
+.grid .lane .job .card .job-name {
   font-size: 17px;
   margin-top: 0;
   margin-bottom: 0;
 }
-.lane .job .card .company-name {
+.grid .lane .job .card .company-name {
   font-size: 15px;
   margin-top: 5px;
 }
-.lane .job .card .job-details {
+.grid .lane .job .card .job-details {
   margin-bottom: 0;
 }
 .is-active {

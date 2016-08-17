@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9cb237afa4ce618c94a5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "65236d5222641479a296"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -636,39 +636,40 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Create an enhanced history that syncs navigation events with the store
-
-
 	// import reducers from './reducers'
 	// import * as reducers from './reducers'
 
 	var token = localStorage.getItem('sagfi_token') || null;
 
+	/*
 
-	var parsedData = undefined;
-	if (!token) {
-	    var data_local = localStorage.getItem('sagfi_data');
-	    if (JSON.parse(data_local)) {
+	let parsedData = undefined;
+	if( ! token ){
+	    let data_local = localStorage.getItem('sagfi_data');
+	    if( JSON.parse(data_local) ){
 	        parsedData = JSON.parse(data_local);
 	    }
-	    console.log(parsedData);
 	}
+	*/
+	// Create an enhanced history that syncs navigation events with the store
 
-	var store = (0, _configureStore2.default)(parsedData);
-	// const store = configureStore(undefined);
+	// const store = configureStore(parsedData);
+	var store = (0, _configureStore2.default)(undefined);
 	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
 
+	/*
 	function handleChange() {
-
-	    if (!token) {
-	        var entities = store.getState()['entities'];
-	        var data = { entities: entities };
-	        var stringData = JSON.stringify(data);
+	    
+	    if( ! token){    
+	        let entities = store.getState()['entities'];
+	        let data = { entities }
+	        let stringData = JSON.stringify(data);
 
 	        localStorage.setItem('sagfi_data', stringData);
 	        // console.log('handleChange')
 	        // console.log(stringData)
 	    }
+
 
 	    // let previousValue = currentValue
 	    // currentValue = select(store.getState())
@@ -678,29 +679,8 @@
 	    // }
 	}
 
-	var unsubscribe = store.subscribe(handleChange);
-
-	/*
-	store.dispatch( addLane('Like') )
-	store.dispatch( addLane('Interview') )
-	store.dispatch( addLane('Offer') )
-
-	store.dispatch( addJob({ name: 'Fuck fuck 111', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-	store.dispatch( addJob({ name: 'Fuck fuck 222', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-	store.dispatch( addJob({ name: 'Fuck fuck 333', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-	store.dispatch( addJob({ name: 'Fuck fuck 444', company: 'Google', salary: '100k', exp: 'Middle', skills: ['css', 'html'], keywords: 'verbal communication skills, help life-saving products, existing technology stack, client facing interfaces, focused accelerator program'}))
-
-	const laneId = 0
-
-	store.dispatch( attachToLane(laneId, 11) )
-	store.dispatch( attachToLane(laneId, 12) )
-	store.dispatch( attachToLane(laneId, 13) )
-	store.dispatch( attachToLane(laneId, 13) )
-
-	store.dispatch( attachToLane(1, 14) )
+	let unsubscribe = store.subscribe(handleChange)
 	*/
-
-	// console.log(store.getState())
 
 	var userAuth = function userAuth(nextState, replace, callback) {
 
@@ -39690,6 +39670,10 @@
 
 			loginPopup: function loginPopup(step) {
 				dispatch((0, _actions.loginPopup)(step));
+			},
+
+			loginPopupClose: function loginPopupClose() {
+				dispatch((0, _actions.loginPopupClose)());
 			}
 
 		};
@@ -39823,7 +39807,8 @@
 	                        'a',
 	                        { href: '#', className: 'close', onClick: function onClick(e) {
 	                                e.preventDefault();
-	                                _this3.props.loginPopup('close');
+	                                _this3.props.loginPopupClose();
+	                                // this.props.loginPopup('close');
 	                            } },
 	                        _react3.default.createElement(
 	                            'i',
@@ -39839,7 +39824,7 @@
 	                            { href: '#', className: 'valign soc-button twitter', onClick: function onClick(e) {
 	                                    return _this3._auth(e);
 	                                } },
-	                            'Twitter'
+	                            'Login via Twitter'
 	                        )
 	                    )
 	                );
@@ -39912,7 +39897,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.getJobs = exports.getLanes = exports.move = exports.hover = exports.attachToLane = exports.addLane = exports.dislikeJob = exports.likeJob = exports.addJob = exports.getUser = exports.auth = exports.loginPopup = exports.init = undefined;
+	exports.getJobs = exports.getLanes = exports.move = exports.hover = exports.attachToLane = exports.addLane = exports.dislikeJob = exports.likeJob = exports.addJob = exports.getUser = exports.auth = exports.loginPopupClose = exports.loginPopupShow = exports.init = undefined;
 
 	var _auth = __webpack_require__(497);
 
@@ -39921,7 +39906,8 @@
 	var Actions = { auth: _auth.auth, getUser: _auth.getUser, addJob: _jobs.addJob, likeJob: _jobs.likeJob, addLane: _jobs.addLane, attachToLane: _jobs.attachToLane, hover: _jobs.hover, move: _jobs.move, getLanes: _jobs.getLanes, getJobs: _jobs.getJobs };
 	// export default Actions;
 	exports.init = _jobs.init;
-	exports.loginPopup = _jobs.loginPopup;
+	exports.loginPopupShow = _jobs.loginPopupShow;
+	exports.loginPopupClose = _jobs.loginPopupClose;
 	exports.auth = _auth.auth;
 	exports.getUser = _auth.getUser;
 	exports.addJob = _jobs.addJob;
@@ -40264,7 +40250,8 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 	exports.init = init;
-	exports.loginPopup = loginPopup;
+	exports.loginPopupClose = loginPopupClose;
+	exports.loginPopupShow = loginPopupShow;
 	exports.addJob = addJob;
 	exports.addLane = addLane;
 	exports.likeJob = likeJob;
@@ -40305,19 +40292,31 @@
 		};
 	}
 
-	function loginPopup(step) {
-
-		var isShow = void 0;
-		if (step == 'close') {
-			isShow = false;
-		} else if (step == 'show') {
-			isShow = true;
-		}
-
+	function loginPopupClose() {
 		return {
-			type: 'LOGIN_POPUP',
-			isShow: isShow
+			type: 'LOGIN_POPUP_CLOSE'
 		};
+	}
+
+	function loginPopupShow(step) {
+		return {
+			type: 'LOGIN_POPUP_SHOW'
+		};
+
+		/*
+	 	let isShow;
+	 	if(step == 'close'){
+	 		isShow = false;
+	 	}
+	 	else if (step == 'show') {
+	 		isShow = true;
+	 	}
+	 
+	 	return{
+	 		type: 'LOGIN_POPUP',
+	 		isShow
+	 	}
+	 */
 	}
 
 	var nextJobId = 11;
@@ -41054,6 +41053,10 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _jquery = __webpack_require__(584);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	var _reactRouter = __webpack_require__(192);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41117,6 +41120,11 @@
 	    }
 
 	    _createClass(Job, [{
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            return this.props.style !== nextProps.style || this.props.job !== nextProps.job;
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -41197,7 +41205,7 @@
 	                                        _this2.props.onLike();
 	                                    }
 	                                } else {
-	                                    _this2.props.loginPopup();
+	                                    _this2.props.loginPopupShow();
 	                                }
 	                            } },
 	                        _react3.default.createElement(
@@ -41454,7 +41462,7 @@
 
 	            return _react3.default.createElement(
 	                'div',
-	                { id: 'grid', className: 'job_list grid row' },
+	                { id: 'grid', className: 'autogrid job_list grid row' },
 	                content
 	            );
 	        }
@@ -41482,22 +41490,29 @@
 	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(JobList).call(this, props));
 
 	        _this7.state = {
-	            jobs: []
+	            jobs: [],
+	            isLoaded: false
 	        };
 	        return _this7;
 	    }
 
 	    _createClass(JobList, [{
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            return !this.state.isLoaded;
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            // this.props.getJobs();
 
-	            $.ajax({
+	            _jquery2.default.ajax({
 	                url: '/jobs/',
 	                dataType: 'json',
 	                cache: false,
 	                success: function (jobs) {
 	                    this.setState({ jobs: jobs });
+	                    this.setState({ isLoaded: true });
 	                }.bind(this),
 	                error: function (xhr, status, err) {
 	                    console.error(this.props.url, status, err.toString());
@@ -41525,8 +41540,8 @@
 	                    onDislike: function onDislike() {
 	                        return _this8.props.onDislike(job.id);
 	                    },
-	                    loginPopup: function loginPopup() {
-	                        return _this8.props.loginPopup('show');
+	                    loginPopupShow: function loginPopupShow() {
+	                        return _this8.props.loginPopupShow();
 	                    }
 	                });
 	            });
@@ -41534,15 +41549,45 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react3.default.createElement(
-	                'div',
-	                { className: 'container' },
-	                _react3.default.createElement(
-	                    PinterestGrid,
-	                    { gutter: 20 },
-	                    this.items()
-	                )
-	            );
+	            if (this.state.isLoaded) {
+	                return _react3.default.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    _react3.default.createElement(
+	                        PinterestGrid,
+	                        { gutter: 20 },
+	                        this.items()
+	                    )
+	                );
+	            } else {
+	                return _react3.default.createElement(
+	                    'div',
+	                    { style: { textAlign: 'center' } },
+	                    _react3.default.createElement(
+	                        'div',
+	                        { className: 'preloader-wrapper big active' },
+	                        _react3.default.createElement(
+	                            'div',
+	                            { className: 'spinner-layer spinner-blue-only' },
+	                            _react3.default.createElement(
+	                                'div',
+	                                { className: 'circle-clipper left' },
+	                                _react3.default.createElement('div', { className: 'circle' })
+	                            ),
+	                            _react3.default.createElement(
+	                                'div',
+	                                { className: 'gap-patch' },
+	                                _react3.default.createElement('div', { className: 'circle' })
+	                            ),
+	                            _react3.default.createElement(
+	                                'div',
+	                                { className: 'circle-clipper right' },
+	                                _react3.default.createElement('div', { className: 'circle' })
+	                            )
+	                        )
+	                    )
+	                );
+	            }
 	        }
 	    }]);
 
@@ -41682,8 +41727,8 @@
 				dispatch((0, _actions.getJobs)());
 			},
 
-			loginPopup: function loginPopup(step) {
-				dispatch((0, _actions.loginPopup)(step));
+			loginPopupShow: function loginPopupShow() {
+				dispatch((0, _actions.loginPopupShow)());
 			}
 		};
 	};
@@ -41738,6 +41783,10 @@
 
 	        getLanes: function getLanes() {
 	            dispatch((0, _actions.getLanes)());
+	        },
+
+	        loginPopupShow: function loginPopupShow() {
+	            dispatch((0, _actions.loginPopupShow)());
 	        }
 	    };
 	};
@@ -41854,6 +41903,17 @@
 	 }
 	 */
 
+		/*
+	 hover(targetProps, monitor) {
+	 	const targetId = targetProps.job.id;
+	     const sourceId = monitor.getItem().id;
+	 	    if (targetId === sourceId) {
+	 	    return;
+	     }
+	 		targetProps.onMove(sourceId, targetId);
+	 }
+	 */
+
 		drop: function drop(targetProps, monitor) {
 			var targetId = targetProps.job.id;
 			var sourceId = monitor.getItem().id;
@@ -41967,26 +42027,30 @@
 					{ className: 'lane col' },
 					_react3.default.createElement(
 						'div',
-						{ className: 'header center-align' },
+						{ className: 'lane-content' },
 						_react3.default.createElement(
-							'p',
-							{ className: 'card z-depth-1 ' },
-							this.props.lane.name
-						)
-					),
-					this.props.jobs.map(function (job) {
-						return _react3.default.createElement(Job, {
-							id: job.id,
-							key: job.id,
-							job: job
-							// onFuck={ ({sourceId, targetId}) =>{return true}
-							// console.log(`source: ${sourceId}, target: ${targetId}`)
-							// }
-							, onMove: function onMove(sourceId, targetId) {
-								return _this3.props.onMove(sourceId, targetId);
-							}
-						});
-					})
+							'div',
+							{ className: 'header center-align' },
+							_react3.default.createElement(
+								'p',
+								{ className: 'card z-depth-1 ' },
+								this.props.lane.name
+							)
+						),
+						this.props.jobs.map(function (job) {
+							return _react3.default.createElement(Job, {
+								id: job.id,
+								key: job.id,
+								job: job
+								// onFuck={ ({sourceId, targetId}) =>{return true}
+								// console.log(`source: ${sourceId}, target: ${targetId}`)
+								// }
+								, onMove: function onMove(sourceId, targetId) {
+									return _this3.props.onMove(sourceId, targetId);
+								}
+							});
+						})
+					)
 				));
 			}
 		}]);
@@ -42036,7 +42100,12 @@
 		_createClass(Pipeline, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				this.props.getLanes();
+
+				if (localStorage.getItem('sagfi_token')) {
+					this.props.getLanes();
+				} else {
+					this.props.loginPopupShow();
+				}
 			}
 		}, {
 			key: 'renderLanes',
@@ -42064,7 +42133,7 @@
 					return _react3.default.createElement(
 						'p',
 						null,
-						'First like job'
+						'No jobs yet.'
 					);
 				}
 			}
@@ -47312,6 +47381,8 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
+	var _actions = __webpack_require__(496);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47457,7 +47528,7 @@
 											this.state.job.exp
 										)
 									),
-									_react3.default.createElement('p', { dangerouslySetInnerHTML: this.renderText() })
+									_react3.default.createElement('div', { dangerouslySetInnerHTML: this.renderText() })
 								)
 							),
 							_react3.default.createElement(
@@ -47493,7 +47564,7 @@
 								{ className: 'card' },
 								_react3.default.createElement(
 									'div',
-									{ className: 'card-content' },
+									{ className: 'card-content share-btns-wrapper' },
 									_react3.default.createElement(
 										'span',
 										null,
@@ -47504,20 +47575,50 @@
 										{ onClick: function onClick(e) {
 												return _this2.share(e, 'http://twitter.com/share?text=');
 											}, href: '#', target: '_blank' },
-										'Twitter'
+										_react3.default.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
 									),
-									_react3.default.createElement('hr', null),
 									_react3.default.createElement(
 										'a',
 										{ onClick: function onClick(e) {
 												return _this2.share(e, 'https://www.facebook.com/sharer/sharer.php?u=');
 											}, href: '#', target: '_blank' },
-										'Facebook'
+										_react3.default.createElement('i', { className: 'fa fa-facebook', 'aria-hidden': 'true' })
 									)
 								)
+							),
+							_react3.default.createElement(
+								'a',
+								{ className: 'waves-effect waves-light btn', href: this.state.job.url, target: '_blank' },
+								'Apply'
+							),
+							_react3.default.createElement('br', null),
+							_react3.default.createElement('br', null),
+							_react3.default.createElement(
+								'a',
+								{ className: 'waves-effect waves-light btn', href: '#', onClick: function onClick(e) {
+										e.preventDefault();
+										if (localStorage.getItem('sagfi_token')) {
+											_this2.props.onLike(_this2.state.job.id);
+
+											/*
+	          if(this.props.isLiked){
+	              // this.props.onDislike();
+	          }
+	          else{
+	              // this.setState({ isLiked: true });
+	              this.props.onLike();
+	          }
+	          */
+										} else {
+											_this2.props.loginPopup('show');
+										}
+									} },
+								'Like'
 							)
-						)
-					)
+						),
+						' '
+					),
+					' '
 				);
 			}
 		}]);
@@ -47531,7 +47632,19 @@
 		};
 	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(JobDetails);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			onLike: function onLike(jobId) {
+				dispatch((0, _actions.likeJob)(jobId));
+			},
+
+			loginPopup: function loginPopup(step) {
+				dispatch((0, _actions.loginPopup)(step));
+			}
+		};
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(JobDetails);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(352)(module)))
 
 /***/ },
@@ -57848,8 +57961,11 @@
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case 'LOGIN_POPUP':
-	            return { isShow: action.isShow };
+	        case 'LOGIN_POPUP_SHOW':
+	            return { isShow: true };
+
+	        case 'LOGIN_POPUP_CLOSE':
+	            return { isShow: false };
 
 	        default:
 	            return state;

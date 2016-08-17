@@ -219,7 +219,12 @@ export function getUser() {
 	                	return getJSON(res);
 	                }
 	            },
-	            types.GET_USER_FAILURE
+	            {
+	            	localStorage.removeItem('sagfi_token');
+	            	return(
+		            	types.GET_USER_FAILURE
+	            	);
+	            }
 	        ]
 	    }
 	};

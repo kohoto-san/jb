@@ -1,11 +1,12 @@
 import { auth, getUser } from './auth.js';
-import { init, loginPopup, addJob, likeJob, dislikeJob, addLane, attachToLane, hover, move, getLanes, getJobs } from './jobs.js';
+import { init, loginPopupShow, loginPopupClose, addJob, likeJob, dislikeJob, addLane, attachToLane, hover, move, getLanes, getJobs } from './jobs.js';
 
 const Actions = { auth, getUser, addJob, likeJob, addLane, attachToLane, hover, move, getLanes, getJobs };
 // export default Actions;
 export {
 	init,
-	loginPopup,
+	loginPopupShow,
+	loginPopupClose,
 	auth,
 	getUser,
 	addJob,

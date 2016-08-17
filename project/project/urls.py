@@ -32,14 +32,18 @@ urlpatterns = [
 
     url(r'^api/get-lanes/$', views.MetaJobList.as_view()),
     url(r'^jobs/$', views.JobList.as_view()),
-    url(r'^parse/$', views.parseJobs, name='parse'),
 
     url(r'^api/job/(?P<pk>[0-9]+)$', views.JobDetails.as_view()),
 
 
     # url(r'^api/login/', include('rest_social_auth.urls_token')),
-
     url(r'^auth/', include('apps.profiles.urls', namespace='auth')),
+
+
+
+
+
+    url(r'^parse/$', views.parseJobsView, name='parse'),
 ]
 
 urlpatterns += [

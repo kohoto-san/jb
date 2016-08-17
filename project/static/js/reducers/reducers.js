@@ -33,8 +33,11 @@ function data(state=[], action){
 
 function loginPopup(state={isShow: false}, action){
     switch(action.type){
-        case 'LOGIN_POPUP':
-            return { isShow: action.isShow }
+        case 'LOGIN_POPUP_SHOW':
+            return { isShow: true }
+
+        case 'LOGIN_POPUP_CLOSE':
+            return { isShow: false }
 
         default:
             return state

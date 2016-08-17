@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ClassNames from 'classnames'
+import $ from 'jquery'
 
 // import { PropTypes } from 'react'
 // import VisibleJobs from '../containers/jobs.js'
@@ -17,6 +18,13 @@ class Job extends React.Component{
         this.state = {
             isLiked: this.props.isLiked
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return(
+            this.props.style !== nextProps.style ||
+            this.props.job !== nextProps.job
+        );
     }
 
     render() {
@@ -72,7 +80,7 @@ class Job extends React.Component{
                                 }
                             }
                             else{
-                                this.props.loginPopup();
+                                this.props.loginPopupShow();
                             } 
                         }}>
                     	<i className="material-icons">&#xE87E;</i>  {/*favorite border*/}
@@ -286,7 +294,7 @@ class PinterestGrid extends React.Component {
         */
 
         return (
-            <div id="grid" className="job_list grid row">
+            <div id="grid" className="autogrid job_list grid row">
                 { content }
             </div>
         );
@@ -309,11 +317,16 @@ PinterestGrid.defaultProps = {
 // const Jobs = ({ jobs }) => (
 class JobList extends React.Component{
 
-     constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
-            jobs: []
+            jobs: [],
+            isLoaded: false
         };
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return !this.state.isLoaded;
     }
 
 	componentDidMount() {
@@ -325,44 +338,66 @@ class JobList extends React.Component{
             cache: false,
             success: function(jobs) {
                 this.setState({jobs: jobs});
+                this.setState({isLoaded: true});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
-
-
 	}
 
 	items (){
-
         // return this.props.jobs.map((job, i) =>{
         return this.state.jobs.map((job, i) =>{
 
-                            const isLiked = this.props.likes.has(job.id)
+            const isLiked = this.props.likes.has(job.id)
 
-						   	return(<Job
-						        key={job.id}
-						        job={job}
-                                isLiked={isLiked}
-                                // ref={`child-${i}`}
-                                onLike={() => this.props.onLike(job.id)}
-						        onDislike={() => this.props.onDislike(job.id)}
-                                loginPopup={() => this.props.loginPopup('show')}
-						    />)
-					    })
+		   	return(<Job
+		        key={job.id}
+		        job={job}
+                isLiked={isLiked}
+                // ref={`child-${i}`}
+                onLike={() => this.props.onLike(job.id) }
+		        onDislike={() => this.props.onDislike(job.id)}
+                loginPopupShow={() => this.props.loginPopupShow() }
+		    />)
+	    })
 	}
 
 	render() {
-		return (
+        if(this.state.isLoaded){
+    		return (
+    			<div className="container">
 
-			<div className="container">
-                <PinterestGrid gutter={20}>
-                    { this.items() }
-                </PinterestGrid>
-			</div>				
+                    {/*
+                    <div id="grid" className="job_list grid row">
+                        { this.items() }
+                    </div>
+                    */}
 
-		);
+                    <PinterestGrid gutter={20}>
+                        { this.items() }
+                    </PinterestGrid>
+    			</div>				
+    		);
+        }
+        else{
+            return(
+                <div style={{textAlign: 'center'}}>
+                    <div className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
 	}
 }
 // )
