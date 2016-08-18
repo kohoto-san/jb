@@ -77,11 +77,11 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.profiles',
 
-    'django_crontab',
+    'django_cron'
 ]
 
-CRONJOBS = [
-    ('0 */4 * * *', 'apps.core.parseJobs.parseJobs')
+CRON_CLASSES = [
+    "apps.core.parseJobs.CronJob",
 ]
 
 SITE_ID = 1

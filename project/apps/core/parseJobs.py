@@ -10,6 +10,19 @@ from apps.core.models import Job, Skill, Keyword
 from . import nltkutils
 
 
+from django_cron import CronJobBase, Schedule
+
+
+class CronJob(CronJobBase):
+    RUN_EVERY_MINS = 120 # every 2 hours
+
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+    code = 'my_app.my_cron_job'    # a unique code
+
+    def do(self):
+        parseJobs()    # do your thing here
+
+
 def parseJobs():
 
     lvls = ['junior', 'middle', 'senior']
