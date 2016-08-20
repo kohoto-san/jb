@@ -1,0 +1,4 @@
+#!/bin/bash
+
+python -c "import nltk; nltk.download('all')"
+./project/manage.py migrate
