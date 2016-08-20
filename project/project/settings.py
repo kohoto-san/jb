@@ -14,6 +14,9 @@ import os
 import environ
 from django.core.exceptions import ImproperlyConfigured
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -21,11 +24,8 @@ env = environ.Env(
 # ALLOWED_HOSTS=(list, ['*'])
 # ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
 
-environ.Env.read_env('../.env')
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+path_to_env = os.path.abspath(os.path.join(BASE_DIR, '../.env'))
+environ.Env.read_env(path_to_env)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
