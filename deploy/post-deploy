@@ -2,3 +2,5 @@
 
 python -c "import nltk; nltk.download('all')"
 ./project/manage.py migrate
+
+chmod +x deploy/pre-deploy
