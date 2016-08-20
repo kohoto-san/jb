@@ -3,3 +3,4 @@ node_modules
 Dockerfile
 # runtime.txt
 # .buildpacks
+project/db.sqlite3

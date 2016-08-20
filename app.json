@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "dokku": {
+      "postdeploy": "python -c \"import nltk; nltk.download('all')\""
+    }
+  },
+}
