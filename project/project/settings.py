@@ -76,12 +76,6 @@ INSTALLED_APPS = [
 
     'apps.core',
     'apps.profiles',
-
-    'django_cron'
-]
-
-CRON_CLASSES = [
-    "apps.core.parseJobs.CronJob",
 ]
 
 SITE_ID = 1
