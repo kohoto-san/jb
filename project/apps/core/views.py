@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from . import parseJobs
+from django.http import HttpResponse
 
 
 class MetaJobList(APIView):
@@ -128,4 +129,5 @@ class JobDetails(generics.RetrieveAPIView):
 
 
 def parseJobsView(request):
-    return parseJobs.parseJobs()
+    parseJobs.parseJobs()
+    return HttpResponse('ok')
