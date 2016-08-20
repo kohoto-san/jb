@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
 # import xml.etree.ElementTree
-import xml.dom
+import xml.dom.minidom.parseString
 import re
 
 from django.http import HttpResponse
@@ -26,11 +26,6 @@ def parseJobs():
 
         same_job = Job.objects.filter(url=job_url)
         if same_job:
-            print('==================')
-            print('==================')
-            print(same_job[0].name)
-            print('==================')
-            print('==================')
             break
 
         name = node.getElementsByTagName("title")[0].childNodes[0].nodeValue
@@ -76,7 +71,6 @@ def parseJobs():
             obj, created = Keyword.objects.get_or_create(name=keyword)
             job.keywords.add(obj)
 
-        print(name)
         job.save()
 
     # return HttpResponse('objects')
