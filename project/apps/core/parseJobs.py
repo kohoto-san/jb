@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
 # import xml.etree.ElementTree
-import xml.dom.minidom.parseString
+from xml.dom.minidom import parseString
 import re
 
 from django.http import HttpResponse
@@ -17,7 +17,8 @@ def parseJobs():
 
     url = 'https://stackoverflow.com/jobs/feed?allowsremote=True'
     r = requests.get(url)
-    e = xml.dom.minidom.parseString(r.text)
+    # e = xml.dom.minidom.parseString(r.text)
+    e = parseString(r.text)
     items = e.getElementsByTagName('item')
 
     for node in items:
