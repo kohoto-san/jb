@@ -62,15 +62,15 @@ INSTALLED_APPS = [
 
     'rest_auth',
 
-    # 'allauth',
-    # 'allauth.account',
-    # 'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.twitter',
 
-    # 'social.apps.django_app.default',  # python social auth
-    # 'rest_social_auth',  # this package
+    'social.apps.django_app.default',  # python social auth
+    'rest_social_auth',  # this package
 
     'apps.core',
     'apps.profiles',
