@@ -1,6 +1,11 @@
 {
-  "name": "sagfi python3.4",
-  "description": "Python, React, Redux",
+  "name": "Django-Redux",
+  "description": "The app that uses Django, React and Redux",
+  "keywords": [
+    "dokku",
+    "python",
+    "django"
+  ],
   "scripts": {
     "dokku": {
       "postdeploy": "python -c \"import nltk; nltk.download('all')\""
