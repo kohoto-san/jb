@@ -19,13 +19,11 @@ RUN pip install -r requirements.txt
 # RUN python -c "import os; print(os.getcwd())"
 CMD python ./project/manage.py migrate
 
-# Copy the project
-COPY . /webapp/
-
-
 # CMD python ./project/manage.py crontab add
 RUN python -c "import nltk; nltk.download('all')"
 
+# Copy the project
+COPY . /webapp/
 
 
 # CMD python ./project/manage.py makemigrations
