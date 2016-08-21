@@ -1,4 +1,5 @@
 from django.contrib import admin
+'''
 from apps.core.models import Skill, Keyword, Job, Lane, MetaJob
 
 admin.site.register(Skill)
@@ -14,3 +15,4 @@ class JobAdmin(admin.ModelAdmin):
     # fields = ['pub_date', 'question_text']
 
 admin.site.register(Job, JobAdmin)
+'''
