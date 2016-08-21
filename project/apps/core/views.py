@@ -102,12 +102,10 @@ class MetaJobList(APIView):
         # else:
             # return Response(status=status.HTTP_404_NOT_FOUND)
 
-    '''
-    def delete(self, request):
-        job = get_object_or_404(MetaJob, pk=request.data['id'])
-        job.delete()
-        return Response('deleted')
-    '''
+    # def delete(self, request):
+    #     job = get_object_or_404(MetaJob, pk=request.data['id'])
+    #     job.delete()
+    #     return Response('deleted')
 
 #class MetaJobList(generics.ListAPIView):
 #    queryset = MetaJob.objects.all()
