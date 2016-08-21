@@ -16,8 +16,8 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-RUN python -c "import os; print(os.getcwd())"
-RUN python project/manage.py migrate
+# RUN python -c "import os; print(os.getcwd())"
+CMD python ./project/manage.py migrate
 
 # Copy the project
 COPY . /webapp/
