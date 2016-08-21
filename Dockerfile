@@ -16,8 +16,7 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-RUN python -c "import os; os.path.dirname(os.path.dirname(os.path.abspath(__file__)))"
-
+RUN python -c "import os; print(os.getcwd())"
 RUN python project/manage.py migrate
 
 # Copy the project
