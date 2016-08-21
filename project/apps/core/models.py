@@ -30,7 +30,7 @@ class Keyword(models.Model):
     def __str__(self):
         return self.name
 
-'''
+
 class Job(models.Model):
 
     date = models.DateTimeField(default=timezone.now)
@@ -100,4 +100,3 @@ def user_signed_up_(request, user, **kwargs):
     Lane.objects.create(name='Interviewed', user=user)
     Lane.objects.create(name='Disqualified', user=user)
     Lane.objects.create(name='Hired', user=user)
-'''
