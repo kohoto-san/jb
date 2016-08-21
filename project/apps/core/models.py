@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 from allauth.account.signals import user_signed_up
 
-
+'''
 class Skill(models.Model):
 
     name = models.CharField(max_length=250)
@@ -100,3 +100,4 @@ def user_signed_up_(request, user, **kwargs):
     Lane.objects.create(name='Interviewed', user=user)
     Lane.objects.create(name='Disqualified', user=user)
     Lane.objects.create(name='Hired', user=user)
+'''

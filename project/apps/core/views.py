@@ -5,7 +5,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from rest_framework import status
-
+'''
 from apps.core.models import MetaJob, Lane, Job, Skill, Keyword
 from apps.core.serializers import MetaJobSerializer, JobSerializer, JobListSerializer
 from rest_framework import generics, viewsets
@@ -129,3 +129,4 @@ class JobDetails(generics.RetrieveAPIView):
 def parseJobsView(request):
     parseJobs.parseJobs()
     return HttpResponse('ok')
+'''

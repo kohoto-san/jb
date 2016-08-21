@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apps.core.models import *
 
-
+'''
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
@@ -43,3 +43,4 @@ class MetaJobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MetaJob
+'''
