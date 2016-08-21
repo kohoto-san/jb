@@ -15,13 +15,17 @@ COPY requirements.txt requirements.txt
 #    && pip install -r prod-requirements.txt
 
 RUN pip install -r requirements.txt
-CMD python project/manage.py migrate
-# CMD python ./project/manage.py crontab add
 
-# RUN python -c "import nltk; nltk.download('all')"
+
+CMD python ./project/manage.py migrate
 
 # Copy the project
 COPY . /webapp/
+
+# CMD python ./project/manage.py crontab add
+# RUN python -c "import nltk; nltk.download('all')"
+
+
 
 # CMD python ./project/manage.py makemigrations
 
