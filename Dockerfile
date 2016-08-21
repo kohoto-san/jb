@@ -17,7 +17,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 
-RUN python ./project/manage.py migrate
+RUN python project/manage.py migrate
 
 # Copy the project
 COPY . /webapp/
