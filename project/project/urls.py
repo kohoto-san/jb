@@ -30,10 +30,10 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
 
-    # url(r'^api/get-lanes/$', views.MetaJobList.as_view()),
-    # url(r'^jobs/$', views.JobList.as_view()),
+    url(r'^api/get-lanes/$', views.MetaJobList.as_view()),
+    url(r'^jobs/$', views.JobList.as_view()),
 
-    # url(r'^api/job/(?P<pk>[0-9]+)$', views.JobDetails.as_view()),
+    url(r'^api/job/(?P<pk>[0-9]+)$', views.JobDetails.as_view()),
 
 
     # url(r'^api/login/', include('rest_social_auth.urls_token')),
@@ -43,7 +43,7 @@ urlpatterns = [
 
 
 
-    # url(r'^parse/$', views.parseJobsView, name='parse'),
+    url(r'^parse/$', views.parseJobsView, name='parse'),
 ]
 
 urlpatterns += [
