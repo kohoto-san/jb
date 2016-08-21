@@ -27,7 +27,8 @@ def parseJobs():
 
         same_job = Job.objects.filter(url=job_url)
         if same_job:
-            break
+            continue
+            # break
 
         name = node.getElementsByTagName("title")[0].childNodes[0].nodeValue
         name_index = name.find('at')
