@@ -51,6 +51,8 @@ class Job(models.Model):
         super(Job, self).save(*args, **kwargs)
         if not self.slug:
             self.slug = "%s-%s" % (self.pk, slugify(self.name))
+            if len(self.slug) > 250:
+                self.slug = self.slug[:250]
             self.save()
 
     class Meta:
