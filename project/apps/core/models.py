@@ -45,7 +45,7 @@ class Job(models.Model):
     skills = models.ManyToManyField(Skill)
     keywords = models.ManyToManyField(Keyword)
 
-    slug = models.SlugField(max_length=250, blank=True)
+    slug = models.SlugField(max_length=255, blank=True)
 
     def save(self, *args, **kwargs):
         super(Job, self).save(*args, **kwargs)
