@@ -80,7 +80,7 @@ class Navbar extends React.Component{
                 */}
 
 
-                    <nav className="grey lighten-2" style={{textColor: '#000'}}>
+                    <nav className="white black-text" style={{textColor: '#000'}}>
                         <div className="nav-wrapper" className="black-text">
                             <Link to='/' className="brand-logo">Sagfi</Link>
                             <ul className="right">

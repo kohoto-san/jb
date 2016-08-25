@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(move(sourceId, targetId))
         },
 
-        attachToLane: (laneId, jobId) => {
-            dispatch(attachToLane(laneId, jobId))
+        attachToLane: (targetLaneId, sourceLaneId, sourceJobId) => {
+            dispatch(attachToLane(targetLaneId, sourceLaneId, sourceJobId))
         },
 
         getLanes: () => {

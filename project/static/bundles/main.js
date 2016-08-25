@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "de6ab678006d1d5b9e86"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8771c8522368dd24747c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39842,7 +39842,7 @@
 	                    { style: { marginBottom: '30px' } },
 	                    _react3.default.createElement(
 	                        'nav',
-	                        { className: 'grey lighten-2', style: { textColor: '#000' } },
+	                        { className: 'white black-text', style: { textColor: '#000' } },
 	                        _react3.default.createElement(
 	                            'div',
 	                            _defineProperty({ className: 'nav-wrapper' }, 'className', 'black-text'),
@@ -40172,12 +40172,16 @@
 	            payload: function payload(action, state, res) {
 	                return (0, _reduxApiMiddleware.getJSON)(res);
 	            }
-	        }, {
+	        }, types.GET_USER_FAILURE
+	        /*
+	        {
 	            type: types.GET_USER_FAILURE,
-	            remove: function remove() {
+	            remove: () => {
 	                localStorage.removeItem('sagfi_token');
 	            }
-	        }]
+	        }
+	        */
+	        ]
 	    });
 	}
 
@@ -40401,40 +40405,47 @@
 		});
 	}
 
-	function attachToLane(laneId, jobId) {
-
-		return _defineProperty({}, _reduxApiMiddleware.CALL_API, {
-			endpoint: '/api/get-lanes/',
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				laneId: laneId,
-				sourceId: jobId
-			}),
-			types: ['ATTACH_TO_LANE_REQUEST', {
-				type: 'ATTACH_TO_LANE',
-				payload: function payload(action, state) {
-					return {
-						laneId: laneId,
-						sourceId: jobId
-					};
-				}
-			}, 'ATTACH_TO_LANE_FAILURE']
-		});
-	}
-
 	/*
 	export function attachToLane (laneId, jobId) {
-		return{
-			type: 'ATTACH_TO_LANE',
-			laneId,
-			jobId
-		}
+
+		return {
+		    [CALL_API]: {
+		        endpoint: '/api/get-lanes/',
+		        method: 'PATCH',
+		        headers: {
+				    'Accept': 'application/json',
+				    'Content-Type': 'application/json'
+				},
+		        body: JSON.stringify({
+					laneId: laneId,
+					sourceId: jobId
+				}),
+		        types: [
+		            'ATTACH_TO_LANE_REQUEST',
+		            {
+		                type: 'ATTACH_TO_LANE',
+		                payload: (action, state) => ({
+							laneId: laneId,
+							sourceId: jobId
+		                })
+		            },
+		            'ATTACH_TO_LANE_FAILURE'
+		        ]
+		    }
+		};
 	}
 	*/
+
+	function attachToLane(targetLaneId, sourceLaneId, jobId) {
+		return {
+			type: 'ATTACH_TO_LANE',
+			// sourceId: jobId,
+			jobId: jobId,
+			sourceLaneId: sourceLaneId,
+			targetLaneId: targetLaneId
+			// laneId
+		};
+	}
 
 	function hover(sourceId, targetId) {
 
@@ -40446,49 +40457,63 @@
 	}
 
 	function move(sourceId, targetId) {
-		/*
-	 return{
-	 	type: 'MOVE_SUCCESS',
-	 	sourceId,
-	 	targetId
-	 }
-	 */
-
-		return _defineProperty({}, _reduxApiMiddleware.CALL_API, {
-			endpoint: '/api/get-lanes/',
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				sourceId: sourceId,
-				targetId: targetId
-			}),
-			types: ['REQUEST', {
-				type: 'MOVE_SUCCESS',
-				payload: function payload(action, state) {
-					return {
-						sourceId: sourceId,
-						targetId: targetId
-					};
-				}
-
-				// sourceId,
-				// targetId
-
-				/*
-	   payload: (action, state, res) => {
-	   	// let normal = getJSON(res).then((json) => normalize(json, { lanes: arrayOf(laneSchema) }));
-	   	let normal = getJSON(res);
-	   	// alert(res)
-	   // alert(JSON.stringify(normal, null, 4));
-	        return normal;
-	   }
-	   */
-			}, 'FAILURE']
-		});
+		return {
+			type: 'MOVE_SUCCESS',
+			sourceId: sourceId,
+			targetId: targetId
+		};
 	}
+
+	/*
+	export function move (sourceId, targetId) {
+		// return{
+		// 	type: 'MOVE_SUCCESS',
+		// 	sourceId,
+		// 	targetId
+		// }
+
+		return {
+		    [CALL_API]: {
+		        endpoint: '/api/get-lanes/',
+		        method: 'PATCH',
+		        headers: {
+				    'Accept': 'application/json',
+				    'Content-Type': 'application/json'
+				},
+		        body: JSON.stringify({
+				    sourceId: sourceId,
+		        	targetId: targetId
+				}),
+		        types: [
+		            'REQUEST',
+		            {
+		                type: 'MOVE_SUCCESS',
+		                payload: (action, state) => ({
+		                	sourceId: sourceId,
+		                	targetId: targetId
+		                })
+		                
+		                // sourceId,
+		                // targetId
+
+		                /*
+		                payload: (action, state, res) => {
+		                	// let normal = getJSON(res).then((json) => normalize(json, { lanes: arrayOf(laneSchema) }));
+		                	let normal = getJSON(res);
+		                	// alert(res)
+				            // alert(JSON.stringify(normal, null, 4));
+
+		                    return normal;
+		                }
+		                /
+						
+		            },
+		            'FAILURE'
+		        ]
+		    }
+		};
+	}
+	*/
 
 	var i = -1;
 
@@ -40539,7 +40564,7 @@
 	      payload: (action, state) => ({ email: email, password: action.password })
 	  },
 	  */
-			'REQUEST', {
+			'GET_LANES_REQUEST', {
 				type: 'GET_LANES_SUCCESS',
 				payload: function payload(action, state, res) {
 					var normal = (0, _reduxApiMiddleware.getJSON)(res).then(function (json) {
@@ -40570,7 +40595,7 @@
 					console.log(wtffff);
 					console.log('fuck rnd');
 				}
-			}, 'FAILURE']
+			}, 'GET_LANES_FAILURE']
 		});
 	}
 
@@ -41127,7 +41152,7 @@
 	    _createClass(Job, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return this.props.style !== nextProps.style || this.props.job !== nextProps.job;
+	            return this.props.style !== nextProps.style || this.props.job !== nextProps.job || this.state.isLiked !== nextState.isLiked;
 	        }
 	    }, {
 	        key: 'render',
@@ -41504,7 +41529,9 @@
 	    _createClass(JobList, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return !this.state.isLoaded;
+	            return this.state.jobs !== nextState.jobs || !this.state.isLoaded;
+
+	            // return !this.state.isLoaded;
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -51862,8 +51889,8 @@
 	            dispatch((0, _actions.move)(sourceId, targetId));
 	        },
 
-	        attachToLane: function attachToLane(laneId, jobId) {
-	            dispatch((0, _actions.attachToLane)(laneId, jobId));
+	        attachToLane: function attachToLane(targetLaneId, sourceLaneId, sourceJobId) {
+	            dispatch((0, _actions.attachToLane)(targetLaneId, sourceLaneId, sourceJobId));
 	        },
 
 	        getLanes: function getLanes() {
@@ -51916,6 +51943,8 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _dec, _dec2, _class, _dec3, _class2, _dec4, _class3;
+
+	var _reactRouter = __webpack_require__(192);
 
 	var _redux = __webpack_require__(177);
 
@@ -51972,8 +52001,12 @@
 		beginDrag: function beginDrag(props) {
 			return {
 				jobId: props.job.job_id,
-				id: props.id
+				id: props.id,
+				laneId: props.job.lane_id
 			};
+		},
+		isDragging: function isDragging(props, monitor) {
+			return props.id === monitor.getItem().id;
 		}
 	};
 
@@ -51988,28 +52021,27 @@
 	 }
 	 */
 
-		/*
-	 hover(targetProps, monitor) {
-	 	const targetId = targetProps.job.id;
-	     const sourceId = monitor.getItem().id;
-	 	    if (targetId === sourceId) {
-	 	    return;
-	     }
-	 		targetProps.onMove(sourceId, targetId);
-	 }
-	 */
-
-		drop: function drop(targetProps, monitor) {
+		hover: function hover(targetProps, monitor) {
 			var targetId = targetProps.job.id;
 			var sourceId = monitor.getItem().id;
 
 			// Don't replace items with themselves
-			if (targetId === sourceId) {
-				return;
+			if (targetId !== sourceId) {
+				targetProps.onMove(sourceId, targetId);
 			}
-
-			targetProps.onMove(sourceId, targetId);
 		}
+
+		/*
+	 drop(targetProps, monitor) {
+	 	const targetId = targetProps.job.id;
+	     const sourceId = monitor.getItem().id;
+	 	    // Don't replace items with themselves
+	     if (targetId !== sourceId) {
+	 		targetProps.onMove(sourceId, targetId);
+	     }
+	 	}
+	 */
+
 	};
 
 	var Job = _wrapComponent('Job')((_dec = (0, _reactDnd.DragSource)('job', jobSource, function (connect, monitor) {
@@ -52032,21 +52064,39 @@
 		}
 
 		_createClass(Job, [{
+			key: 'shouldComponentUpdate',
+			value: function shouldComponentUpdate(nextProps, nextState) {
+				return this.props.connectDragSource !== nextProps.connectDragSource || this.props.connectDropTarget !== nextProps.connectDropTarget || this.props.isDragging !== nextProps.isDragging || this.props.isOver !== nextProps.isOver || this.props.job !== nextProps.job;
+			}
+		}, {
+			key: 'click',
+			value: function click() {
+				_reactRouter.browserHistory.push('/job/' + this.props.job.job__slug);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+
 				var _props = this.props;
 				var connectDragSource = _props.connectDragSource;
 				var connectDropTarget = _props.connectDropTarget;
 				var isDragging = _props.isDragging;
 				var isOver = _props.isOver;
 
+				// console.log('isDragging ' + isDragging)
 
-				return connectDragSource(connectDropTarget(_react3.default.createElement(
+				// return connectDragSource(connectDropTarget(
+
+				return connectDragSource(_react3.default.createElement(
 					'div',
-					{ className: 'job col s12', style: { opacity: isDragging || isOver ? 0.2 : 1 } },
+					{ className: 'job', style: { opacity: isDragging || isOver ? 0 : 1 } },
 					_react3.default.createElement(
 						'a',
-						{ className: 'card z-depth-1' },
+						{ href: '#', className: 'card z-depth-1', onClick: function onClick(e) {
+								e.preventDefault();
+								_this2.click();
+							} },
 						_react3.default.createElement(
 							'p',
 							{ className: 'job-name' },
@@ -52058,7 +52108,7 @@
 							this.props.job.job__company
 						)
 					)
-				)));
+				));
 			}
 		}]);
 
@@ -52070,19 +52120,40 @@
 	///////////////////////////////////////////////////////////////////////
 
 	var laneTarget = {
-		drop: function drop(targetProps, monitor) {
-			var sourceId = monitor.getItem().id;
+		/*
+	 drop(targetProps, monitor) {
+	     const sourceId = monitor.getItem().id;
+	 	    // If the target lane doesn't have notes, attach the note to it.
+	     //
+	     // `attachToLane` performs necessarly cleanup by default and it guarantees
+	     // a note can belong only to a single lane at a time.
+	     
+	     // if length == 0
+	     if( ! targetProps.lane.jobs.length) {
+	 		targetProps.attachToLane(
+	 			targetProps.lane.id,
+	 			sourceId
+	 		);
+	     }
+	 }
+	 */
 
-			// If the target lane doesn't have notes, attach the note to it.
-			//
-			// `attachToLane` performs necessarly cleanup by default and it guarantees
-			// a note can belong only to a single lane at a time.
+		hover: function hover(targetProps, monitor) {
+			var sourceJobId = monitor.getItem().id;
+			var sourceLaneId = monitor.getItem().laneId;
+			var targetLaneId = targetProps.lane.id;
 
-			// if length == 0
-			if (!targetProps.lane.jobs.length) {
-				targetProps.attachToLane(targetProps.lane.id, sourceId);
+			var laneHasJob = targetProps.lane.jobs.includes(sourceJobId);
+			// console.log(laneHasJob)
+
+			// if( ! targetProps.lane.jobs.length) {
+			if (!laneHasJob && sourceLaneId !== targetLaneId) {
+				// console.log(' IFFFIFIFIIF ')
+				// console.log(sourceLaneId)
+				// console.log(monitor.getItem())
+				// console.log(sourceLaneId + '  ---  ' + targetLaneId)
+				targetProps.attachToLane(targetLaneId, sourceLaneId, sourceJobId);
 			}
-			// console.log(targetProps)
 		}
 	};
 
@@ -52100,9 +52171,14 @@
 		}
 
 		_createClass(Lane, [{
+			key: 'shouldComponentUpdate',
+			value: function shouldComponentUpdate(nextProps, nextState) {
+				return this.props.connectDropTarget !== nextProps.connectDropTarget || this.props.jobs !== nextProps.jobs || this.props.lane !== nextProps.lane;
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				var _this3 = this;
+				var _this4 = this;
 
 				var connectDropTarget = this.props.connectDropTarget;
 
@@ -52131,7 +52207,7 @@
 								// console.log(`source: ${sourceId}, target: ${targetId}`)
 								// }
 								, onMove: function onMove(sourceId, targetId) {
-									return _this3.props.onMove(sourceId, targetId);
+									return _this4.props.onMove(sourceId, targetId);
 								}
 							});
 						})
@@ -52185,7 +52261,6 @@
 		_createClass(Pipeline, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-
 				if (localStorage.getItem('sagfi_token')) {
 					this.props.getLanes();
 				} else {
@@ -52193,9 +52268,14 @@
 				}
 			}
 		}, {
+			key: 'shouldComponentUpdate',
+			value: function shouldComponentUpdate(nextProps, nextState) {
+				return this.props.entities !== nextProps.entities;
+			}
+		}, {
 			key: 'renderLanes',
 			value: function renderLanes() {
-				var _this5 = this;
+				var _this6 = this;
 
 				if (this.props.entities.jobs.length) {
 					return this.props.entities.lanes.map(function (lane) {
@@ -52204,12 +52284,12 @@
 							return _react3.default.createElement(Lane, {
 								key: lane['name'],
 								lane: lane,
-								jobs: selectJobsByIds(_this5.props.entities.jobs, lane.jobs),
+								jobs: selectJobsByIds(_this6.props.entities.jobs, lane.jobs),
 								onMove: function onMove(sourceId, targetId) {
-									return _this5.props.onMove(sourceId, targetId);
+									return _this6.props.onMove(sourceId, targetId);
 								},
-								attachToLane: function attachToLane(laneId, jobId) {
-									return _this5.props.attachToLane(laneId, jobId);
+								attachToLane: function attachToLane(targetLaneId, sourceLaneId, sourceJobId) {
+									return _this6.props.attachToLane(targetLaneId, sourceLaneId, sourceJobId);
 								}
 							});
 						}
@@ -52225,16 +52305,11 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				// alert(JSON.stringify(this.props.entities, null, 4));
 
 				return _react3.default.createElement(
 					'div',
 					{ id: 'grid', className: 'grid row' },
-					_react3.default.createElement(
-						'div',
-						{ className: 'col s10 offset-s1' },
-						this.renderLanes()
-					)
+					this.renderLanes()
 				);
 			}
 		}]);
@@ -57579,7 +57654,7 @@
 					{ className: 'container' },
 					_react3.default.createElement(
 						'div',
-						{ id: 'grid', className: 'grid row' },
+						{ id: 'grid', className: 'full-job grid row' },
 						_react3.default.createElement(
 							'div',
 							{ className: 'col s12 l10 offset-l1', style: { width: '700px' } },
@@ -57590,13 +57665,13 @@
 									'div',
 									{ className: 'card-content' },
 									_react3.default.createElement(
-										'span',
-										{ className: 'card-title' },
+										'h1',
+										{ className: 'job-name center-align' },
 										this.state.job.name
 									),
 									_react3.default.createElement(
 										'span',
-										{ className: 'card-title' },
+										{ className: 'job-company card-title center-align' },
 										this.state.job.company
 									),
 									_react3.default.createElement(
@@ -57613,7 +57688,7 @@
 											this.state.job.exp
 										)
 									),
-									_react3.default.createElement('div', { dangerouslySetInnerHTML: this.renderText() })
+									_react3.default.createElement('div', { className: 'job-text', dangerouslySetInnerHTML: this.renderText() })
 								)
 							),
 							_react3.default.createElement(
@@ -57624,7 +57699,7 @@
 									{ className: 'card-content' },
 									_react3.default.createElement(
 										'div',
-										null,
+										{ className: 'job-keywords' },
 										this.state.keywords.map(function (keyword) {
 											return keyword['name'];
 										}).join(', ')
@@ -57673,14 +57748,12 @@
 							),
 							_react3.default.createElement(
 								'a',
-								{ className: 'waves-effect waves-light btn', href: this.state.job.url, target: '_blank' },
+								{ className: 'btn-apply waves-effect btn', href: this.state.job.url, target: '_blank' },
 								'Apply'
 							),
-							_react3.default.createElement('br', null),
-							_react3.default.createElement('br', null),
 							_react3.default.createElement(
 								'a',
-								{ className: 'waves-effect waves-light btn', href: '#', onClick: function onClick(e) {
+								{ className: 'btn-like waves-effect btn', href: '#', onClick: function onClick(e) {
 										e.preventDefault();
 										if (localStorage.getItem('sagfi_token')) {
 											_this2.props.onLike(_this2.state.job.id);
@@ -57941,8 +58014,8 @@
 
 	    switch (action.type) {
 	        case 'INIT':
-	            console.log('case type');
-	            console.log(action);
+	            // console.log('case type')
+	            // console.log(action)
 	            return action;
 
 	        default:
@@ -58148,6 +58221,8 @@
 	function move(state, action) {
 	    var lanes = state.lanes;
 
+	    // console.log(action)
+
 	    var sourceLane = lanes.filter(function (lane) {
 	        return lane && lane.jobs && lane.jobs.includes(action.sourceId);
 	    })[0];
@@ -58155,9 +58230,9 @@
 	        return lane && lane.jobs && lane.jobs.includes(action.targetId);
 	    })[0];
 
-	    console.log('!!!!!!!!!!!1');
-	    console.log(sourceLane);
-	    console.log(targetLane);
+	    // console.log('!!!!!!!!!!!1')
+	    // console.log(sourceLane)
+	    // console.log(targetLane)
 
 	    var sourceNoteIndex = sourceLane.jobs.indexOf(action.sourceId);
 	    var targetNoteIndex = targetLane.jobs.indexOf(action.targetId);
@@ -58194,6 +58269,7 @@
 	    });
 
 	    var newLanes = void 0;
+
 	    if (sourceLane != targetLane) {
 
 	        newLanes = state.lanes.map(function (lane) {
@@ -58269,36 +58345,57 @@
 	    var lanes = state.lanes;
 
 	    var targetLane = lanes.filter(function (lane) {
-	        return lane && lane.id == action.laneId;
+	        return lane && lane.id == action.targetLaneId;
 	    })[0];
 	    var sourceLane = lanes.filter(function (lane) {
-	        return lane && lane.jobs && lane.jobs.includes(action.sourceId);
+	        return lane && lane.jobs && lane.jobs.includes(action.jobId);
 	    })[0];
 
-	    // console.log(lanes)
-	    // console.log(sourceLane)
-	    // console.log(action.sourceId)
+	    // if(!sourceLane){
+	    //     sourceLane = lanes.filter(lane => lane && lane.id == action.sourceLaneId)[0]
+	    // }
 
-	    var sourceNoteIndex = sourceLane.jobs.indexOf(action.sourceId);
+	    // const sourceLane = lanes.filter(lane => lane && lane.id == action.sourceLaneId)[0]
+
+	    // console.log(action)
+	    console.log(lanes.filter(function (lane) {
+	        return lane && lane.jobs && lane.jobs.includes(action.jobId);
+	    }));
+	    // console.log(sourceLane)
+	    // console.log(state)
+
+	    // console.log(action.jobId)
+	    // console.log(lanes)
+	    // console.log(targetLane)
+	    // console.log(sourceLane)
+
+	    var sourceNoteIndex = sourceLane.jobs.indexOf(action.jobId);
 	    var targetNoteIndex = targetLane.jobs.indexOf(action.targetId);
 
 	    var sourceJob = state.jobs.filter(function (job) {
-	        if (job) return job.id == action.sourceId;
+	        if (job) return job.id == action.jobId;
 	    })[0];
 
 	    var newSourceLane = void 0;
 	    var newTargetLane = void 0;
 	    var newLane = void 0;
 
-	    var targetPosition = 0;
+	    // const targetPosition = 0
+	    var targetPosition = targetLane.jobs.length;
+	    // console.log(targetPosition)
+
 
 	    // const ids = new Set(sourceLane.jobs)
 	    // const currentJobs = new Set([sourceJob.id, targetJob.id])
 
+	    // console.log(sourceJob)
+	    // console.log('jobId ' + sourceJob.id)
+
 	    var newJobs = state.jobs.map(function (job) {
 	        if (job && job.id == sourceJob.id) {
 	            return (0, _reactAddonsUpdate2.default)(job, {
-	                position: { $set: targetPosition }
+	                position: { $set: targetPosition },
+	                lane_id: { $set: action.targetLaneId }
 	            });
 	        } else {
 	            return job;
@@ -58319,7 +58416,7 @@
 	        } else if (lane && targetLane.id === lane.id && lane.jobs) {
 	            return (0, _reactAddonsUpdate2.default)(lane, {
 	                jobs: {
-	                    $splice: [[targetNoteIndex, 0, action.sourceId]]
+	                    $splice: [[targetNoteIndex, 0, action.jobId]]
 	                }
 	            });
 	        } else {
@@ -58344,7 +58441,7 @@
 	    })[0];
 	    var targetNoteIndex = targetLane.jobs.indexOf(action.targetId);
 	    var sourceJob = state.jobs.filter(function (job) {
-	        return job.id == action.sourceId;
+	        return job && job.id == action.sourceId;
 	    })[0];
 
 	    var newLane = void 0;
@@ -58353,7 +58450,7 @@
 	    var newJobs = state.jobs.map(function (job) {
 
 	        // if(job.id == sourceJob.id){
-	        if (job.id == action.sourceId) {
+	        if (job && job.id == action.sourceId) {
 	            return (0, _reactAddonsUpdate2.default)(job, {
 	                position: { $set: targetPosition }
 	            });
@@ -58367,7 +58464,7 @@
 
 	    newLanes = state.lanes.map(function (lane) {
 
-	        if (targetLane.id === lane.id && lane.jobs) {
+	        if (lane && targetLane.id === lane.id && lane.jobs) {
 	            return (0, _reactAddonsUpdate2.default)(lane, {
 	                jobs: {
 	                    $splice: [[targetNoteIndex, 0, action.sourceId]]
@@ -58378,6 +58475,7 @@
 	        }
 	    });
 	    // }
+
 
 	    var newState = {
 	        lanes: newLanes ? newLanes : state.lanes,
@@ -58454,7 +58552,10 @@
 	            return (0, _merge2.default)({}, state, action.payload.entities);
 
 	        case 'MOVE_SUCCESS':
-	            return move(state, action.payload);
+	            return move(state, action);
+	        // return move(state, action.payload)
+
+
 	        // alert(JSON.stringify(state, null, 4));
 	        // console.log('ACTION')
 	        // console.log('ACTION')
@@ -58468,7 +58569,8 @@
 	        */
 
 	        case 'ATTACH_TO_LANE':
-	            return attachToLane(state, action.payload);
+	            return attachToLane(state, action);
+	        // return attachToLane(state, action.payload)
 
 	        case 'LIKE_SUCCESS':
 	            return likeJob(state, action.payload);

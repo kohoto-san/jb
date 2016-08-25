@@ -65,6 +65,7 @@ let unsubscribe = store.subscribe(handleChange)
 
 const userAuth = (nextState, replace, callback) => {
 
+
     if(token){
         store.dispatch( getUser() );
         store.dispatch( getLanes() );

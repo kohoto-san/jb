@@ -77,28 +77,28 @@ class JobDetails extends React.Component{
 		return (
 
 			<div className="container">
-				<div id="grid" className="grid row">
+				<div id="grid" className="full-job grid row">
 
 					<div className="col s12 l10 offset-l1" style={{width: '700px'}}>
 						<div className="card">
 							<div className="card-content">
 
-								<span className="card-title">{this.state.job.name}</span>
-								<span className="card-title">{this.state.job.company}</span>
+								<h1 className="job-name center-align">{this.state.job.name}</h1>
+								<span className="job-company card-title center-align">{this.state.job.company}</span>
 								
 								<div className="job-details">
 				    	    		<p className="left-align">{this.state.job.salary}</p>
 				    	    		<p className="right-align">{this.state.job.exp}</p>
 				    	    	</div>
 
-								<div dangerouslySetInnerHTML={ this.renderText() }></div>
+								<div className="job-text" dangerouslySetInnerHTML={ this.renderText() }></div>
 
 							</div>
 						</div>
 
 						<div className="card">
 							<div className="card-content">
-								<div>
+								<div className="job-keywords">
 									{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
 								</div>
 
@@ -144,12 +144,9 @@ class JobDetails extends React.Component{
 							</div>
 						</div>
 
-						<a className="waves-effect waves-light btn" href={this.state.job.url} target="_blank">Apply</a>
-					
-						<br />
-						<br />
+						<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank">Apply</a>
 
-						<a className="waves-effect waves-light btn" href="#" onClick={(e) => {
+						<a className="btn-like waves-effect btn" href="#" onClick={(e) => {
                             e.preventDefault();
                             if( localStorage.getItem('sagfi_token') ){
                                 this.props.onLike(this.state.job.id);

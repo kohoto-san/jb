@@ -29,8 +29,8 @@ from rest_framework.authentication import TokenAuthentication
 
 # It's probably a good idea to put your consumer's OAuth token and
 # OAuth secret into your project's settings. 
-consumer = oauth.Consumer(settings.TWITTER_TOKEN, settings.TWITTER_SECRET)
-client = oauth.Client(consumer)
+### consumer = oauth.Consumer(settings.TWITTER_TOKEN, settings.TWITTER_SECRET)
+### client = oauth.Client(consumer)
 
 request_token_url = 'https://api.twitter.com/oauth/request_token'
 access_token_url = 'https://api.twitter.com/oauth/access_token'
@@ -58,7 +58,7 @@ try:
 except ImportError:
     pass
 
-from allauth.socialaccount.models import SocialToken
+from allauth.socialaccount.models import SocialToken, SocialApp
 
 
 class MyTwitterSerializer(TwitterLoginSerializer):
@@ -132,8 +132,15 @@ class TwitterLogin(LoginView):
     adapter_class = TwitterOAuthAdapter
 
 
+# /token/
 class TwitterGetToken(APIView):
     def post(self, request, format=None):
+
+        socail_app = SocialApp.objects.get(name='twitter')
+
+        consumer = oauth.Consumer(socail_app.client_id, socail_app.secret)
+        # consumer = oauth.Consumer(settings.TWITTER_TOKEN, settings.TWITTER_SECRET)
+        client = oauth.Client(consumer)
 
         # Step 1. Get a request token from Twitter.
         resp, content = client.request(request_token_url, "GET")
@@ -151,6 +158,7 @@ class TwitterGetToken(APIView):
         return Response({'oauth_token': url, 'oauth_token_secret': request_token['oauth_token_secret']})
 
 
+# /login/
 class TwitterGetAllTokens(APIView):
     def post(self, request, format=None):
 
@@ -161,6 +169,9 @@ class TwitterGetAllTokens(APIView):
         token = oauth.Token(oauth_token, oauth_token_secret)
 
         token.set_verifier(oauth_verifier)
+
+        socail_app = SocialApp.objects.get(name='twitter')
+        consumer = oauth.Consumer(socail_app.client_id, socail_app.secret)
         client = oauth.Client(consumer, token)
 
         resp, content = client.request(access_token_url, "POST")

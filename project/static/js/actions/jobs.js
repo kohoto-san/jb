@@ -144,6 +144,7 @@ export function dislikeJob (jobId){
 
 }
 
+/*
 export function attachToLane (laneId, jobId) {
 
 	return {
@@ -172,16 +173,18 @@ export function attachToLane (laneId, jobId) {
 	    }
 	};
 }
+*/
 
-/*
-export function attachToLane (laneId, jobId) {
+export function attachToLane (targetLaneId, sourceLaneId, jobId) {
 	return{
 		type: 'ATTACH_TO_LANE',
-		laneId,
-		jobId
+		// sourceId: jobId,
+		jobId,
+		sourceLaneId,
+		targetLaneId
+		// laneId
 	}
 }
-*/
 
 export function hover (sourceId, targetId) {
 
@@ -194,13 +197,20 @@ export function hover (sourceId, targetId) {
 
 
 export function move (sourceId, targetId) {
-	/*
 	return{
 		type: 'MOVE_SUCCESS',
 		sourceId,
 		targetId
 	}
-	*/
+}
+
+/*
+export function move (sourceId, targetId) {
+	// return{
+	// 	type: 'MOVE_SUCCESS',
+	// 	sourceId,
+	// 	targetId
+	// }
 
 	return {
 	    [CALL_API]: {
@@ -235,13 +245,15 @@ export function move (sourceId, targetId) {
 
 	                    return normal;
 	                }
-					*/
+	                /
+					
 	            },
 	            'FAILURE'
 	        ]
 	    }
 	};
 }
+*/
 
 let i = -1;
 
@@ -292,7 +304,7 @@ export function getLanes() {
                 payload: (action, state) => ({ email: email, password: action.password })
             },
             */
-            'REQUEST',
+            'GET_LANES_REQUEST',
             {
                 type: 'GET_LANES_SUCCESS',
                 payload: (action, state, res) => {
@@ -324,7 +336,7 @@ export function getLanes() {
                 	console.log('fuck rnd')
                 }
             },
-            'FAILURE'
+            'GET_LANES_FAILURE'
         ]
     }
   };

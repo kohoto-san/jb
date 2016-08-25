@@ -12,6 +12,7 @@ from rest_framework import generics, viewsets
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
 from . import parseJobs
 from django.http import HttpResponse
@@ -24,7 +25,7 @@ class MetaJobList(APIView):
         jobs = MetaJob.objects.filter(lane__user=request.user).order_by('lane')
         serializer = MetaJobSerializer(jobs, many=True)
 
-        data = jobs.values('id', 'position', 'lane_id', 'lane__name',
+        data = jobs.values('id', 'job__slug', 'position', 'lane_id', 'lane__name',
                            'job_id', 'job__name', 'job__company', 'job__salary', 'job__exp')
         result = {'lanes': []}
         lanes = Lane.objects.all().values('name', 'id')
@@ -50,8 +51,8 @@ class MetaJobList(APIView):
                 lane.setdefault('jobs', []).append(thing)
             result['lanes'].append(lane)
 
-        print(result2)
-        print(result)
+        # print(result2)
+        # print(result)
 
         return Response(result2)
         # return Response(serializer.data)
@@ -82,6 +83,10 @@ class MetaJobList(APIView):
         # res = json.loads(request.data)
         source_job = get_object_or_404(Job, pk=request.data['sourceId'])
         lane = get_object_or_404(Lane, user=request.user, name='Liked')
+
+        metajob = MetaJob.objects.filter(job=source_job)
+        if metajob:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         try:
             position = lane.metajob_set.latest('position').position

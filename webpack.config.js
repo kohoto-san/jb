@@ -37,8 +37,8 @@ var config = {
       { test: /\.js?$/, loader: 'babel', exclude: /node_modules/,
         query: {
           plugins: ['transform-decorators-legacy', ],
-          presets: ['es2015', 'stage-0', 'react', 'react-hmre']
-          // cacheDirectory: true,
+          presets: ['es2015', 'stage-0', 'react', 'react-hmre'],
+          cacheDirectory: true,
         }
       },
 
@@ -63,7 +63,7 @@ var config = {
     }
   },
 
-  cache: false,
+  cache: true,
   debug: true
 }
 

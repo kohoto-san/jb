@@ -23,7 +23,8 @@ class Job extends React.Component{
     shouldComponentUpdate(nextProps, nextState) {
         return(
             this.props.style !== nextProps.style ||
-            this.props.job !== nextProps.job
+            this.props.job !== nextProps.job ||
+            this.state.isLiked !== nextState.isLiked
         );
     }
 
@@ -326,7 +327,12 @@ class JobList extends React.Component{
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return !this.state.isLoaded;
+        return(
+            this.state.jobs !== nextState.jobs ||
+            !this.state.isLoaded
+        );
+
+        // return !this.state.isLoaded;
     }
 
 	componentDidMount() {
