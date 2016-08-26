@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import ClassNames from 'classnames'
 
 import $ from 'jquery'
 
@@ -71,8 +72,36 @@ class JobDetails extends React.Component{
 	renderText() {
 		return {__html: this.state.job.text};
 	};
+
+	renderLikeButton(){
+		if(this.props.isLiked){
+			return(
+				<a className="btn-like waves-effect btn" href="#" onClick={(e) => {
+	                e.preventDefault();
+	                if( localStorage.getItem('sagfi_token') ){
+	                    this.props.onLike(this.state.job.id);
+	                }
+	                else{
+	                    this.props.loginPopup('show');
+	                } 
+	            }}>Like</a>
+			);
+		}
+		else{
+			return(
+				<a className=" disabled" href="#" onClick={(e) => {
+	                e.preventDefault();
+	            }}>Liked</a>
+			);
+		}
+	}
 	
 	render() {
+
+		let likeClasses = ClassNames('btn-like waves-effect btn',
+		{
+            'disabled': this.props.isLiked
+        });
 
 		return (
 
@@ -146,20 +175,17 @@ class JobDetails extends React.Component{
 
 						<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank">Apply</a>
 
-						<a className="btn-like waves-effect btn" href="#" onClick={(e) => {
+						<a className={likeClasses} href="#" onClick={(e) => {
                             e.preventDefault();
                             if( localStorage.getItem('sagfi_token') ){
-                                this.props.onLike(this.state.job.id);
                                
-                                /*
                                 if(this.props.isLiked){
                                     // this.props.onDislike();
                                 }
                                 else{
                                     // this.setState({ isLiked: true });
-                                    this.props.onLike();
+	                                this.props.onLike(this.state.job.id);
                                 }
-                                */
                             }
                             else{
                                 this.props.loginPopup('show');
@@ -181,7 +207,12 @@ import { likeJob, loginPopup } from '../actions'
 
 
 const mapStateToProps = (state, ownProps) => {
+
+	const currentJobId = ownProps.params.slug.split('-')[0]
+	const likes_arr = state.entities.jobs.filter(job => job && job.job_id==currentJobId)
+
 	return{
+		isLiked: likes_arr.length > 0,
 		slug: ownProps.params.slug
 	}
 }

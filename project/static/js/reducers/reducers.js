@@ -440,6 +440,12 @@ function likeJob(state, action){
     let newLane
     const targetPosition = 0
 
+    let newJobs = [
+        ...state.jobs,
+        action.metajob
+    ]
+
+    /*
     let newJobs = state.jobs.map(job => {
 
         // if(job.id == sourceJob.id){
@@ -452,6 +458,7 @@ function likeJob(state, action){
             return job
         }
     })
+    */
 
     let newLanes
     // if(sourceLane != targetLane) {

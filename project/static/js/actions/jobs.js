@@ -91,7 +91,8 @@ export function likeJob (jobId) {
 	                		return{
 								laneId: json.laneId,
 								sourceId: json.jobId,
-								position: json.position
+								position: json.position,
+								metajob: json.metajob
 							}
 	                	});
 	                }

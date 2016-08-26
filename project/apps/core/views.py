@@ -2,6 +2,7 @@ from itertools import groupby
 import collections
 import json
 
+from django.forms.models import model_to_dict
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from rest_framework import status
@@ -86,7 +87,7 @@ class MetaJobList(APIView):
         source_job = get_object_or_404(Job, pk=request.data['sourceId'])
         lane = get_object_or_404(Lane, user=request.user, name='Liked')
 
-        metajob = MetaJob.objects.filter(job=source_job)
+        metajob = MetaJob.objects.filter(job=source_job, lane__user=request.user)
         if metajob:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -97,7 +98,24 @@ class MetaJobList(APIView):
 
         job = MetaJob(job=source_job, lane=lane, position=position)
         job.save()
-        return Response({"laneId": lane.id, "jobId": job.id, "position": position})
+
+        # metajob_json = model_to_dict(job, fields=[field.name for field in job._meta.fields])
+        # metajob_json = model_to_dict(job, fields=['position', 'lane__name'])
+
+        metajob_json = {
+            'id': job.id,
+            'job__slug': job.job.slug,
+            'position': job.position,
+            'lane_id': job.lane_id,
+            'lane__name': job.lane.name,
+            'job_id': job.job_id,
+            'job__name': job.job.name,
+            'job__company': job.job.company,
+            'job__salary': job.job.salary,
+            'job__exp': job.job.exp
+        }
+
+        return Response({"laneId": lane.id, "metajob": metajob_json, "jobId": job.id, "position": position})
 
         # if 'laneName' in request.data:
             # source_job.position = 0

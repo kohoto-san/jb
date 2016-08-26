@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "12bbe4dc30accb0c3d41"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c926a01a08fa57a142df"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -40365,7 +40365,8 @@
 						return {
 							laneId: json.laneId,
 							sourceId: json.jobId,
-							position: json.position
+							position: json.position,
+							metajob: json.metajob
 						};
 					});
 				}
@@ -57559,6 +57560,10 @@
 
 	var _reactRedux = __webpack_require__(191);
 
+	var _classnames = __webpack_require__(506);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var _jquery = __webpack_require__(507);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -57667,9 +57672,41 @@
 				return { __html: this.state.job.text };
 			}
 		}, {
+			key: 'renderLikeButton',
+			value: function renderLikeButton() {
+				var _this2 = this;
+
+				if (this.props.isLiked) {
+					return _react3.default.createElement(
+						'a',
+						{ className: 'btn-like waves-effect btn', href: '#', onClick: function onClick(e) {
+								e.preventDefault();
+								if (localStorage.getItem('sagfi_token')) {
+									_this2.props.onLike(_this2.state.job.id);
+								} else {
+									_this2.props.loginPopup('show');
+								}
+							} },
+						'Like'
+					);
+				} else {
+					return _react3.default.createElement(
+						'a',
+						{ className: ' disabled', href: '#', onClick: function onClick(e) {
+								e.preventDefault();
+							} },
+						'Liked'
+					);
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
+				var _this3 = this;
+
+				var likeClasses = (0, _classnames2.default)('btn-like waves-effect btn', {
+					'disabled': this.props.isLiked
+				});
 
 				return _react3.default.createElement(
 					'div',
@@ -57755,14 +57792,14 @@
 									_react3.default.createElement(
 										'a',
 										{ onClick: function onClick(e) {
-												return _this2.share(e, 'http://twitter.com/share?text=');
+												return _this3.share(e, 'http://twitter.com/share?text=');
 											}, href: '#', target: '_blank' },
 										_react3.default.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
 									),
 									_react3.default.createElement(
 										'a',
 										{ onClick: function onClick(e) {
-												return _this2.share(e, 'https://www.facebook.com/sharer/sharer.php?u=');
+												return _this3.share(e, 'https://www.facebook.com/sharer/sharer.php?u=');
 											}, href: '#', target: '_blank' },
 										_react3.default.createElement('i', { className: 'fa fa-facebook', 'aria-hidden': 'true' })
 									)
@@ -57775,22 +57812,18 @@
 							),
 							_react3.default.createElement(
 								'a',
-								{ className: 'btn-like waves-effect btn', href: '#', onClick: function onClick(e) {
+								{ className: likeClasses, href: '#', onClick: function onClick(e) {
 										e.preventDefault();
 										if (localStorage.getItem('sagfi_token')) {
-											_this2.props.onLike(_this2.state.job.id);
 
-											/*
-	          if(this.props.isLiked){
-	              // this.props.onDislike();
-	          }
-	          else{
-	              // this.setState({ isLiked: true });
-	              this.props.onLike();
-	          }
-	          */
+											if (_this3.props.isLiked) {
+												// this.props.onDislike();
+											} else {
+												// this.setState({ isLiked: true });
+												_this3.props.onLike(_this3.state.job.id);
+											}
 										} else {
-											_this2.props.loginPopup('show');
+											_this3.props.loginPopup('show');
 										}
 									} },
 								'Like'
@@ -57807,7 +57840,14 @@
 	}(_react3.default.Component));
 
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
+
+		var currentJobId = ownProps.params.slug.split('-')[0];
+		var likes_arr = state.entities.jobs.filter(function (job) {
+			return job && job.job_id == currentJobId;
+		});
+
 		return {
+			isLiked: likes_arr.length > 0,
 			slug: ownProps.params.slug
 		};
 	};
@@ -58467,17 +58507,21 @@
 	    var newLane = void 0;
 	    var targetPosition = 0;
 
-	    var newJobs = state.jobs.map(function (job) {
+	    var newJobs = [].concat(_toConsumableArray(state.jobs), [action.metajob]);
 
-	        // if(job.id == sourceJob.id){
-	        if (job && job.id == action.sourceId) {
-	            return (0, _reactAddonsUpdate2.default)(job, {
-	                position: { $set: targetPosition }
-	            });
-	        } else {
-	            return job;
+	    /*
+	    let newJobs = state.jobs.map(job => {
+	         // if(job.id == sourceJob.id){
+	        if(job && job.id == action.sourceId){
+	            return update(job, {
+	                position: {$set: targetPosition}
+	            })
 	        }
-	    });
+	        else{
+	            return job
+	        }
+	    })
+	    */
 
 	    var newLanes = void 0;
 	    // if(sourceLane != targetLane) {
