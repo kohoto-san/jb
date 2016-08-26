@@ -57,6 +57,7 @@ class MetaJobList(APIView):
         return Response(result2)
         # return Response(serializer.data)
 
+    # attachToLaneServer
     def patch(self, request):
         # res = json.loads(request.data)
         source_job = get_object_or_404(MetaJob, pk=request.data['sourceId'])
@@ -79,6 +80,7 @@ class MetaJobList(APIView):
 
         return Response('ok')
 
+    # Like
     def post(self, request):
         # res = json.loads(request.data)
         source_job = get_object_or_404(Job, pk=request.data['sourceId'])
@@ -121,7 +123,7 @@ class MetaJobList(APIView):
 #   queryset = MetaJob.objects.all()
 
 class JobList(generics.ListCreateAPIView):
-    queryset = Job.objects.all().order_by('-id')
+    queryset = Job.objects.all().order_by('-date')
     serializer_class = JobListSerializer
     # serializer_class = JobSerializer
 

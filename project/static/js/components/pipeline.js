@@ -35,6 +35,11 @@ const jobTarget = {
 	}
 	*/
 
+	/*
+	canDrop() {
+	    return false;
+	},
+
 	hover(targetProps, monitor) {
 		const targetId = targetProps.job.id;
 	    const sourceId = monitor.getItem().id;
@@ -44,6 +49,7 @@ const jobTarget = {
 			targetProps.onMove(sourceId, targetId);
 	    }
 	}
+	*/
 
 	/*
 	drop(targetProps, monitor) {
@@ -142,6 +148,24 @@ const laneTarget = {
 	    }
 	}
 	*/
+
+	
+	drop(targetProps, monitor) {
+		console.log('drop')
+
+		const sourceJobId = monitor.getItem().id;
+		const sourceLaneId = monitor.getItem().laneId;
+		const targetLaneId = targetProps.lane.id;
+
+		let laneHasJob = targetProps.lane.jobs.includes(sourceJobId)
+
+	    // if( !laneHasJob && sourceLaneId !== targetLaneId ) {
+			targetProps.attachToLaneServer(
+				targetLaneId,
+				sourceJobId
+			);
+	    // }
+	},
 
 	hover(targetProps, monitor) {
 		const sourceJobId = monitor.getItem().id;
@@ -272,6 +296,7 @@ class Pipeline extends React.Component{
 							jobs={selectJobsByIds(this.props.entities.jobs, lane.jobs)}
 							onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
 							attachToLane={ (targetLaneId, sourceLaneId, sourceJobId) => this.props.attachToLane(targetLaneId, sourceLaneId, sourceJobId) }
+							attachToLaneServer={ (targetLaneId, sourceJobId) => this.props.attachToLaneServer(targetLaneId, sourceJobId) }
 						/>
 					)
 				}

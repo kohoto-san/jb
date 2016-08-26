@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Pipeline, Lane} from '../components/pipeline.js'
 
-import { move, attachToLane, getLanes, loginPopupShow } from '../actions'
+import { move, attachToLane, attachToLaneServer, getLanes, loginPopupShow } from '../actions'
 
 const mapStateToProps = (state) => {
 
@@ -22,6 +22,10 @@ const mapDispatchToProps = (dispatch) => {
 
         attachToLane: (targetLaneId, sourceLaneId, sourceJobId) => {
             dispatch(attachToLane(targetLaneId, sourceLaneId, sourceJobId))
+        },
+
+        attachToLaneServer: (targetLaneId, jobId) => {
+            dispatch( attachToLaneServer(targetLaneId, jobId) )
         },
 
         getLanes: () => {

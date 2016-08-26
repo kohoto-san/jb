@@ -1,7 +1,7 @@
 import { auth, getUser } from './auth.js';
-import { init, loginPopupShow, loginPopupClose, addJob, likeJob, dislikeJob, addLane, attachToLane, hover, move, getLanes, getJobs } from './jobs.js';
+import { init, loginPopupShow, loginPopupClose, addJob, likeJob, dislikeJob, addLane, attachToLaneServer, attachToLane, hover, move, getLanes, getJobs } from './jobs.js';
 
-const Actions = { auth, getUser, addJob, likeJob, addLane, attachToLane, hover, move, getLanes, getJobs };
+// const Actions = { auth, getUser, addJob, likeJob, addLane, attachToLane, hover, move, getLanes, getJobs };
 // export default Actions;
 export {
 	init,
@@ -14,6 +14,7 @@ export {
 	dislikeJob,
 	addLane,
 	attachToLane,
+	attachToLaneServer,
 	hover,
 	move,
 	getLanes,

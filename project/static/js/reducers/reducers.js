@@ -350,7 +350,7 @@ function attachToLane(state, action){
     // const sourceLane = lanes.filter(lane => lane && lane.id == action.sourceLaneId)[0]
 
     // console.log(action)
-    console.log(  lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.jobId))  )
+    // console.log(  lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.jobId))  )
     // console.log(sourceLane)
     // console.log(state)
 

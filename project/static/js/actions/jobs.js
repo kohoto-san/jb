@@ -144,8 +144,7 @@ export function dislikeJob (jobId){
 
 }
 
-/*
-export function attachToLane (laneId, jobId) {
+export function attachToLaneServer (laneId, jobId) {
 
 	return {
 	    [CALL_API]: {
@@ -161,6 +160,10 @@ export function attachToLane (laneId, jobId) {
 			}),
 	        types: [
 	            'ATTACH_TO_LANE_REQUEST',
+                'ATTACH_TO_LANE_SERVER_SUCCESS',
+	            'ATTACH_TO_LANE_FAILURE'
+	            
+	            /*
 	            {
 	                type: 'ATTACH_TO_LANE',
 	                payload: (action, state) => ({
@@ -168,12 +171,11 @@ export function attachToLane (laneId, jobId) {
 						sourceId: jobId
 	                })
 	            },
-	            'ATTACH_TO_LANE_FAILURE'
+	            */
 	        ]
 	    }
 	};
 }
-*/
 
 export function attachToLane (targetLaneId, sourceLaneId, jobId) {
 	return{

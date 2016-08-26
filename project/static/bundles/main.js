@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8771c8522368dd24747c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "12bbe4dc30accb0c3d41"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39897,13 +39897,13 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.getJobs = exports.getLanes = exports.move = exports.hover = exports.attachToLane = exports.addLane = exports.dislikeJob = exports.likeJob = exports.addJob = exports.getUser = exports.auth = exports.loginPopupClose = exports.loginPopupShow = exports.init = undefined;
+	exports.getJobs = exports.getLanes = exports.move = exports.hover = exports.attachToLaneServer = exports.attachToLane = exports.addLane = exports.dislikeJob = exports.likeJob = exports.addJob = exports.getUser = exports.auth = exports.loginPopupClose = exports.loginPopupShow = exports.init = undefined;
 
 	var _auth = __webpack_require__(497);
 
 	var _jobs = __webpack_require__(499);
 
-	var Actions = { auth: _auth.auth, getUser: _auth.getUser, addJob: _jobs.addJob, likeJob: _jobs.likeJob, addLane: _jobs.addLane, attachToLane: _jobs.attachToLane, hover: _jobs.hover, move: _jobs.move, getLanes: _jobs.getLanes, getJobs: _jobs.getJobs };
+	// const Actions = { auth, getUser, addJob, likeJob, addLane, attachToLane, hover, move, getLanes, getJobs };
 	// export default Actions;
 	exports.init = _jobs.init;
 	exports.loginPopupShow = _jobs.loginPopupShow;
@@ -39915,6 +39915,7 @@
 	exports.dislikeJob = _jobs.dislikeJob;
 	exports.addLane = _jobs.addLane;
 	exports.attachToLane = _jobs.attachToLane;
+	exports.attachToLaneServer = _jobs.attachToLaneServer;
 	exports.hover = _jobs.hover;
 	exports.move = _jobs.move;
 	exports.getLanes = _jobs.getLanes;
@@ -40265,6 +40266,7 @@
 	exports.addLane = addLane;
 	exports.likeJob = likeJob;
 	exports.dislikeJob = dislikeJob;
+	exports.attachToLaneServer = attachToLaneServer;
 	exports.attachToLane = attachToLane;
 	exports.hover = hover;
 	exports.move = move;
@@ -40405,36 +40407,33 @@
 		});
 	}
 
-	/*
-	export function attachToLane (laneId, jobId) {
+	function attachToLaneServer(laneId, jobId) {
 
-		return {
-		    [CALL_API]: {
-		        endpoint: '/api/get-lanes/',
-		        method: 'PATCH',
-		        headers: {
-				    'Accept': 'application/json',
-				    'Content-Type': 'application/json'
-				},
-		        body: JSON.stringify({
-					laneId: laneId,
-					sourceId: jobId
-				}),
-		        types: [
-		            'ATTACH_TO_LANE_REQUEST',
-		            {
-		                type: 'ATTACH_TO_LANE',
-		                payload: (action, state) => ({
-							laneId: laneId,
-							sourceId: jobId
-		                })
-		            },
-		            'ATTACH_TO_LANE_FAILURE'
-		        ]
-		    }
-		};
+		return _defineProperty({}, _reduxApiMiddleware.CALL_API, {
+			endpoint: '/api/get-lanes/',
+			method: 'PATCH',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				laneId: laneId,
+				sourceId: jobId
+			}),
+			types: ['ATTACH_TO_LANE_REQUEST', 'ATTACH_TO_LANE_SERVER_SUCCESS', 'ATTACH_TO_LANE_FAILURE'
+
+			/*
+	  {
+	      type: 'ATTACH_TO_LANE',
+	      payload: (action, state) => ({
+	  laneId: laneId,
+	  sourceId: jobId
+	      })
+	  },
+	  */
+			]
+		});
 	}
-	*/
 
 	function attachToLane(targetLaneId, sourceLaneId, jobId) {
 		return {
@@ -51893,6 +51892,10 @@
 	            dispatch((0, _actions.attachToLane)(targetLaneId, sourceLaneId, sourceJobId));
 	        },
 
+	        attachToLaneServer: function attachToLaneServer(targetLaneId, jobId) {
+	            dispatch((0, _actions.attachToLaneServer)(targetLaneId, jobId));
+	        },
+
 	        getLanes: function getLanes() {
 	            dispatch((0, _actions.getLanes)());
 	        },
@@ -52021,15 +52024,19 @@
 	 }
 	 */
 
-		hover: function hover(targetProps, monitor) {
-			var targetId = targetProps.job.id;
-			var sourceId = monitor.getItem().id;
-
-			// Don't replace items with themselves
-			if (targetId !== sourceId) {
-				targetProps.onMove(sourceId, targetId);
-			}
-		}
+		/*
+	 canDrop() {
+	     return false;
+	 },
+	 	hover(targetProps, monitor) {
+	 	const targetId = targetProps.job.id;
+	     const sourceId = monitor.getItem().id;
+	 	    // Don't replace items with themselves
+	     if (targetId !== sourceId) {
+	 		targetProps.onMove(sourceId, targetId);
+	     }
+	 }
+	 */
 
 		/*
 	 drop(targetProps, monitor) {
@@ -52041,7 +52048,6 @@
 	     }
 	 	}
 	 */
-
 	};
 
 	var Job = _wrapComponent('Job')((_dec = (0, _reactDnd.DragSource)('job', jobSource, function (connect, monitor) {
@@ -52138,6 +52144,19 @@
 	 }
 	 */
 
+		drop: function drop(targetProps, monitor) {
+			console.log('drop');
+
+			var sourceJobId = monitor.getItem().id;
+			var sourceLaneId = monitor.getItem().laneId;
+			var targetLaneId = targetProps.lane.id;
+
+			var laneHasJob = targetProps.lane.jobs.includes(sourceJobId);
+
+			// if( !laneHasJob && sourceLaneId !== targetLaneId ) {
+			targetProps.attachToLaneServer(targetLaneId, sourceJobId);
+			// }
+		},
 		hover: function hover(targetProps, monitor) {
 			var sourceJobId = monitor.getItem().id;
 			var sourceLaneId = monitor.getItem().laneId;
@@ -52290,6 +52309,9 @@
 								},
 								attachToLane: function attachToLane(targetLaneId, sourceLaneId, sourceJobId) {
 									return _this6.props.attachToLane(targetLaneId, sourceLaneId, sourceJobId);
+								},
+								attachToLaneServer: function attachToLaneServer(targetLaneId, sourceJobId) {
+									return _this6.props.attachToLaneServer(targetLaneId, sourceJobId);
 								}
 							});
 						}
@@ -58358,9 +58380,7 @@
 	    // const sourceLane = lanes.filter(lane => lane && lane.id == action.sourceLaneId)[0]
 
 	    // console.log(action)
-	    console.log(lanes.filter(function (lane) {
-	        return lane && lane.jobs && lane.jobs.includes(action.jobId);
-	    }));
+	    // console.log(  lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.jobId))  )
 	    // console.log(sourceLane)
 	    // console.log(state)
 
