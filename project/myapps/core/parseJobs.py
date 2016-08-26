@@ -6,7 +6,7 @@ import re
 
 from django.http import HttpResponse
 
-from apps.core.models import Job, Skill, Keyword
+from models import Job, Skill, Keyword
 
 from . import nltkutils
 
