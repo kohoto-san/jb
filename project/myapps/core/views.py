@@ -7,8 +7,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from rest_framework import status
 
-from models import MetaJob, Lane, Job, Skill, Keyword
-from serializers import MetaJobSerializer, JobSerializer, JobListSerializer
+from .models import MetaJob, Lane, Job, Skill, Keyword
+from .serializers import MetaJobSerializer, JobSerializer, JobListSerializer
 from rest_framework import generics, viewsets
 
 from rest_framework.views import APIView

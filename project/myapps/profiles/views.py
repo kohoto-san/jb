@@ -16,10 +16,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 # Project
-from models import Profile
+from .models import Profile
 
 # DRF
-from serializers import ProfileSerializer, UserSerializer
+from .serializers import ProfileSerializer, UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView

@@ -72,8 +72,8 @@ INSTALLED_APPS = [
     # 'social.apps.django_app.default',  # python social auth
     # 'rest_social_auth',  # this package
 
-    'apps.core',
-    'apps.profiles',
+    'myapps.core',
+    'myapps.profiles',
 ]
 
 SITE_ID = 1

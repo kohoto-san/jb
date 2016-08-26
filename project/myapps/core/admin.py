@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Skill, Keyword, Job, Lane, MetaJob
+from .models import Skill, Keyword, Job, Lane, MetaJob
 
 admin.site.register(Skill)
 admin.site.register(Keyword)
