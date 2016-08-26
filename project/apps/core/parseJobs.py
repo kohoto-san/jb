@@ -24,15 +24,20 @@ def parseJobs():
     for node in items:
 
         job_url = node.getElementsByTagName("link")[0].childNodes[0].nodeValue
+        print(job_url)
 
         same_job = Job.objects.filter(url=job_url)
         if same_job:
+            print('same_job; continue')
+            print(same_job)
             continue
             # break
 
         name = node.getElementsByTagName("title")[0].childNodes[0].nodeValue
         name_index = name.find('at')
         name = name[0:name_index].rstrip()
+
+        print(name)
 
         company = node.getElementsByTagName("a10:name")[0].childNodes[0].nodeValue
         text_html = node.getElementsByTagName("description")[0].childNodes[0].nodeValue
@@ -54,7 +59,7 @@ def parseJobs():
 
         try:
             #                      $100K | $30/h
-            salary = re.findall(r'\$\d+[k,K]|\$\d+\/\w+', text)[0]
+            salary = re.findall(r'\$\d+[kK]|\$\d+\/\w+', text)[0]
         except IndexError:
             salary = None
 
