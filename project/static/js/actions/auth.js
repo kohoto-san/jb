@@ -1,6 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { CALL_API, getJSON } from 'redux-api-middleware';
 
+import { getLanes } from './index.js' 
+
 import * as types from '../constants/ActionTypes';
 
 
@@ -259,6 +261,8 @@ export function auth () {
             .then(function (key) {
                 localStorage.setItem('sagfi_token', key);
                 dispatch(getUser());
+                dispatch(getLanes());
+
                 // dispatch(oAuthSignInComplete(key));
             });
 

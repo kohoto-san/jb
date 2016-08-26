@@ -151,7 +151,6 @@ const laneTarget = {
 
 	
 	drop(targetProps, monitor) {
-		console.log('drop')
 
 		const sourceJobId = monitor.getItem().id;
 		const sourceLaneId = monitor.getItem().laneId;

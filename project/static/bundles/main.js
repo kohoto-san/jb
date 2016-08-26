@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c926a01a08fa57a142df"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "89d7df0e2a2d7af391f6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39943,6 +39943,8 @@
 
 	var _reduxApiMiddleware = __webpack_require__(260);
 
+	var _index = __webpack_require__(496);
+
 	var _ActionTypes = __webpack_require__(498);
 
 	var types = _interopRequireWildcard(_ActionTypes);
@@ -40211,6 +40213,8 @@
 	        authenticate({ provider: provider, url: url }).then(function (key) {
 	            localStorage.setItem('sagfi_token', key);
 	            dispatch(getUser());
+	            dispatch((0, _index.getLanes)());
+
 	            // dispatch(oAuthSignInComplete(key));
 	        });
 
@@ -51819,8 +51823,8 @@
 		var likes = new Set(likes_arr);
 
 		return {
-			jobs: state.allJobs,
 			likes: likes
+			// jobs: state.allJobs,
 			// jobs: ownProps.params.jobs
 		};
 	};
@@ -52146,7 +52150,6 @@
 	 */
 
 		drop: function drop(targetProps, monitor) {
-			console.log('drop');
 
 			var sourceJobId = monitor.getItem().id;
 			var sourceLaneId = monitor.getItem().laneId;

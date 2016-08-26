@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
     const likes = new Set(likes_arr);
 
 	return{
-		jobs: state.allJobs,
 		likes: likes
+		// jobs: state.allJobs,
 		// jobs: ownProps.params.jobs
 	}
 }
