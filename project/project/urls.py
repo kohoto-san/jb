@@ -16,8 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
 
-from myapps.core import views
-from myapps import profiles
+from app.core import views
+from app import profiles
 
 from django.views.generic import TemplateView
 
@@ -37,7 +37,7 @@ urlpatterns = [
 
 
     # url(r'^api/login/', include('rest_social_auth.urls_token')),
-    url(r'^auth/', include('myapps.profiles.urls', namespace='auth')),
+    url(r'^auth/', include('app.profiles.urls', namespace='auth')),
 
 
 

@@ -1,6 +1,6 @@
 # from django.core.management.base import NoArgsCommand
 from django.core.management.base import BaseCommand, BaseCommand
-from myapps.core import parseJobs
+from app.core import parseJobs
 
 
 class Command(BaseCommand):
