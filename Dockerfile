@@ -29,7 +29,7 @@ COPY . /webapp/
 
 # CMD python ./project/manage.py makemigrations
 
-EXPOSE 50
+EXPOSE 5000
 
 # CMD python ./project/manage.py runserver 0.0.0.0:5000
 # CMD python ./project/manage.py collectstatic --noinput
