@@ -39,7 +39,7 @@ class Job(models.Model):
     salary = models.CharField(max_length=250, blank=True, null=True)
     exp = models.CharField(max_length=250, blank=True, null=True)
     text = models.TextField()
-    url = models.URLField(max_length=250)
+    url = models.URLField()
     source = models.CharField(max_length=250)
 
     skills = models.ManyToManyField(Skill)

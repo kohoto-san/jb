@@ -69,7 +69,7 @@ def parseJobs():
         if exp:
             exp = exp[:250]
 
-        job = Job(date=date, name=name[:250], company=company[:250], salary=salary, exp=exp, text=text, url=job_url[:250], source="StackOverflow")
+        job = Job(date=date, name=name[:250], company=company[:250], salary=salary, exp=exp, text=text, url=job_url, source="StackOverflow")
         job.save()
 
         skills = node.getElementsByTagName("category")
