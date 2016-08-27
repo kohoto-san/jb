@@ -1,0 +1,419 @@
+bc = lighten(#000, 98%);
+grey-color = #bdbdbd;
+
+body
+    background-color: bc;
+
+nav ul a,
+nav .brand-logo
+    color #000;
+    color darken(#fff, 50%); //#808080
+
+.login-popup
+    display block;
+    position fixed;
+    width 100%;
+    height 100vh;
+    background-color rgba(255, 255, 255, 96%);
+    z-index 100;
+    
+    .close
+        position absolute;
+        top 0px;
+        right 0px;
+        color #000;
+        width auto;
+
+        i
+            font-size: 40px;
+
+    .valign-wrapper
+        height 100%;
+
+        .soc-button
+            display block;
+            width 200px;
+            color #fff;
+            padding 10px;
+            margin auto;
+            
+        .twitter
+            background-color #1da1f2;
+        
+.share-btns-wrapper
+    font-size 20px;
+    a
+        padding 10px;
+        color #000;
+        &:hover
+            opacity 0.5;
+
+.my-jobs
+    text-align right;
+    p
+        margin-right 30px;
+        margin-bottom 40px;
+
+
+
+.job-name
+    font-size 20px;
+.company-name
+    font-size 18px;
+    margin-bottom 0;
+    color lighten(#000, 40%);
+
+.job-details
+    font-size 16px;
+    padding 0 20px;
+    margin-bottom 10px;
+    
+    p
+        display inline-block;
+        margin-top 0;
+        text-transform capitalize;
+    .right-align
+        float right;
+
+.job-keys
+    text-align center;
+    border-top 1px solid grey-color;
+
+.job-skills
+    padding 20px 0;
+    right-padding = job-actions-right + 46;
+    padding 10px 60px 0 10px;
+    text-align left;
+
+.job-keywords,
+.job-skills
+    span
+        display inline-block;
+        margin-right 4px;
+        margin-top 5px;
+        
+        // background-color #90caf9;
+        color darken(grey-color, 90%);
+        border 1px solid grey-color;
+        border-radius 3px;
+        padding 3px 5px;
+        font-size 12px;
+        
+        &:last-child
+            margin-right 0;
+            
+.job-keywords
+    padding 10px 0;
+    
+    p
+        text-align left;
+        padding-left 15px;
+
+
+
+.full-job
+    .job-name
+        margin: 0 0 10px;
+        font-size: 2.5rem;
+
+    .job-company
+        display block;
+    
+    .job-details
+        p
+            color rgba(0,0,0,0.87);
+            font-size 20px;
+            font-weight 300;
+
+    .job-skills
+        padding-left 0;
+
+    .job-text
+        p
+            margin 10px 0;
+        ul li
+            list-style-type disc;
+            margin 10px 30px;
+    
+    .btn-like
+        margin-left 20px;
+    
+    .btn-like,
+    .btn-apply
+        background-color #03a9f4;
+        background-color rgba(3,169,244,0.7);
+        font-weight: 500;
+
+        padding: 0 50px;
+        height: 42px;
+        line-height: 42px;
+
+.job_list
+    position relative;
+
+job-actions-right = 10px;
+
+.autogrid
+    .grid__item
+        .card
+            height auto;
+
+.grid__item
+    // @extend .job;
+    
+    width 200px;
+    position relative;
+
+    a
+        color #000;
+
+    .card
+        display block;
+        padding-bottom 25px;
+        height 380px;
+        // padding-bottom 45px;        
+
+    .card-body
+        padding 10px 15px 10px;
+        // text-transform capitalize;
+        // height 400px;
+    
+        p
+            margin 10px 0;
+        
+    .job-actions
+        position: absolute;
+        bottom: 25px;
+        right: job-actions-right;
+        i
+            vertical-align middle;
+            padding 10px;
+            border-radius 50%;
+            border 1px solid #000;
+            color #000;
+
+            ../ .is_liked i
+                    background-color darken(#fff, 5%);
+        
+            &:first-child
+                margin-right 10px;
+            
+            &:hover
+                background-color darken(#fff, 5%);
+            
+        
+            
+.grid .lane
+    // @extend .job;
+    width 20%;
+    margin-left auto;
+    left auto;
+    right auto;
+    
+    margin auto;
+    // background-color darken(bc, 5%);
+    
+    .lane-content
+        padding-bottom: 100px;
+        background-color darken(bc, 5%);
+
+    .header
+        margin-bottom 15px;
+        p
+            padding 4px 15px;
+            background-color #fff;
+            font-size 20px;
+            text-align center;
+    
+    .job
+        // margin 0 20px 20px;
+        margin 0 20px;
+        padding 10px 0;
+        text-align left;
+
+        .card
+            padding 5px 0 0 5px;
+            margin 0;
+            display block;
+            
+            .job-name
+                font-size 17px;
+                margin-top 0;
+                margin-bottom 0;
+
+            .company-name
+                font-size 15px;
+                margin-top 5px;
+
+            .job-details
+                margin-bottom 0;
+            
+        
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+.is-active
+    z-index: 100;
+
+
+.is-dropped
+    opacity: 0;
+    -webkit-transform: scale3d(0.7,0.7,1) !important;
+    transform: scale3d(0.7,0.7,1) !important;
+
+
+.is-complete
+    opacity: 1;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s !important;
+    transition: opacity 0.3s, transform 0.3s !important;
+    -webkit-transform: scale3d(1,1,1) !important;
+    transform: scale3d(1,1,1) !important;
+
+
+.animate
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+
+
+.drop-area {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    z-index: 99;
+    width: 100%;
+    height: 17em;
+    background: #cc6055;
+    text-align: center;
+    -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.6,0,0.4,1);
+    transition: transform 0.5s cubic-bezier(0.6,0,0.4,1);
+    -webkit-transform: translate3d(0,20px,0);
+    transform: translate3d(0,20px,0);
+    
+
+    &.show {
+        -webkit-transform: translate3d(0,-100%,0);
+        transform: translate3d(0,-100%,0);
+        
+        &>div {
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+        }
+    }
+    
+    &>div {
+        width: 100%;
+        height: 100%;
+        -webkit-transition: -webkit-transform 0.4s 0.3s;
+        transition: transform 0.4s 0.3s;
+        -webkit-transform: translate3d(0,50%,0);
+        transform: translate3d(0,50%,0);
+    }
+    
+    &__item {
+        font-size: 15px;
+        position: relative;
+        display: inline-block;
+        margin: 1.25em 1% 1% 1%;
+        // max-width: 13em;
+        width: 100%;
+        height: 12em;
+        border-radius: 4px;
+        background: rgba(0,0,0,0.1);
+        -webkit-transition: -webkit-transform 0.3s, background 0.3s;
+        transition: transform 0.3s, background 0.3s;
+        -webkit-backface-visibility: hidden;
+        
+
+        &.highlight {
+            background: rgba(0,0,0,0.15);
+            -webkit-transform: scale3d(1.08,1.08,1);
+            transform: scale3d(1.08,1.08,1);
+        }
+        
+
+        &::before,
+        &::after {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            color: rgba(0,0,0,0.15);
+            font-size: 1.5em;
+            margin-top: -0.35em;
+            font-family: FontAwesome;
+            pointer-events: none;
+        }
+        
+        &::before {
+            content: '\f067';
+        }
+        
+        &::after {
+            color: rgba(255,253,197,0.6);
+            content: '\f00c';
+            font-size: 3em;
+            margin-top: -0.5em;
+            opacity: 0;
+            -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+            transition: opacity 0.3s, transform 0.3s;
+            -webkit-transform: scale3d(2,2,1);
+            transform: scale3d(2,2,1);
+        }
+        
+    } //__item
+} // drop-area
+
+
+.drop-feedback
+    &.drop-area__item
+        &::before
+            opacity: 0;
+            -webkit-transform: scale3d(0,0,1);
+            transform: scale3d(0,0,1);
+        
+        &::after
+            opacity: 1;
+            -webkit-transform: scale3d(1,1,1);
+            transform: scale3d(1,1,1);
+
+.drop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.drop-area.show + .drop-overlay {
+    opacity: 1;
+}
+
+.helper {
+    position: absolute !important;
+    margin: 0;
+}
+
+@media screen and (max-width: 50em) {
+    .grid__item {
+        font-size: 1.5em;
+    }
+    .drop-area {
+        font-size: 0.6em;
+    }
+}
+
+@media screen and (max-width: 25.5em) {
+    .grid {
+        padding: 0 2em;
+    }
+    .grid__item {
+        font-size: 1em;
+    }
+}

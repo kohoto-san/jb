@@ -9,4 +9,6 @@
 # python project/manage.py collectstatic --noinput
 # gunicorn --config project/deploy/gunicorn.conf.py project.project.wsgi
 
-gunicorn project.project.wsgi --bind 0.0.0.0:5000
+
+python ./project/manage.py collectstatic --noinput
+gunicorn --pythonpath project project.wsgi --bind 0.0.0.0:5000
