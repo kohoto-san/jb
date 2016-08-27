@@ -33,6 +33,6 @@ EXPOSE 50
 
 # CMD python ./project/manage.py runserver 0.0.0.0:5000
 CMD python ./project/manage.py collectstatic --noinput
-CMD cd project && gunicorn project.wsgi:application --bind 0.0.0.0:5000
+CMD cd project && gunicorn project.wsgi:application --bind 0.0.0.0:50
 
 # CMD ["./project/deploy/deploy_script.sh"]
