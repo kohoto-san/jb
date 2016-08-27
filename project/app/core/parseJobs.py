@@ -82,4 +82,4 @@ def parseJobs():
 
     # return HttpResponse('objects')
 
-parseJobs()
+# parseJobs()
