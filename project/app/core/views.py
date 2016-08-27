@@ -29,7 +29,7 @@ class MetaJobList(APIView):
         data = jobs.values('id', 'job__slug', 'position', 'lane_id', 'lane__name',
                            'job_id', 'job__name', 'job__company', 'job__salary', 'job__exp')
         result = {'lanes': []}
-        lanes = Lane.objects.all().values('name', 'id')
+        lanes = Lane.objects.filter(user=request.user).values('name', 'id')
 
         result2 = {'lanes': []}
 
