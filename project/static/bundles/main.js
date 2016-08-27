@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8c989738f03421b733fc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cdd1028a4742b084b859"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -57687,7 +57687,7 @@
 								if (localStorage.getItem('sagfi_token')) {
 									_this2.props.onLike(_this2.state.job.id);
 								} else {
-									_this2.props.loginPopup('show');
+									_this2.props.loginPopupShow();
 								}
 							} },
 						'Like'
@@ -57826,7 +57826,7 @@
 												_this3.props.onLike(_this3.state.job.id);
 											}
 										} else {
-											_this3.props.loginPopup('show');
+											_this3.props.loginPopupShow();
 										}
 									} },
 								'Like'
@@ -57861,8 +57861,8 @@
 				dispatch((0, _actions.likeJob)(jobId));
 			},
 
-			loginPopup: function loginPopup(step) {
-				dispatch((0, _actions.loginPopup)(step));
+			loginPopupShow: function loginPopupShow() {
+				dispatch((0, _actions.loginPopupShow)());
 			}
 		};
 	};

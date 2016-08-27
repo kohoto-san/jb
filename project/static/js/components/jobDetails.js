@@ -82,7 +82,7 @@ class JobDetails extends React.Component{
 	                    this.props.onLike(this.state.job.id);
 	                }
 	                else{
-	                    this.props.loginPopup('show');
+	                    this.props.loginPopupShow();
 	                } 
 	            }}>Like</a>
 			);
@@ -188,7 +188,7 @@ class JobDetails extends React.Component{
                                 }
                             }
                             else{
-                                this.props.loginPopup('show');
+                                this.props.loginPopupShow();
                             } 
                         }}>Like</a>
 					
@@ -202,7 +202,7 @@ class JobDetails extends React.Component{
 
 
 
-import { likeJob, loginPopup } from '../actions'
+import { likeJob, loginPopupShow } from '../actions'
 
 
 
@@ -223,8 +223,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(likeJob(jobId))
 		},
 
-		loginPopup: (step) => {
-			dispatch( loginPopup(step) )
+		loginPopupShow: () => {
+			dispatch( loginPopupShow() )
 		}
 	}
 }
