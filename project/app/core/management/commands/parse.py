@@ -1,6 +1,6 @@
 # from django.core.management.base import NoArgsCommand
 from django.core.management.base import BaseCommand, BaseCommand
-from app.core import parseJobs
+# from app.core import parseJobs
 
 
 class Command(BaseCommand):
@@ -8,4 +8,5 @@ class Command(BaseCommand):
 
     # def handle_noargs(self, **options):
     def handle(self, *args, **options):
-        parseJobs.parseJobs()
+        pass
+        # parseJobs.parseJobs()
