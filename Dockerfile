@@ -31,7 +31,7 @@ COPY . /webapp/
 
 EXPOSE 50
 
-CMD python ./project/manage.py runserver 0.0.0.0:5000
+RUN python ./project/manage.py runserver 0.0.0.0:5000
 # RUN cd project && gunicorn project.wsgi:application --bind 0.0.0.0:5000
 
 # CMD ["./project/deploy/deploy_script.sh"]
