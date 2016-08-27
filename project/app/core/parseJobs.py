@@ -63,7 +63,13 @@ def parseJobs():
         except IndexError:
             salary = None
 
-        job = Job(date=date, name=name[:250], company=company[:250], salary=salary[:250], exp=exp[:250], text=text, url=job_url[:250], source="StackOverflow")
+        if salary:
+            salary = salary[:250]
+
+        if exp:
+            exp = exp[:250]
+
+        job = Job(date=date, name=name[:250], company=company[:250], salary=salary, exp=exp, text=text, url=job_url[:250], source="StackOverflow")
         job.save()
 
         skills = node.getElementsByTagName("category")
