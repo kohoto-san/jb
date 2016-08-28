@@ -35,8 +35,9 @@ class Job extends React.Component{
             'is_liked': this.state.isLiked
         });
 
+            // <div className="grid__item col s4" style={this.props.style}>
         return (
-        	<div className="grid__item col s4" style={this.props.style}>
+            <div className="grid__item" style={this.props.style}>
 
                 {/*
                 <Link to={{ pathname: `/job/${job.slug}` }} className="card hoverable z-depth-1">
@@ -67,7 +68,7 @@ class Job extends React.Component{
 
                 </Link> {/* .card*/}
 
-        		<div className="job-actions">
+        		<div className="job-actions hide-on-med-and-down">
                     {/* <a href="#" className="like"> */}
                     <a href="#" className={likeClasses} onClick={(e) => {
                             e.preventDefault();
@@ -116,12 +117,12 @@ class PinterestGrid extends React.Component {
         super(props);
         this.state = {
             styles: [],
-            isRendered: false
+            isRendered: false,
+            height: 0
         };
     }
 
     componentDidMount() {
-        this.isLoading = true;
         if (this.props.children.length) {
             this.layout();
         }
@@ -148,11 +149,13 @@ class PinterestGrid extends React.Component {
      * and the opacity signifying readiness
      * @returns {object} style key/value map
      */
+    /*
     getStyle() {
         return extend({
             opacity: this.state.styles.length ? 1 : 0
         }, this.props.style);
     }
+    */
 
     /**
      * Find which column is the shortest
@@ -172,6 +175,7 @@ class PinterestGrid extends React.Component {
      * @returns {number} the number of columns to use
      */
     getColumnCount() {
+        /*
         if (this.props.columns) {
             return this.props.columns;
         } else {
@@ -182,6 +186,17 @@ class PinterestGrid extends React.Component {
             const childWidth = childNode.offsetWidth;
             return Math.floor(rootWidth / (childWidth + this.props.gutter));
         }
+        */
+
+        if(window.innerWidth > 1200){
+            return 3;
+        }
+        else if(window.innerWidth > 800){
+            return 2;
+        }
+        else{
+            return 1;
+        }
     }
 
     /**
@@ -191,8 +206,12 @@ class PinterestGrid extends React.Component {
      */
     layout() {
 
-        if( ! this.state.isRendered){
+        // if( ! this.state.isRendered){
+            console.log('layout')
+
             this.waitForChildren().then(() => {
+
+                console.log('then')
                 const columnCount = this.getColumnCount();
                 if(columnCount){
 
@@ -214,10 +233,12 @@ class PinterestGrid extends React.Component {
                             left: `${left}px`
                         };
                     });
+
+                    this.props.setHeight(columnHeights[columnHeights.length-1]);
                     this.setState({ styles: styles, isRendered: true });
                 }
             });
-        }
+        // }
     }
 
     /**
@@ -248,6 +269,7 @@ class PinterestGrid extends React.Component {
      * @returns {array} a list of ready-to-render child nodes
      */
     getUpdatedChildren() {
+
         return React.Children.map(this.props.children, (child, i) => {
 
             const style = child.props.style || {};
@@ -258,7 +280,7 @@ class PinterestGrid extends React.Component {
                 // ref: `child-${i}`,
             });
 
-            this.isLoading = false;
+            // this.isLoading = false;
             return newChild;
         });
     }
@@ -271,29 +293,6 @@ class PinterestGrid extends React.Component {
         
         let content;
         content = this.getUpdatedChildren();
-
-        /*
-        if(this.isLoading){
-
-            content = (
-                <div className="preloader-wrapper big active">
-                    <div className="spinner-layer spinner-blue-only">
-                        <div className="circle-clipper left">
-                            <div className="circle"></div>
-                        </div><div className="gap-patch">
-                            <div className="circle"></div>
-                        </div><div className="circle-clipper right">
-                            <div className="circle"></div>
-                        </div>
-                    </div>
-                </div>
-            )
-
-        }
-        else{
-        }
-        */
-
         return (
             <div id="grid" className="autogrid job_list grid row">
                 { content }
@@ -320,42 +319,58 @@ class JobList extends React.Component{
 
     constructor(props) {
         super(props);
+
+        this.setHeight = this.setHeight.bind(this);
+        this.load = this.load.bind(this);
+
         this.state = {
             jobs: [],
-            isLoaded: false
+            isLoaded: false,
+            nextUrl: '/jobs/',
+            height: '0px'
         };
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         return(
             this.state.jobs !== nextState.jobs ||
+            this.state.height !== nextState.height ||
             !this.state.isLoaded
         );
-
-        // return !this.state.isLoaded;
     }
 
 	componentDidMount() {
         // this.props.getJobs();
-
-        $.ajax({
-            url: '/jobs/',
-            dataType: 'json',
-            cache: false,
-            success: function(jobs) {
-                this.setState({jobs: jobs});
-                this.setState({isLoaded: true});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        this.load();
 	}
+
+    setHeight(top){
+        this.setState({height: top});
+    }
+
+    load(){
+        if(this.state.nextUrl){
+            $.ajax({
+                url: `${this.state.nextUrl}`,
+                dataType: 'json',
+                // cache: false,   //added ?_={timestamp}
+                success: function(jobs) {
+                    this.setState({nextUrl: jobs.next});
+                    this.setState({jobs: this.state.jobs.concat(jobs.results)});
+                    this.setState({isLoaded: true});
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
+    }
+
+
 
 	items (){
         // return this.props.jobs.map((job, i) =>{
         return this.state.jobs.map((job, i) =>{
-
             const isLiked = this.props.likes.has(job.id)
 
 		   	return(<Job
@@ -371,6 +386,13 @@ class JobList extends React.Component{
 	}
 
 	render() {
+
+        let loadClasses = ClassNames('btn-moreJobs waves-effect btn',
+        {
+            'disabled': this.state.nextUrl ? false : true
+            // 'disabled': this.props.isLiked
+        });
+
         if(this.state.isLoaded){
     		return (
     			<div className="container">
@@ -381,12 +403,22 @@ class JobList extends React.Component{
                     </div>
                     */}
 
-                    <PinterestGrid gutter={20}>
+                    <PinterestGrid gutter={20} setHeight={this.setHeight}>
                         { this.items() }
                     </PinterestGrid>
+
+                    {/*
+                    <a href='#' className={loadClasses} style={{top: this.state.height}} onClick={(e) => {
+                        e.preventDefault();
+                        this.load();
+                    }}>
+                        More
+                    </a>
+                    */}
+
     			</div>				
     		);
-        }
+        } // if isLoaded END
         else{
             return(
                 <div style={{textAlign: 'center'}}>
@@ -404,7 +436,7 @@ class JobList extends React.Component{
                 </div>
             );
         }
-	}
+	} // render END
 }
 // )
 

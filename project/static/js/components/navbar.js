@@ -83,7 +83,7 @@ class Navbar extends React.Component{
                     <nav className="white black-text" style={{textColor: '#000'}}>
                         <div className="nav-wrapper" className="black-text">
                             <Link to='/' className="brand-logo">Sagfi</Link>
-                            <ul className="right">
+                            <ul className="right hide-on-med-and-down">
                                 
                                 <li>
                                     <Link to="/my-jobs" className="my-jobs">
@@ -109,6 +109,10 @@ class Navbar extends React.Component{
                             </ul>
                         </div>
                     </nav>
+
+                    <div className="notification-for-mob hide-on-large-only">
+                            Mobile and tablet version has no the full functionality
+                    </div>
 
 
                 </div>

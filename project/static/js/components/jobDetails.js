@@ -98,7 +98,7 @@ class JobDetails extends React.Component{
 	
 	render() {
 
-		let likeClasses = ClassNames('btn-like waves-effect btn',
+		let likeClasses = ClassNames('hide-on-med-and-down btn-like waves-effect btn',
 		{
             'disabled': this.props.isLiked
         });
@@ -108,7 +108,7 @@ class JobDetails extends React.Component{
 			<div className="container">
 				<div id="grid" className="full-job grid row">
 
-					<div className="col s12 l10 offset-l1" style={{width: '700px'}}>
+					<div className="col s12 l10 offset-l1">
 						<div className="card">
 							<div className="card-content">
 

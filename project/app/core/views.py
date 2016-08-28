@@ -9,11 +9,10 @@ from rest_framework import status
 
 from .models import MetaJob, Lane, Job, Skill, Keyword
 from .serializers import MetaJobSerializer, JobSerializer, JobListSerializer
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, pagination, status
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 
 from . import parseJobs
 from django.http import HttpResponse
@@ -140,10 +139,14 @@ class MetaJobList(APIView):
 #class MetaJobViewSet(viewsets.ModelViewSet):
 #   queryset = MetaJob.objects.all()
 
+class JobListPagination(pagination.PageNumberPagination):
+    page_size = 50
+
+
 class JobList(generics.ListCreateAPIView):
     queryset = Job.objects.all().order_by('-date')
     serializer_class = JobListSerializer
-    # serializer_class = JobSerializer
+    pagination_class = JobListPagination
 
 
 class JobDetails(generics.RetrieveAPIView):

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cdd1028a4742b084b859"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8673d117922f73adfc0a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39853,7 +39853,7 @@
 	                            ),
 	                            _react3.default.createElement(
 	                                'ul',
-	                                { className: 'right' },
+	                                { className: 'right hide-on-med-and-down' },
 	                                _react3.default.createElement(
 	                                    'li',
 	                                    null,
@@ -39876,6 +39876,11 @@
 	                                )
 	                            )
 	                        )
+	                    ),
+	                    _react3.default.createElement(
+	                        'div',
+	                        { className: 'notification-for-mob hide-on-large-only' },
+	                        'Mobile and tablet version has no the full functionality'
 	                    )
 	                )
 	            );
@@ -41168,9 +41173,10 @@
 	                'is_liked': this.state.isLiked
 	            });
 
+	            // <div className="grid__item col s4" style={this.props.style}>
 	            return _react3.default.createElement(
 	                'div',
-	                { className: 'grid__item col s4', style: this.props.style },
+	                { className: 'grid__item', style: this.props.style },
 	                _react3.default.createElement(
 	                    _reactRouter.Link,
 	                    { to: { pathname: '/job/' + this.props.job.slug }, className: 'card z-depth-1' },
@@ -41226,7 +41232,7 @@
 	                ' ',
 	                _react3.default.createElement(
 	                    'div',
-	                    { className: 'job-actions' },
+	                    { className: 'job-actions hide-on-med-and-down' },
 	                    _react3.default.createElement(
 	                        'a',
 	                        { href: '#', className: likeClasses, onClick: function onClick(e) {
@@ -41290,7 +41296,8 @@
 
 	        _this3.state = {
 	            styles: [],
-	            isRendered: false
+	            isRendered: false,
+	            height: 0
 	        };
 	        return _this3;
 	    }
@@ -41298,7 +41305,6 @@
 	    _createClass(PinterestGrid, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            this.isLoading = true;
 	            if (this.props.children.length) {
 	                this.layout();
 	            }
@@ -41324,14 +41330,13 @@
 	         * and the opacity signifying readiness
 	         * @returns {object} style key/value map
 	         */
-
-	    }, {
-	        key: 'getStyle',
-	        value: function getStyle() {
+	        /*
+	        getStyle() {
 	            return extend({
 	                opacity: this.state.styles.length ? 1 : 0
 	            }, this.props.style);
 	        }
+	        */
 
 	        /**
 	         * Find which column is the shortest
@@ -41357,15 +41362,25 @@
 	    }, {
 	        key: 'getColumnCount',
 	        value: function getColumnCount() {
+	            /*
 	            if (this.props.columns) {
 	                return this.props.columns;
 	            } else {
-	                var rootNode = _reactDom2.default.findDOMNode(this);
-	                var rootWidth = rootNode.offsetWidth || rootNode.parentNode.offsetWidth;
+	                const rootNode = ReactDOM.findDOMNode(this);
+	                const rootWidth = rootNode.offsetWidth || rootNode.parentNode.offsetWidth;
 	                // const childNode = rootNode.children[0].firstChild;
-	                var childNode = rootNode.children[0].firstChild;
-	                var childWidth = childNode.offsetWidth;
+	                const childNode = rootNode.children[0].firstChild;
+	                const childWidth = childNode.offsetWidth;
 	                return Math.floor(rootWidth / (childWidth + this.props.gutter));
+	            }
+	            */
+
+	            if (window.innerWidth > 1200) {
+	                return 3;
+	            } else if (window.innerWidth > 800) {
+	                return 2;
+	            } else {
+	                return 1;
 	            }
 	        }
 
@@ -41380,37 +41395,43 @@
 	        value: function layout() {
 	            var _this4 = this;
 
-	            if (!this.state.isRendered) {
-	                this.waitForChildren().then(function () {
-	                    var columnCount = _this4.getColumnCount();
-	                    if (columnCount) {
-	                        (function () {
+	            // if( ! this.state.isRendered){
+	            console.log('layout');
 
-	                            var gutter = _this4.props.gutter;
-	                            // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
-	                            var nodeWidth = _reactDom2.default.findDOMNode(_this4).children[0].firstChild.offsetWidth;
+	            this.waitForChildren().then(function () {
 
-	                            var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
-	                                return 0;
-	                            });
-	                            var styles = _this4.props.children.map(function (child, i) {
-	                                var node = _reactDom2.default.findDOMNode(_this4).children[i].firstChild;
-	                                var columnIndex = _this4.getShortestColumn(columnHeights);
-	                                var top = columnHeights[columnIndex];
-	                                var left = columnIndex * (nodeWidth + gutter);
-	                                columnHeights[columnIndex] += node.offsetHeight + gutter;
+	                console.log('then');
+	                var columnCount = _this4.getColumnCount();
+	                if (columnCount) {
+	                    (function () {
 
-	                                return {
-	                                    position: 'absolute',
-	                                    top: top + 'px',
-	                                    left: left + 'px'
-	                                };
-	                            });
-	                            _this4.setState({ styles: styles, isRendered: true });
-	                        })();
-	                    }
-	                });
-	            }
+	                        var gutter = _this4.props.gutter;
+	                        // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
+	                        var nodeWidth = _reactDom2.default.findDOMNode(_this4).children[0].firstChild.offsetWidth;
+
+	                        var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
+	                            return 0;
+	                        });
+	                        var styles = _this4.props.children.map(function (child, i) {
+	                            var node = _reactDom2.default.findDOMNode(_this4).children[i].firstChild;
+	                            var columnIndex = _this4.getShortestColumn(columnHeights);
+	                            var top = columnHeights[columnIndex];
+	                            var left = columnIndex * (nodeWidth + gutter);
+	                            columnHeights[columnIndex] += node.offsetHeight + gutter;
+
+	                            return {
+	                                position: 'absolute',
+	                                top: top + 'px',
+	                                left: left + 'px'
+	                            };
+	                        });
+
+	                        _this4.props.setHeight(columnHeights[columnHeights.length - 1]);
+	                        _this4.setState({ styles: styles, isRendered: true });
+	                    })();
+	                }
+	            });
+	            // }
 	        }
 
 	        /**
@@ -41457,7 +41478,7 @@
 	                    style: extend({}, _this6.state.styles[i], child.props.style)
 	                });
 
-	                _this6.isLoading = false;
+	                // this.isLoading = false;
 	                return newChild;
 	            });
 	        }
@@ -41473,27 +41494,6 @@
 
 	            var content = void 0;
 	            content = this.getUpdatedChildren();
-
-	            /*
-	            if(this.isLoading){
-	                 content = (
-	                    <div className="preloader-wrapper big active">
-	                        <div className="spinner-layer spinner-blue-only">
-	                            <div className="circle-clipper left">
-	                                <div className="circle"></div>
-	                            </div><div className="gap-patch">
-	                                <div className="circle"></div>
-	                            </div><div className="circle-clipper right">
-	                                <div className="circle"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                )
-	             }
-	            else{
-	            }
-	            */
-
 	            return _react3.default.createElement(
 	                'div',
 	                { id: 'grid', className: 'autogrid job_list grid row' },
@@ -41523,9 +41523,14 @@
 
 	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(JobList).call(this, props));
 
+	        _this7.setHeight = _this7.setHeight.bind(_this7);
+	        _this7.load = _this7.load.bind(_this7);
+
 	        _this7.state = {
 	            jobs: [],
-	            isLoaded: false
+	            isLoaded: false,
+	            nextUrl: '/jobs/',
+	            height: '0px'
 	        };
 	        return _this7;
 	    }
@@ -41533,27 +41538,37 @@
 	    _createClass(JobList, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return this.state.jobs !== nextState.jobs || !this.state.isLoaded;
-
-	            // return !this.state.isLoaded;
+	            return this.state.jobs !== nextState.jobs || this.state.height !== nextState.height || !this.state.isLoaded;
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            // this.props.getJobs();
-
-	            _jquery2.default.ajax({
-	                url: '/jobs/',
-	                dataType: 'json',
-	                cache: false,
-	                success: function (jobs) {
-	                    this.setState({ jobs: jobs });
-	                    this.setState({ isLoaded: true });
-	                }.bind(this),
-	                error: function (xhr, status, err) {
-	                    console.error(this.props.url, status, err.toString());
-	                }.bind(this)
-	            });
+	            this.load();
+	        }
+	    }, {
+	        key: 'setHeight',
+	        value: function setHeight(top) {
+	            this.setState({ height: top });
+	        }
+	    }, {
+	        key: 'load',
+	        value: function load() {
+	            if (this.state.nextUrl) {
+	                _jquery2.default.ajax({
+	                    url: '' + this.state.nextUrl,
+	                    dataType: 'json',
+	                    // cache: false,   //added ?_={timestamp}
+	                    success: function (jobs) {
+	                        this.setState({ nextUrl: jobs.next });
+	                        this.setState({ jobs: this.state.jobs.concat(jobs.results) });
+	                        this.setState({ isLoaded: true });
+	                    }.bind(this),
+	                    error: function (xhr, status, err) {
+	                        console.error(this.props.url, status, err.toString());
+	                    }.bind(this)
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'items',
@@ -41562,7 +41577,6 @@
 
 	            // return this.props.jobs.map((job, i) =>{
 	            return this.state.jobs.map(function (job, i) {
-
 	                var isLiked = _this8.props.likes.has(job.id);
 
 	                return _react3.default.createElement(Job, {
@@ -41585,46 +41599,54 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+
+	            var loadClasses = (0, _classnames2.default)('btn-moreJobs waves-effect btn', {
+	                'disabled': this.state.nextUrl ? false : true
+	                // 'disabled': this.props.isLiked
+	            });
+
 	            if (this.state.isLoaded) {
 	                return _react3.default.createElement(
 	                    'div',
 	                    { className: 'container' },
 	                    _react3.default.createElement(
 	                        PinterestGrid,
-	                        { gutter: 20 },
+	                        { gutter: 20, setHeight: this.setHeight },
 	                        this.items()
 	                    )
 	                );
-	            } else {
-	                return _react3.default.createElement(
-	                    'div',
-	                    { style: { textAlign: 'center' } },
-	                    _react3.default.createElement(
+	            } // if isLoaded END
+	            else {
+	                    return _react3.default.createElement(
 	                        'div',
-	                        { className: 'preloader-wrapper big active' },
+	                        { style: { textAlign: 'center' } },
 	                        _react3.default.createElement(
 	                            'div',
-	                            { className: 'spinner-layer spinner-blue-only' },
+	                            { className: 'preloader-wrapper big active' },
 	                            _react3.default.createElement(
 	                                'div',
-	                                { className: 'circle-clipper left' },
-	                                _react3.default.createElement('div', { className: 'circle' })
-	                            ),
-	                            _react3.default.createElement(
-	                                'div',
-	                                { className: 'gap-patch' },
-	                                _react3.default.createElement('div', { className: 'circle' })
-	                            ),
-	                            _react3.default.createElement(
-	                                'div',
-	                                { className: 'circle-clipper right' },
-	                                _react3.default.createElement('div', { className: 'circle' })
+	                                { className: 'spinner-layer spinner-blue-only' },
+	                                _react3.default.createElement(
+	                                    'div',
+	                                    { className: 'circle-clipper left' },
+	                                    _react3.default.createElement('div', { className: 'circle' })
+	                                ),
+	                                _react3.default.createElement(
+	                                    'div',
+	                                    { className: 'gap-patch' },
+	                                    _react3.default.createElement('div', { className: 'circle' })
+	                                ),
+	                                _react3.default.createElement(
+	                                    'div',
+	                                    { className: 'circle-clipper right' },
+	                                    _react3.default.createElement('div', { className: 'circle' })
+	                                )
 	                            )
 	                        )
-	                    )
-	                );
-	            }
-	        }
+	                    );
+	                }
+	        } // render END
+
 	    }]);
 
 	    return JobList;
@@ -57707,7 +57729,7 @@
 			value: function render() {
 				var _this3 = this;
 
-				var likeClasses = (0, _classnames2.default)('btn-like waves-effect btn', {
+				var likeClasses = (0, _classnames2.default)('hide-on-med-and-down btn-like waves-effect btn', {
 					'disabled': this.props.isLiked
 				});
 
@@ -57719,7 +57741,7 @@
 						{ id: 'grid', className: 'full-job grid row' },
 						_react3.default.createElement(
 							'div',
-							{ className: 'col s12 l10 offset-l1', style: { width: '700px' } },
+							{ className: 'col s12 l10 offset-l1' },
 							_react3.default.createElement(
 								'div',
 								{ className: 'card' },

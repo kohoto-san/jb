@@ -1,5 +1,12 @@
 bc = lighten(#000, 98%);
 grey-color = #bdbdbd;
+$sagfi-blue = rgba(3,169,244,0.7);
+
+$sagfi-bg-mixin(){
+    color #fff;
+    font-weight 500;
+    background-color $sagfi-blue;
+}
 
 body
     background-color: bc;
@@ -39,7 +46,12 @@ nav .brand-logo
             
         .twitter
             background-color #1da1f2;
-        
+
+.notification-for-mob
+    width 100%;
+    padding 15px;
+    $sagfi-bg-mixin();
+
 .share-btns-wrapper
     font-size 20px;
     a
@@ -112,6 +124,10 @@ nav .brand-logo
 
 
 .full-job
+    
+    > .col
+        max-width 700px !important;
+
     .job-name
         margin: 0 0 10px;
         font-size: 2.5rem;
@@ -148,6 +164,14 @@ nav .brand-logo
         height: 42px;
         line-height: 42px;
 
+
+.btn-moreJobs
+    $sagfi-bg-mixin()
+    display: block;
+    height: 42px;
+    line-height: 42px;
+    margin-bottom 30px;
+
 .job_list
     position relative;
 
@@ -161,7 +185,9 @@ job-actions-right = 10px;
 .grid__item
     // @extend .job;
     
-    width 200px;
+    // width 200px;
+    width: 300px;
+    min-width 300px;
     position relative;
 
     a
@@ -200,8 +226,6 @@ job-actions-right = 10px;
             
             &:hover
                 background-color darken(#fff, 5%);
-            
-        
             
 .grid .lane
     // @extend .job;
@@ -410,9 +434,6 @@ job-actions-right = 10px;
 }
 
 @media screen and (max-width: 25.5em) {
-    .grid {
-        padding: 0 2em;
-    }
     .grid__item {
         font-size: 1em;
     }
