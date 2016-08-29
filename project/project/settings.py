@@ -21,8 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(
     DEBUG=(bool, False),
 )
-# ALLOWED_HOSTS=(list, ['*'])
-# ALLOWED_HOSTS=(list, ['127.0.0.1:8000'])
 
 path_to_env = os.path.abspath(os.path.join(BASE_DIR, '../.env'))
 environ.Env.read_env(path_to_env)
@@ -38,13 +36,8 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = False
 DEBUG = env('DEBUG')
 
-# ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
-# ALLOWED_HOSTS = ['*', '127.0.0.1:8000', 'localhost:8000', 'localhost', '127.0.0.1']
-# ALLOWED_HOSTS = ['*', '.sagfi.com', 'http://sagfi.com', 'sagfi.com']
 ALLOWED_HOSTS = ['.sagfi.com']
-# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
