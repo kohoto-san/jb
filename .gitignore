@@ -4,3 +4,9 @@ node_modules
 runtime.txt
 .buildpacks
 project/db.sqlite3
+*.pyc
+*.hot-update.json
+
+project/app/core/__pycache__/models.cpython-34.pyc
+project/app/core/__pycache__/parseJobs.cpython-34.pyc
+project/app/core/__pycache__/views.cpython-34.pyc
