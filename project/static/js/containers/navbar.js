@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 
 	return{
 		// jobs_count: state.jobs.filter(job => job.stage != 'no').length
-		jobs_count: state.entities.jobs.filter(job => job).length,
+		// jobs_count: state.entities.jobs.filter(job => job).length,
+		jobs_count: state.entities.totalLikes,
 		user: state.user,
 		popupIsShow: state.loginPopup.isShow
 	}

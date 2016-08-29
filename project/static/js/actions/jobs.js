@@ -83,7 +83,7 @@ export function likeJob (jobId) {
 				sourceId: jobId
 			}),
 	        types: [
-	            'REQUEST',
+	            'LIKE_JOB_REQUEST',
 	            {
 	                type: 'LIKE_SUCCESS',
 	                payload: (action, state, res) => {
@@ -281,7 +281,7 @@ const laneSchema = new Schema('lanes', { idAttribute: 'id' }),
 // jobSchema = new Schema('jobs', { idAttribute: 'job_id' });
 
 laneSchema.define({
-	jobs: valuesOf(jobSchema)
+	jobs: valuesOf(jobSchema),
 });
 
 

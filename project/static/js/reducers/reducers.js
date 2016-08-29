@@ -423,7 +423,8 @@ function attachToLane(state, action){
 
     const newState = {
         lanes: newLanes ? newLanes : state.lanes,
-        jobs: newJobs
+        jobs: newJobs,
+        totalLikes: state.totalLikes
     }
 
     return newState;
@@ -484,7 +485,8 @@ function likeJob(state, action){
 
     const newState = {
         lanes: newLanes ? newLanes : state.lanes,
-        jobs: newJobs
+        jobs: newJobs,
+        totalLikes: state.totalLikes
     }
 
     return newState;
@@ -546,7 +548,7 @@ function dislikeJob(state, action){
     return newState;
 }
 
-function entities(state = { lanes: [], jobs: [] }, action) {
+function entities(state = { lanes: [], jobs: [], totalLikes: 0 }, action) {
     if (action.response && action.response.entities) {
         // alert('fuck you')
         return merge({}, state, action.response.entities)
@@ -554,12 +556,28 @@ function entities(state = { lanes: [], jobs: [] }, action) {
 
     switch(action.type){
         case "GET_LANES_SUCCESS":
-            return merge({}, state, action.payload.entities)
 
-         case 'MOVE_SUCCESS':
+            let totalLikes;
+            if(action.payload.entities.jobs){
+                totalLikes = Object.keys(action.payload.entities.jobs).length;
+            }
+            else{
+                totalLikes = 0;
+            }
+
+            let newState = {
+                lanes: action.payload.entities.lanes,
+                jobs: action.payload.entities.jobs,
+                totalLikes: totalLikes
+            }
+            return merge({}, state, newState)
+            // return merge({}, state, action.payload.entities)
+
+        /*
+        case 'MOVE_SUCCESS':
             return move(state, action)
             // return move(state, action.payload)
-            
+        */  
 
 
             // alert(JSON.stringify(state, null, 4));
@@ -578,11 +596,20 @@ function entities(state = { lanes: [], jobs: [] }, action) {
             return attachToLane(state, action)
             // return attachToLane(state, action.payload)
 
+        case 'LIKE_JOB_REQUEST':
+            return {
+                lanes: state.lanes,
+                jobs: state.jobs, 
+                totalLikes: state.totalLikes + 1
+            }
+
         case 'LIKE_SUCCESS':
             return likeJob(state, action.payload)
 
+        /*
         case 'DISLIKE_SUCCESS':
             return dislikeJob(state, action.payload)
+        */
 
         default:
             return state

@@ -24,8 +24,15 @@ class Job extends React.Component{
         return(
             this.props.style !== nextProps.style ||
             this.props.job !== nextProps.job ||
-            this.state.isLiked !== nextState.isLiked
+            this.state.isLiked !== nextState.isLiked ||
+            this.props.isLiked !== nextProps.isLiked
         );
+    }
+
+    componentDidUpdate(){
+        if(this.props.isLiked && !this.state.isLiked){
+            this.setState({isLiked: true})
+        }
     }
 
     render() {
@@ -73,7 +80,7 @@ class Job extends React.Component{
                     <a href="#" className={likeClasses} onClick={(e) => {
                             e.preventDefault();
                             if( localStorage.getItem('sagfi_token') ){
-                                if(this.props.isLiked){
+                                if(this.state.isLiked){
                                     // this.props.onDislike();
                                 }
                                 else{
@@ -206,7 +213,7 @@ class PinterestGrid extends React.Component {
      */
     layout() {
 
-        // if( ! this.state.isRendered){
+        if( ! this.state.isRendered){
             console.log('layout')
 
             this.waitForChildren().then(() => {
@@ -238,7 +245,7 @@ class PinterestGrid extends React.Component {
                     this.setState({ styles: styles, isRendered: true });
                 }
             });
-        // }
+        }
     }
 
     /**
@@ -371,7 +378,7 @@ class JobList extends React.Component{
 	items (){
         // return this.props.jobs.map((job, i) =>{
         return this.state.jobs.map((job, i) =>{
-            const isLiked = this.props.likes.has(job.id)
+            const isLiked = this.props.likes.has(job.id);
 
 		   	return(<Job
 		        key={job.id}

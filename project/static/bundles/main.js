@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8673d117922f73adfc0a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7a51946ef7c02fac4ffb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39641,9 +39641,8 @@
 
 		return {
 			// jobs_count: state.jobs.filter(job => job.stage != 'no').length
-			jobs_count: state.entities.jobs.filter(function (job) {
-				return job;
-			}).length,
+			// jobs_count: state.entities.jobs.filter(job => job).length,
+			jobs_count: state.entities.totalLikes,
 			user: state.user,
 			popupIsShow: state.loginPopup.isShow
 		};
@@ -40367,7 +40366,7 @@
 				laneName: 'Liked',
 				sourceId: jobId
 			}),
-			types: ['REQUEST', {
+			types: ['LIKE_JOB_REQUEST', {
 				type: 'LIKE_SUCCESS',
 				payload: function payload(action, state, res) {
 					return (0, _reduxApiMiddleware.getJSON)(res).then(function (json) {
@@ -41161,7 +41160,14 @@
 	    _createClass(Job, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return this.props.style !== nextProps.style || this.props.job !== nextProps.job || this.state.isLiked !== nextState.isLiked;
+	            return this.props.style !== nextProps.style || this.props.job !== nextProps.job || this.state.isLiked !== nextState.isLiked || this.props.isLiked !== nextProps.isLiked;
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.props.isLiked && !this.state.isLiked) {
+	                this.setState({ isLiked: true });
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -41238,7 +41244,7 @@
 	                        { href: '#', className: likeClasses, onClick: function onClick(e) {
 	                                e.preventDefault();
 	                                if (localStorage.getItem('sagfi_token')) {
-	                                    if (_this2.props.isLiked) {
+	                                    if (_this2.state.isLiked) {
 	                                        // this.props.onDislike();
 	                                    } else {
 	                                        _this2.setState({ isLiked: true });
@@ -41395,43 +41401,43 @@
 	        value: function layout() {
 	            var _this4 = this;
 
-	            // if( ! this.state.isRendered){
-	            console.log('layout');
+	            if (!this.state.isRendered) {
+	                console.log('layout');
 
-	            this.waitForChildren().then(function () {
+	                this.waitForChildren().then(function () {
 
-	                console.log('then');
-	                var columnCount = _this4.getColumnCount();
-	                if (columnCount) {
-	                    (function () {
+	                    console.log('then');
+	                    var columnCount = _this4.getColumnCount();
+	                    if (columnCount) {
+	                        (function () {
 
-	                        var gutter = _this4.props.gutter;
-	                        // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
-	                        var nodeWidth = _reactDom2.default.findDOMNode(_this4).children[0].firstChild.offsetWidth;
+	                            var gutter = _this4.props.gutter;
+	                            // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
+	                            var nodeWidth = _reactDom2.default.findDOMNode(_this4).children[0].firstChild.offsetWidth;
 
-	                        var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
-	                            return 0;
-	                        });
-	                        var styles = _this4.props.children.map(function (child, i) {
-	                            var node = _reactDom2.default.findDOMNode(_this4).children[i].firstChild;
-	                            var columnIndex = _this4.getShortestColumn(columnHeights);
-	                            var top = columnHeights[columnIndex];
-	                            var left = columnIndex * (nodeWidth + gutter);
-	                            columnHeights[columnIndex] += node.offsetHeight + gutter;
+	                            var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
+	                                return 0;
+	                            });
+	                            var styles = _this4.props.children.map(function (child, i) {
+	                                var node = _reactDom2.default.findDOMNode(_this4).children[i].firstChild;
+	                                var columnIndex = _this4.getShortestColumn(columnHeights);
+	                                var top = columnHeights[columnIndex];
+	                                var left = columnIndex * (nodeWidth + gutter);
+	                                columnHeights[columnIndex] += node.offsetHeight + gutter;
 
-	                            return {
-	                                position: 'absolute',
-	                                top: top + 'px',
-	                                left: left + 'px'
-	                            };
-	                        });
+	                                return {
+	                                    position: 'absolute',
+	                                    top: top + 'px',
+	                                    left: left + 'px'
+	                                };
+	                            });
 
-	                        _this4.props.setHeight(columnHeights[columnHeights.length - 1]);
-	                        _this4.setState({ styles: styles, isRendered: true });
-	                    })();
-	                }
-	            });
-	            // }
+	                            _this4.props.setHeight(columnHeights[columnHeights.length - 1]);
+	                            _this4.setState({ styles: styles, isRendered: true });
+	                        })();
+	                    }
+	                });
+	            }
 	        }
 
 	        /**
@@ -58512,7 +58518,8 @@
 
 	    var newState = {
 	        lanes: newLanes ? newLanes : state.lanes,
-	        jobs: newJobs
+	        jobs: newJobs,
+	        totalLikes: state.totalLikes
 	    };
 
 	    return newState;
@@ -58568,7 +58575,8 @@
 
 	    var newState = {
 	        lanes: newLanes ? newLanes : state.lanes,
-	        jobs: newJobs
+	        jobs: newJobs,
+	        totalLikes: state.totalLikes
 	    };
 
 	    return newState;
@@ -58628,7 +58636,7 @@
 	}
 
 	function entities() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { lanes: [], jobs: [] } : arguments[0];
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? { lanes: [], jobs: [], totalLikes: 0 } : arguments[0];
 	    var action = arguments[1];
 
 	    if (action.response && action.response.entities) {
@@ -58638,12 +58646,27 @@
 
 	    switch (action.type) {
 	        case "GET_LANES_SUCCESS":
-	            return (0, _merge2.default)({}, state, action.payload.entities);
 
+	            var totalLikes = void 0;
+	            if (action.payload.entities.jobs) {
+	                totalLikes = Object.keys(action.payload.entities.jobs).length;
+	            } else {
+	                totalLikes = 0;
+	            }
+
+	            var newState = {
+	                lanes: action.payload.entities.lanes,
+	                jobs: action.payload.entities.jobs,
+	                totalLikes: totalLikes
+	            };
+	            return (0, _merge2.default)({}, state, newState);
+	        // return merge({}, state, action.payload.entities)
+
+	        /*
 	        case 'MOVE_SUCCESS':
-	            return move(state, action);
-	        // return move(state, action.payload)
-
+	            return move(state, action)
+	            // return move(state, action.payload)
+	        */
 
 	        // alert(JSON.stringify(state, null, 4));
 	        // console.log('ACTION')
@@ -58661,11 +58684,20 @@
 	            return attachToLane(state, action);
 	        // return attachToLane(state, action.payload)
 
+	        case 'LIKE_JOB_REQUEST':
+	            return {
+	                lanes: state.lanes,
+	                jobs: state.jobs,
+	                totalLikes: state.totalLikes + 1
+	            };
+
 	        case 'LIKE_SUCCESS':
 	            return likeJob(state, action.payload);
 
+	        /*
 	        case 'DISLIKE_SUCCESS':
-	            return dislikeJob(state, action.payload);
+	            return dislikeJob(state, action.payload)
+	        */
 
 	        default:
 	            return state;

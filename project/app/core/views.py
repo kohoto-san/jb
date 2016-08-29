@@ -27,10 +27,9 @@ class MetaJobList(APIView):
 
         data = jobs.values('id', 'job__slug', 'position', 'lane_id', 'lane__name',
                            'job_id', 'job__name', 'job__company', 'job__salary', 'job__exp')
-        result = {'lanes': []}
         lanes = Lane.objects.filter(user=request.user).values('name', 'id')
 
-        result2 = {'lanes': []}
+        result = {'lanes': []}
 
         for lane in lanes:
             meta_lane = {}
@@ -40,8 +39,9 @@ class MetaJobList(APIView):
             for job in data:
                 if(job['lane__name'] == lane['name']):
                     meta_lane['jobs'].append(job)
-            result2['lanes'].append(meta_lane)
+            result['lanes'].append(meta_lane)
 
+        '''
         for key, group in groupby(data, lambda x: x['lane__name']):
             lane = {}
             lane['name'] = key
@@ -50,11 +50,11 @@ class MetaJobList(APIView):
                 # thing.setdefault('id', thing['job_id'])
                 lane.setdefault('jobs', []).append(thing)
             result['lanes'].append(lane)
+        '''
 
-        # print(result2)
         # print(result)
 
-        return Response(result2)
+        return Response(result)
         # return Response(serializer.data)
 
     # attachToLaneServer
