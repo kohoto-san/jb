@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "03ab5c876591bb435b5b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cfd967ce55ca163d0522"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -41588,25 +41588,27 @@
 	            var _this8 = this;
 
 	            // return this.props.jobs.map((job, i) =>{
-	            return this.state.jobs.map(function (job, i) {
-	                var isLiked = _this8.props.likes.has(job.id);
+	            if (this.state.jobs) {
+	                return this.state.jobs.map(function (job, i) {
+	                    var isLiked = _this8.props.likes.has(job.id);
 
-	                return _react3.default.createElement(Job, {
-	                    key: job.id,
-	                    job: job,
-	                    isLiked: isLiked
-	                    // ref={`child-${i}`}
-	                    , onLike: function onLike() {
-	                        return _this8.props.onLike(job.id);
-	                    },
-	                    onDislike: function onDislike() {
-	                        return _this8.props.onDislike(job.id);
-	                    },
-	                    loginPopupShow: function loginPopupShow() {
-	                        return _this8.props.loginPopupShow();
-	                    }
+	                    return _react3.default.createElement(Job, {
+	                        key: job.id,
+	                        job: job,
+	                        isLiked: isLiked
+	                        // ref={`child-${i}`}
+	                        , onLike: function onLike() {
+	                            return _this8.props.onLike(job.id);
+	                        },
+	                        onDislike: function onDislike() {
+	                            return _this8.props.onDislike(job.id);
+	                        },
+	                        loginPopupShow: function loginPopupShow() {
+	                            return _this8.props.loginPopupShow();
+	                        }
+	                    });
 	                });
-	            });
+	            }
 	        }
 	    }, {
 	        key: 'render',

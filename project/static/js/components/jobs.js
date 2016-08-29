@@ -383,19 +383,21 @@ class JobList extends React.Component{
 
 	items (){
         // return this.props.jobs.map((job, i) =>{
-        return this.state.jobs.map((job, i) =>{
-            const isLiked = this.props.likes.has(job.id);
+        if(this.state.jobs){
+            return this.state.jobs.map((job, i) =>{
+                const isLiked = this.props.likes.has(job.id);
 
-		   	return(<Job
-		        key={job.id}
-		        job={job}
-                isLiked={isLiked}
-                // ref={`child-${i}`}
-                onLike={() => this.props.onLike(job.id) }
-		        onDislike={() => this.props.onDislike(job.id)}
-                loginPopupShow={() => this.props.loginPopupShow() }
-		    />)
-	    })
+    		   	return(<Job
+    		        key={job.id}
+    		        job={job}
+                    isLiked={isLiked}
+                    // ref={`child-${i}`}
+                    onLike={() => this.props.onLike(job.id) }
+    		        onDislike={() => this.props.onDislike(job.id)}
+                    loginPopupShow={() => this.props.loginPopupShow() }
+    		    />)
+    	    })
+        }
 	}
 
 	render() {
