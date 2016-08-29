@@ -42,7 +42,8 @@ DEBUG = env('DEBUG')
 # ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 # ALLOWED_HOSTS = ['*', '127.0.0.1:8000', 'localhost:8000', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = ['*', 'http://sagfi.com', 'sagfi.com']
+# ALLOWED_HOSTS = ['*', '.sagfi.com', 'http://sagfi.com', 'sagfi.com']
+ALLOWED_HOSTS = ['.sagfi.com']
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
