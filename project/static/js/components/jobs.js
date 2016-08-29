@@ -42,6 +42,12 @@ class Job extends React.Component{
             'is_liked': this.state.isLiked
         });
 
+        // console.log(this.props.job.skills);
+        let styles;
+        if(this.props.job.skills.length == 0){
+            styles = {paddingBottom: '60px'};
+        }
+
             // <div className="grid__item col s4" style={this.props.style}>
         return (
             <div className="grid__item" style={this.props.style}>
@@ -50,7 +56,7 @@ class Job extends React.Component{
                 <Link to={{ pathname: `/job/${job.slug}` }} className="card hoverable z-depth-1">
                 */}
 
-        		<Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card z-depth-1">
+        		<Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card z-depth-1" style={styles}>
         			
                     <div className="card-body">
             			<p className="job-name center-align">{this.props.job.name}</p>

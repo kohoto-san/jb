@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7a51946ef7c02fac4ffb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "03ab5c876591bb435b5b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -41179,13 +41179,19 @@
 	                'is_liked': this.state.isLiked
 	            });
 
+	            // console.log(this.props.job.skills);
+	            var styles = void 0;
+	            if (this.props.job.skills.length == 0) {
+	                styles = { paddingBottom: '60px' };
+	            }
+
 	            // <div className="grid__item col s4" style={this.props.style}>
 	            return _react3.default.createElement(
 	                'div',
 	                { className: 'grid__item', style: this.props.style },
 	                _react3.default.createElement(
 	                    _reactRouter.Link,
-	                    { to: { pathname: '/job/' + this.props.job.slug }, className: 'card z-depth-1' },
+	                    { to: { pathname: '/job/' + this.props.job.slug }, className: 'card z-depth-1', style: styles },
 	                    _react3.default.createElement(
 	                        'div',
 	                        { className: 'card-body' },
