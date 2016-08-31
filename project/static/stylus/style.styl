@@ -19,6 +19,44 @@ nav .brand-logo
     @media (min-width: 993px)
         padding-left: 20px;
 
+#productcat
+    
+    position: absolute;
+    right: 30px;
+    top: 40px;
+    z-index: -1;
+    transform: rotateZ(140deg);
+    transition top 0.2s ease-out 0.1s;
+    
+    &:hover {
+        animation: shake 1.2s cubic-bezier(.36,.07,.19,.97) both;
+        // transform: translate3d(0, 0, 0);
+        transform: rotateZ(140deg);
+        top: 60px;
+        // backface-visibility: hidden;
+        // perspective: 1000px;
+    }
+    
+    vendors = official
+
+    @keyframes shake {
+        10%, 90% {
+            transform: rotateZ(100deg);
+        }
+
+        20%, 80% {
+            transform: rotateZ(140deg);
+        }
+
+        30%, 50%, 70% {
+            transform: rotateZ(100deg);
+        }
+
+        40%, 60% {
+            transform: rotateZ(140deg);
+        }
+    }
+
 
 .login-popup
     display block;
@@ -223,13 +261,13 @@ job-actions-right = 10px;
             color #000;
 
             ../ .is_liked i
-                    background-color darken(#fff, 5%);
+                    background-color darken(#fff, 15%);
         
             &:first-child
                 margin-right 10px;
             
             &:hover
-                background-color darken(#fff, 5%);
+                background-color darken(#fff, 15%);
             
 .grid .lane
     // @extend .job;

@@ -143,7 +143,7 @@ class MetaJobList(APIView):
 #   queryset = MetaJob.objects.all()
 
 class JobListPagination(pagination.PageNumberPagination):
-    page_size = 50
+    page_size = 100
 
 
 class JobList(generics.ListCreateAPIView):

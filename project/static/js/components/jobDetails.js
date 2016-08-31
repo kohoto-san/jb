@@ -99,9 +99,14 @@ class JobDetails extends React.Component{
 	
 	render() {
 
+		let title = 'Sagfi';
+
+		if(this.state.job.name){
+			title = `Sagfi — ${this.state.job.name} at ${this.state.job.company}`;
+		}
 
 		const meta = {
-			title: `Sagfi — ${this.state.job.name} at ${this.state.job.company}`,
+			title: title,
 			description: 'A smart aggregator of remote jobs with AI',
 			canonical: window.location.href,
 

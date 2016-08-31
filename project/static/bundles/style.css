@@ -12,6 +12,33 @@ nav .brand-logo {
     padding-left: 20px;
   }
 }
+#productcat {
+  position: absolute;
+  right: 30px;
+  top: 40px;
+  z-index: -1;
+  transform: rotateZ(140deg);
+  transition: top 0.2s ease-out 0.1s;
+}
+#productcat:hover {
+  animation: shake 1.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: rotateZ(140deg);
+  top: 60px;
+}
+@keyframes shake {
+  10%, 90% {
+    transform: rotateZ(100deg);
+  }
+  20%, 80% {
+    transform: rotateZ(140deg);
+  }
+  30%, 50%, 70% {
+    transform: rotateZ(100deg);
+  }
+  40%, 60% {
+    transform: rotateZ(140deg);
+  }
+}
 .login-popup {
   display: block;
   position: fixed;
@@ -203,13 +230,13 @@ nav .brand-logo {
   color: #000;
 }
 .grid__item .job-actions .is_liked i {
-  background-color: #f2f2f2;
+  background-color: #d9d9d9;
 }
 .grid__item .job-actions i:first-child {
   margin-right: 10px;
 }
 .grid__item .job-actions i:hover {
-  background-color: #f2f2f2;
+  background-color: #d9d9d9;
 }
 .grid .lane {
   width: 20%;

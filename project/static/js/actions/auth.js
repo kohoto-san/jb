@@ -1,7 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { CALL_API, getJSON } from 'redux-api-middleware';
+import { browserHistory } from 'react-router'
 
-import { getLanes } from './index.js' 
+import { getLanes, loginPopupClose } from './index.js' 
 
 import * as types from '../constants/ActionTypes';
 
@@ -260,8 +261,12 @@ export function auth () {
         authenticate({provider, url})
             .then(function (key) {
                 localStorage.setItem('sagfi_token', key);
+                
+                // browserHistory.push('/');
+
                 dispatch(getUser());
                 dispatch(getLanes());
+                // dispatch(loginPopupClose());
 
                 // dispatch(oAuthSignInComplete(key));
             });

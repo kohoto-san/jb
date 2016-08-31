@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2c6d7ba31a2877303a7a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4a4edbbb7143e040dc3f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -40611,12 +40611,20 @@
 	            }
 	        }
 	    }, {
+	        key: 'renderCat',
+	        value: function renderCat() {
+	            if (window.location.href.indexOf('ref=producthunt') !== -1) {
+	                return _react3.default.createElement('img', { id: 'productcat', src: '/static/productcat.png' });
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react3.default.createElement(
 	                'div',
 	                null,
 	                this.popup(),
+	                this.renderCat(),
 	                _react3.default.createElement(
 	                    'div',
 	                    { style: { marginBottom: '30px' } },
@@ -40634,6 +40642,15 @@
 	                            _react3.default.createElement(
 	                                'ul',
 	                                { className: 'right hide-on-med-and-down' },
+	                                _react3.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react3.default.createElement(
+	                                        'a',
+	                                        { href: 'mailto:sihaelov@gmail.com' },
+	                                        'Contact'
+	                                    )
+	                                ),
 	                                _react3.default.createElement(
 	                                    'li',
 	                                    null,
@@ -40727,6 +40744,8 @@
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 	var _reduxApiMiddleware = __webpack_require__(260);
+
+	var _reactRouter = __webpack_require__(192);
 
 	var _index = __webpack_require__(506);
 
@@ -40997,8 +41016,12 @@
 
 	        authenticate({ provider: provider, url: url }).then(function (key) {
 	            localStorage.setItem('sagfi_token', key);
+
+	            // browserHistory.push('/');
+
 	            dispatch(getUser());
 	            dispatch((0, _index.getLanes)());
+	            // dispatch(loginPopupClose());
 
 	            // dispatch(oAuthSignInComplete(key));
 	        });
@@ -41961,7 +41984,7 @@
 	                { className: 'grid__item', style: this.props.style },
 	                _react3.default.createElement(
 	                    _reactRouter.Link,
-	                    { to: { pathname: '/job/' + this.props.job.slug }, className: 'card z-depth-1', style: styles },
+	                    { to: { pathname: '/job/' + this.props.job.slug }, className: 'card z-depth-1 hoverable', style: styles },
 	                    _react3.default.createElement(
 	                        'div',
 	                        { className: 'card-body' },
@@ -58565,8 +58588,14 @@
 			value: function render() {
 				var _this3 = this;
 
+				var title = 'Sagfi';
+
+				if (this.state.job.name) {
+					title = 'Sagfi — ' + this.state.job.name + ' at ' + this.state.job.company;
+				}
+
 				var meta = {
-					title: 'Sagfi — ' + this.state.job.name + ' at ' + this.state.job.company,
+					title: title,
 					description: 'A smart aggregator of remote jobs with AI',
 					canonical: window.location.href,
 

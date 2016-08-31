@@ -58,7 +58,7 @@ class Job extends React.Component{
                 <Link to={{ pathname: `/job/${job.slug}` }} className="card hoverable z-depth-1">
                 */}
 
-        		<Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card z-depth-1" style={styles}>
+        		<Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card z-depth-1 hoverable" style={styles}>
         			
                     <div className="card-body">
             			<p className="job-name center-align">{this.props.job.name}</p>
@@ -425,7 +425,7 @@ class JobList extends React.Component{
 
         if(this.state.isLoaded){
     		return (
-    			<div className="container">
+    			<div className="container">                    
 
                     {/*
                     <div id="grid" className="job_list grid row">

@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 class Navbar extends React.Component{
 
     isEmpty(obj) {
-      return Object.keys(obj).length === 0;
+        return Object.keys(obj).length === 0;
     }
 
     _auth(e){
@@ -54,14 +54,21 @@ class Navbar extends React.Component{
         }
     }
 
+    renderCat(){
+        if(window.location.href.indexOf('ref=producthunt') !== -1){
+            return <img id="productcat" src="/static/productcat.png" />
+        }
+    }
+
     render() {
         return (
             <div>
 
                 {this.popup()}
 
-
+                {this.renderCat()}
                 <div style={{marginBottom: '30px'}}>
+
 
                 {/*
                     <Link to="/my-jobs" className="my-jobs">
@@ -86,6 +93,12 @@ class Navbar extends React.Component{
                             <ul className="right hide-on-med-and-down">
                                 
                                 <li>
+                                    <a href="mailto:sihaelov@gmail.com">
+                                        Contact
+                                    </a>
+                                </li>
+
+                                <li>
                                     <Link to="/my-jobs" className="my-jobs">
                                             My Jobs
                                             <span id="jobs-counter"> {this.props.jobs_count}</span>        
@@ -94,17 +107,9 @@ class Navbar extends React.Component{
 
                                 <li>
                                     {this.login()}
-
-                                    {/*
-                                        {this.props.user.map(function(wtf) {
-                                                return(wtf);
-                                            }
-                                        )}
-                                    */}
-
+                                </li>
                                     
                                        
-                                </li>
 
                             </ul>
                         </div>
