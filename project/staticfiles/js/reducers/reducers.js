@@ -348,16 +348,7 @@ function attachToLane(state, action){
     // }
     
     // const sourceLane = lanes.filter(lane => lane && lane.id == action.sourceLaneId)[0]
-
-    // console.log(action)
     // console.log(  lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.jobId))  )
-    // console.log(sourceLane)
-    // console.log(state)
-
-    // console.log(action.jobId)
-    // console.log(lanes)
-    // console.log(targetLane)
-    // console.log(sourceLane)
 
     const sourceNoteIndex = sourceLane.jobs.indexOf(action.jobId)
     const targetNoteIndex = targetLane.jobs.indexOf(action.targetId)
@@ -496,41 +487,28 @@ function likeJob(state, action){
 function dislikeJob(state, action){
     const lanes = state.lanes
 
-    const targetLane = lanes.filter(lane => lane.id == action.laneId)[0]
-    const targetNoteIndex = targetLane.jobs.indexOf(action.targetId)
-    const sourceJob = state.jobs.filter(job => job.id == action.sourceId)[0]
+    console.log(action)
+    const sourceLane = lanes.filter(lane => lane && lane.jobs && lane.jobs.includes(action.jobId))[0]
+    const sourceJobNoteIndex = sourceLane.jobs.indexOf(action.jobId)
+    const sourceJob = state.jobs.filter(job => { if(job) return job.id == action.jobId })[0]
 
     let newLane
     const targetPosition = 0
 
-    let newJobs = update(this.state.jobs, {
-                $splice: [
-                    [targetNoteIndex, 1]
-                ]
-            });
-    
-    /*
-    let newJobs = state.jobs.map(job => {
+    let newJobs = update(state.jobs, {
+        $splice: [
+            [sourceJobNoteIndex, 1]
+        ]
+    });
 
-        if(job.id == action.sourceId){
-            return update(job, {
-                position: {$set: targetPosition}
-            })
-        }
-        else{
-            return job
-        }
-    })
-    */
-
-    let newLanes
-
+    let newLanes;
     newLanes = state.lanes.map(lane => {
-        if( targetLane.id === lane.id && lane.jobs){
+
+        if( lane && sourceLane.id === lane.id && lane.jobs){
             return update(lane, {
                 jobs: {
                     $splice: [
-                        [targetNoteIndex, 1]
+                        [sourceJobNoteIndex, 1]
                     ]
                 }
             });
@@ -538,15 +516,16 @@ function dislikeJob(state, action){
         else{
             return lane;
         }
-    });
+    })
 
     const newState = {
-        lanes: newLanes ? newLanes : state.lanes,
-        jobs: newJobs
+        lanes: newLanes,
+        jobs: newJobs,
+        totalLikes: state.totalLikes
     }
 
     return newState;
-}
+} // dislikeJob()
 
 function entities(state = { lanes: [], jobs: [], totalLikes: 0 }, action) {
     if (action.response && action.response.entities) {
@@ -603,8 +582,18 @@ function entities(state = { lanes: [], jobs: [], totalLikes: 0 }, action) {
                 totalLikes: state.totalLikes + 1
             }
 
+        case 'DISLIKE_JOB_REQUEST':
+            return {
+                lanes: state.lanes,
+                jobs: state.jobs, 
+                totalLikes: state.totalLikes - 1
+            }
+
         case 'LIKE_SUCCESS':
             return likeJob(state, action.payload)
+
+        case 'DISLIKE_JOB_SUCCESS':
+            return dislikeJob(state, action.payload)
 
         /*
         case 'DISLIKE_SUCCESS':

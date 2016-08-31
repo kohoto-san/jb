@@ -241,6 +241,17 @@ nav .brand-logo {
   margin: 0;
   display: block;
 }
+.grid .lane .job .card .job-remove {
+  float: right;
+  color: #666;
+  margin-right: 2px;
+}
+.grid .lane .job .card .job-remove:hover {
+  color: #000;
+}
+.grid .lane .job .card .job-remove i {
+  font-size: 25px;
+}
 .grid .lane .job .card .job-name {
   font-size: 17px;
   margin-top: 0;

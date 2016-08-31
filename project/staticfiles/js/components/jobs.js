@@ -29,11 +29,13 @@ class Job extends React.Component{
         );
     }
 
+    /*
     componentDidUpdate(){
         if(this.props.isLiked && !this.state.isLiked){
             this.setState({isLiked: true})
         }
     }
+    */
 
     render() {
 
@@ -87,7 +89,8 @@ class Job extends React.Component{
                             e.preventDefault();
                             if( localStorage.getItem('sagfi_token') ){
                                 if(this.state.isLiked){
-                                    // this.props.onDislike();
+                                    this.setState({ isLiked: false });
+                                    this.props.onDislike();
                                 }
                                 else{
                                     this.setState({ isLiked: true });
@@ -385,7 +388,19 @@ class JobList extends React.Component{
         // return this.props.jobs.map((job, i) =>{
         if(this.state.jobs){
             return this.state.jobs.map((job, i) =>{
-                const isLiked = this.props.likes.has(job.id);
+                // const isLiked = this.props.likes.has(job.id);
+
+                let metajobs_arr = this.props.likes.filter(likedJob => { if(likedJob) return likedJob.job_id == job.id });
+                let isLiked;
+                let metajobId;
+
+                if(metajobs_arr.length != 0){
+                    isLiked = true;
+                    metajobId = metajobs_arr[0].id;
+                }
+                else{
+                    isLiked = false;
+                }
 
     		   	return(<Job
     		        key={job.id}
@@ -393,7 +408,7 @@ class JobList extends React.Component{
                     isLiked={isLiked}
                     // ref={`child-${i}`}
                     onLike={() => this.props.onLike(job.id) }
-    		        onDislike={() => this.props.onDislike(job.id)}
+    		        onDislike={() => this.props.onDislike(metajobId)}
                     loginPopupShow={() => this.props.loginPopupShow() }
     		    />)
     	    })

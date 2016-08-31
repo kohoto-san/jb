@@ -112,19 +112,24 @@ export function likeJob (jobId) {
 
 export function dislikeJob (jobId){
 
-
 	return {
 	    [CALL_API]: {
 	        endpoint: '/api/get-lanes/',
 	        method: 'DELETE',
 	        body: JSON.stringify({
-				id: jobId
+				metaJobId: jobId
 			}),
 	        types: [
-	            'REQUEST',
+		       	'DISLIKE_JOB_REQUEST',
 	            {
-	                type: 'DISLIKE_SUCCESS',
-	                jobId: jobId
+	            	type: 'DISLIKE_JOB_SUCCESS',
+	                payload: (action, state) => ({ jobId: jobId})
+
+	            },
+	            /*
+	            {
+	                type: 'DISLIKE_JOB_SUCCESS',
+	                // jobId: jobId
 	                
 	                /*
 	                payload: (action, state, res) => {
@@ -136,8 +141,8 @@ export function dislikeJob (jobId){
 							}
 	                	});
 	                }
-	                */
 	            },
+	            */
 	            'FAILURE'
 	        ]
 	    }
@@ -317,26 +322,6 @@ export function getLanes() {
 	                	})
                     
                     return normal;
-                	
-
-                	// console.log('normal start')
-                	// console.log(normal)
-                	// console.log('normal end')
-                	// console.log( delete_null_properties(normal) )
-	        		// result = delete_null_properties(normal);
-                    // console.log('///////result')
-                    // console.log(result)
-                    // console.log('^^^^result')
-
-
-                    normal.then((sasi) => { console.log(sasi) });
-
-
-                	console.log('fuck start')
-                    let wtffff = normal.filter(n => { return n != undefined && n != null } );
-                	console.log('fuck after')
-                	console.log(wtffff)
-                	console.log('fuck rnd')
                 }
             },
             'GET_LANES_FAILURE'

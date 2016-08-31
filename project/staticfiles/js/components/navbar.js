@@ -111,7 +111,7 @@ class Navbar extends React.Component{
                     </nav>
 
                     <div className="notification-for-mob hide-on-large-only">
-                            Mobile and tablet version has no the full functionality
+                            The mobile and tablet version has limited functionality
                     </div>
 
 

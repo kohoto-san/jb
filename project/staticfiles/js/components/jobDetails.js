@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import ClassNames from 'classnames'
+import DocumentMeta from 'react-document-meta'
 
 import $ from 'jquery'
 
@@ -98,103 +99,133 @@ class JobDetails extends React.Component{
 	
 	render() {
 
+
+		const meta = {
+			title: `Sagfi — ${this.state.job.name} at ${this.state.job.company}`,
+			description: 'A smart aggregator of remote jobs with AI',
+			canonical: window.location.href,
+
+			meta: {
+		        property: {
+		        	'og:type': 'article',
+		        	"og:title": `${this.state.job.name} is hiring a ${this.state.job.company}`,
+		        	"og:description": `A smart aggregator of remote jobs with AI`,
+		        	"og:site_name": "Sagfi.com",
+
+		        	"twitter:card": "summary",
+		        	"twitter:title": `${this.state.job.name} is hiring a ${this.state.job.company}`,
+		        	"twitter:description": `A smart aggregator of remote jobs with AI`,
+		        }
+
+
+			    // <meta property= content="http://startupden.ru/media/{{post.image}}" />
+			    // <meta property= content="http://startupden.ru/media/{{post.image}}" />
+		    },
+
+		    extend: true
+	    };
+
+
 		let likeClasses = ClassNames('hide-on-med-and-down btn-like waves-effect btn',
 		{
             'disabled': this.props.isLiked
         });
 
 		return (
+			<DocumentMeta {...meta} extend >
 
-			<div className="container">
-				<div id="grid" className="full-job grid row">
+				<div className="container">
+					<div id="grid" className="full-job grid row">
 
-					<div className="col s12 l10 offset-l1">
-						<div className="card">
-							<div className="card-content">
+						<div className="col s12 l10 offset-l1">
+							<div className="card">
+								<div className="card-content">
 
-								<h1 className="job-name center-align">{this.state.job.name}</h1>
-								<span className="job-company card-title center-align">{this.state.job.company}</span>
-								
-								<div className="job-details">
-				    	    		<p className="left-align">{this.state.job.salary}</p>
-				    	    		<p className="right-align">{this.state.job.exp}</p>
-				    	    	</div>
+									<h1 className="job-name center-align">{this.state.job.name}</h1>
+									<span className="job-company card-title center-align">{this.state.job.company}</span>
+									
+									<div className="job-details">
+					    	    		<p className="left-align">{this.state.job.salary}</p>
+					    	    		<p className="right-align">{this.state.job.exp}</p>
+					    	    	</div>
 
-								<div className="job-text" dangerouslySetInnerHTML={ this.renderText() }></div>
+									<div className="job-text" dangerouslySetInnerHTML={ this.renderText() }></div>
 
-							</div>
-						</div>
-
-						<div className="card">
-							<div className="card-content">
-								<div className="job-keywords">
-									{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
-								</div>
-
-
-								<div className="job-skills">
-									{this.state.skills.map(function(skill, index) {
-					                        return(<span key={skill.id}> {skill.name} </span>);
-					                    }
-					                )}
 								</div>
 							</div>
-						</div>
 
-						<div className="card">
-							<div className="card-content share-btns-wrapper">
-								<span>Share</span>
-
-				                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
-				                    <i className="fa fa-twitter" aria-hidden="true"></i>
-				                    {/* Twitter */}
-				                </a>
-				            
-				                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
-				                	<i className="fa fa-facebook" aria-hidden="true"></i>
-				                	{/* Facebook */}
-				                </a>
+							<div className="card">
+								<div className="card-content">
+									<div className="job-keywords">
+										{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
+									</div>
 
 
-								{/*
-								<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
-				                    <i class="fa fa-vk fa-2x"></i>
-				                </a>
-				            
-				                <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
-				                    <i class="fa fa-twitter fa-2x"></i>
-				                </a>
-				            
-				                <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
-				                    <i class="fa fa-facebook fa-2x"></i>
-				                </a>
-				                */}
-
+									<div className="job-skills">
+										{this.state.skills.map(function(skill, index) {
+						                        return(<span key={skill.id}> {skill.name} </span>);
+						                    }
+						                )}
+									</div>
+								</div>
 							</div>
-						</div>
 
-						<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank">Apply</a>
+							<div className="card">
+								<div className="card-content share-btns-wrapper">
+									<span>Share</span>
 
-						<a className={likeClasses} href="#" onClick={(e) => {
-                            e.preventDefault();
-                            if( localStorage.getItem('sagfi_token') ){
-                               
-                                if(this.props.isLiked){
-                                    // this.props.onDislike();
-                                }
-                                else{
-                                    // this.setState({ isLiked: true });
-	                                this.props.onLike(this.state.job.id);
-                                }
-                            }
-                            else{
-                                this.props.loginPopupShow();
-                            } 
-                        }}>Like</a>
-					
-					</div> {/* \col */}
-				</div> {/* \grid */}
-			</div>				
+					                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
+					                    <i className="fa fa-twitter" aria-hidden="true"></i>
+					                    {/* Twitter */}
+					                </a>
+					            
+					                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
+					                	<i className="fa fa-facebook" aria-hidden="true"></i>
+					                	{/* Facebook */}
+					                </a>
+
+
+									{/*
+									<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
+					                    <i class="fa fa-vk fa-2x"></i>
+					                </a>
+					            
+					                <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
+					                    <i class="fa fa-twitter fa-2x"></i>
+					                </a>
+					            
+					                <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+					                    <i class="fa fa-facebook fa-2x"></i>
+					                </a>
+					                */}
+
+								</div>
+							</div>
+
+							<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank">Apply</a>
+
+							<a className={likeClasses} href="#" onClick={(e) => {
+	                            e.preventDefault();
+	                            if( localStorage.getItem('sagfi_token') ){
+	                               
+	                                if(this.props.isLiked){
+	                                    // this.props.onDislike();
+	                                }
+	                                else{
+	                                    // this.setState({ isLiked: true });
+		                                this.props.onLike(this.state.job.id);
+	                                }
+	                            }
+	                            else{
+	                                this.props.loginPopupShow();
+	                            } 
+	                        }}>Like</a>
+						
+						</div> {/* \col */}
+					</div> {/* \grid */}
+				</div>
+			</DocumentMeta>
+
 
 		);
 	}

@@ -104,13 +104,22 @@ class Job extends React.Component{
 			<Link to={{ pathname: `/job/${this.props.job.job__slug}` }} className="card z-depth-1">
 			*/}
 
-				<a href="#" className="card z-depth-1" onClick={(e) => {
-                    e.preventDefault();
-                    this.click();
-                }}>
+				
+                <div className="card z-depth-1">
 					
-					<p className="job-name">{this.props.job.job__name}</p>
+                	<a href="#" className="job-remove right-align" onClick={(e) => {
+	                    e.preventDefault();
+	                    this.props.onDislike(this.props.job.id);
+	                }}>
+				    	<i className="material-icons">&#xE5CD;</i>
+				    </a>
+
+	                <Link to={{ pathname: `/job/${this.props.job.job__slug}` }} className="job-name">
+						{this.props.job.job__name}
+					</Link>
+
 			    	<p className="company-name">{this.props.job.job__company}</p>
+
 
 			    	{/*
 			    	<div className="job-details">
@@ -118,8 +127,7 @@ class Job extends React.Component{
 			    		<p className="right-align">{this.props.job.job__exp}</p>
 			    	</div>
 			    	*/}
-
-				</a>
+			    </div>
 			</div>
 		);
 	}
@@ -228,6 +236,7 @@ class Lane extends React.Component{
 							            // console.log(`source: ${sourceId}, target: ${targetId}`)
 							        // }
 							        onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
+									onDislike={ (jobId) => this.props.onDislike(jobId) }
 								/>
 							)
 					})}
@@ -269,12 +278,19 @@ function selectJobsByIds(allJobs, jobsIds = []) {
 @DragDropContext(HTML5Backend)
 class Pipeline extends React.Component{
 	componentDidMount() {
+        /*
         if( localStorage.getItem('sagfi_token') ){
 	        this.props.getLanes();
 		}
 		else{
 			this.props.loginPopupShow();
 		}
+		*/
+
+        if( !localStorage.getItem('sagfi_token') ){
+			this.props.loginPopupShow();
+        }
+
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -296,6 +312,7 @@ class Pipeline extends React.Component{
 							onMove={ (sourceId, targetId) => this.props.onMove(sourceId, targetId) }
 							attachToLane={ (targetLaneId, sourceLaneId, sourceJobId) => this.props.attachToLane(targetLaneId, sourceLaneId, sourceJobId) }
 							attachToLaneServer={ (targetLaneId, sourceJobId) => this.props.attachToLaneServer(targetLaneId, sourceJobId) }
+							onDislike={ (jobId) => this.props.onDislike(jobId) }
 						/>
 					)
 				}

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Pipeline, Lane} from '../components/pipeline.js'
 
-import { move, attachToLane, attachToLaneServer, getLanes, loginPopupShow } from '../actions'
+import { move, attachToLane, attachToLaneServer, getLanes, loginPopupShow, dislikeJob } from '../actions'
 
 const mapStateToProps = (state) => {
 
@@ -34,6 +34,10 @@ const mapDispatchToProps = (dispatch) => {
 
         loginPopupShow: () => {
             dispatch( loginPopupShow() )
+        },
+
+        onDislike: (jobId) => {
+            dispatch( dislikeJob(jobId) )
         }
     }
 }
