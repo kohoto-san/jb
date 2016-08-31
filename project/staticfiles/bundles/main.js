@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c2a021952a801e2d156c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2c6d7ba31a2877303a7a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -40660,7 +40660,7 @@
 	                    _react3.default.createElement(
 	                        'div',
 	                        { className: 'notification-for-mob hide-on-large-only' },
-	                        'The mobile and tablet version has limited functionality'
+	                        'The mobile and tablet version has the limited functionality'
 	                    )
 	                )
 	            );
