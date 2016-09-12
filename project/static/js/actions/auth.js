@@ -261,6 +261,7 @@ export function auth () {
         authenticate({provider, url})
             .then(function (key) {
                 localStorage.setItem('sagfi_token', key);
+                document.cookie = `sagfi_token=${key}`;
                 
                 // browserHistory.push('/');
 

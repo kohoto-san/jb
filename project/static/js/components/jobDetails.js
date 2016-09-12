@@ -12,7 +12,7 @@ class JobDetails extends React.Component{
         super(props);
 
         this.state = {
-            job: [],
+            job: {},
             keywords: [],
             skills: []
         }
@@ -21,23 +21,30 @@ class JobDetails extends React.Component{
     }
 
 	componentDidMount() {
-		
-		let id = this.props.slug.split('-')[0]
 
-		$.ajax({
-			url: `/api/job/${id}`,
-			dataType: 'json',
-			cache: false,
-			success: function(data) {
-				this.setState({job: data});
-				this.setState({keywords: data.keywords});
-				this.setState({skills: data.skills});
-			}.bind(this),
-			error: function(xhr, status, err) {
-				console.error(status, err.toString());
-			}.bind(this)
-	    });
+        let jobInitdata = window.jobDetails;
+		let jobId = this.props.slug.split('-')[0]
 
+        if(jobInitdata && jobInitdata.id == jobId){
+        	this.setState({job: jobInitdata});
+			this.setState({keywords: jobInitdata.keywords});
+			this.setState({skills: jobInitdata.skills});
+        }
+        else{
+			$.ajax({
+				url: `/api/job/${jobId}`,
+				dataType: 'json',
+				cache: false,
+				success: function(data) {
+					this.setState({job: data});
+					this.setState({keywords: data.keywords});
+					this.setState({skills: data.skills});
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(status, err.toString());
+				}.bind(this)
+		    });
+		} // else END
 	}
 
 
@@ -136,102 +143,104 @@ class JobDetails extends React.Component{
             'disabled': this.props.isLiked
         });
 
+        let jobTextClasses = ClassNames({
+            'job-text': true,
+            'job-text-loaded': Object.keys(this.state.job).length
+        });
+
 		return (
-			<DocumentMeta {...meta} extend >
+			<div className="container">
+				<div id="grid" className="full-job grid row">
 
-				<div className="container">
-					<div id="grid" className="full-job grid row">
+					<div className="col s12 l10 offset-l1">
+						<div className="card">
+							<div className="card-content">
 
-						<div className="col s12 l10 offset-l1">
-							<div className="card">
-								<div className="card-content">
+								<h2 className="job-name center-align">{this.state.job.name}</h2>
+								<h3 className="job-company card-title center-align">{this.state.job.company}</h3>
+								
+								<div className="job-details">
+				    	    		<p className="left-align">{this.state.job.salary}</p>
+				    	    		<p className="right-align">{this.state.job.exp}</p>
+				    	    	</div>
 
-									<h1 className="job-name center-align">{this.state.job.name}</h1>
-									<span className="job-company card-title center-align">{this.state.job.company}</span>
-									
-									<div className="job-details">
-					    	    		<p className="left-align">{this.state.job.salary}</p>
-					    	    		<p className="right-align">{this.state.job.exp}</p>
-					    	    	</div>
+								<div className={jobTextClasses} dangerouslySetInnerHTML={ this.renderText() }></div>
 
-									<div className="job-text" dangerouslySetInnerHTML={ this.renderText() }></div>
+							</div>
+						</div>
 
+						<div className="card">
+							<div className="card-content">
+								<div className="job-keywords">
+									{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
+								</div>
+
+
+								<div className="job-skills">
+									{this.state.skills.map(function(skill, index) {
+					                        return(<span key={skill.id}> {skill.name} </span>);
+					                    }
+					                )}
 								</div>
 							</div>
+						</div>
 
-							<div className="card">
-								<div className="card-content">
-									<div className="job-keywords">
-										{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
-									</div>
+						<div className="card">
+							<div className="card-content share-btns-wrapper">
+								<span>Share</span>
+
+				                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
+				                    <i className="fa fa-twitter" aria-hidden="true"></i>
+				                    {/* Twitter */}
+				                </a>
+				            
+				                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
+				                	<i className="fa fa-facebook" aria-hidden="true"></i>
+				                	{/* Facebook */}
+				                </a>
 
 
-									<div className="job-skills">
-										{this.state.skills.map(function(skill, index) {
-						                        return(<span key={skill.id}> {skill.name} </span>);
-						                    }
-						                )}
-									</div>
-								</div>
+								{/*
+								<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
+				                    <i class="fa fa-vk fa-2x"></i>
+				                </a>
+				            
+				                <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
+				                    <i class="fa fa-twitter fa-2x"></i>
+				                </a>
+				            
+				                <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+				                    <i class="fa fa-facebook fa-2x"></i>
+				                </a>
+				                */}
+
 							</div>
+						</div>
 
-							<div className="card">
-								<div className="card-content share-btns-wrapper">
-									<span>Share</span>
+						<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank" rel="nofollow">
+							Apply
+						</a>
 
-					                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
-					                    <i className="fa fa-twitter" aria-hidden="true"></i>
-					                    {/* Twitter */}
-					                </a>
-					            
-					                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
-					                	<i className="fa fa-facebook" aria-hidden="true"></i>
-					                	{/* Facebook */}
-					                </a>
-
-
-									{/*
-									<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
-					                    <i class="fa fa-vk fa-2x"></i>
-					                </a>
-					            
-					                <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
-					                    <i class="fa fa-twitter fa-2x"></i>
-					                </a>
-					            
-					                <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
-					                    <i class="fa fa-facebook fa-2x"></i>
-					                </a>
-					                */}
-
-								</div>
-							</div>
-
-							<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank">Apply</a>
-
-							<a className={likeClasses} href="#" onClick={(e) => {
-	                            e.preventDefault();
-	                            if( localStorage.getItem('sagfi_token') ){
-	                               
-	                                if(this.props.isLiked){
-	                                    // this.props.onDislike();
-	                                }
-	                                else{
-	                                    // this.setState({ isLiked: true });
-		                                this.props.onLike(this.state.job.id);
-	                                }
-	                            }
-	                            else{
-	                                this.props.loginPopupShow();
-	                            } 
-	                        }}>Like</a>
-						
-						</div> {/* \col */}
-					</div> {/* \grid */}
-				</div>
-			</DocumentMeta>
-
-
+						<a className={likeClasses} href="#" onClick={(e) => {
+                            e.preventDefault();
+                            if( localStorage.getItem('sagfi_token') ){
+                               
+                                if(this.props.isLiked){
+                                    // this.props.onDislike();
+                                }
+                                else{
+                                    // this.setState({ isLiked: true });
+	                                this.props.onLike(this.state.job.id);
+                                }
+                            }
+                            else{
+                                this.props.loginPopupShow();
+                            } 
+                        }}>Like</a>
+					
+					</div> {/* \col */}
+				</div> {/* \grid */}
+			</div>
 		);
 	}
 }

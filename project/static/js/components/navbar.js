@@ -36,9 +36,9 @@ class Navbar extends React.Component{
                 <div className="login-popup">
 
                     <a href="#" className="close" onClick={(e) => {
-                            e.preventDefault();
-                            this.props.loginPopupClose();
-                            // this.props.loginPopup('close');
+                        e.preventDefault();
+                        this.props.loginPopupClose();
+                        // this.props.loginPopup('close');
                     }}>
                         <i className="material-icons">close</i>
                     </a>
@@ -89,7 +89,7 @@ class Navbar extends React.Component{
 
                     <nav className="white black-text" style={{textColor: '#000'}}>
                         <div className="nav-wrapper" className="black-text">
-                            <Link to='/' className="brand-logo">Sagfi</Link>
+                            <h1 className="brand-logo"><Link to='/'>Sagfi</Link></h1>
                             <ul className="right hide-on-med-and-down">
                                 
                                 <li>
@@ -116,7 +116,7 @@ class Navbar extends React.Component{
                     </nav>
 
                     <div className="notification-for-mob hide-on-large-only">
-                            The mobile and tablet version has the limited functionality
+                        The mobile and tablet version has the limited functionality
                     </div>
 
 

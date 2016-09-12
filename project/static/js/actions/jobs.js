@@ -318,7 +318,8 @@ export function getLanes() {
                 payload: (action, state, res) => {
                 	let normal = getJSON(res)
 	                	.then((json) => {
-	                		return( normalize(json, { lanes: arrayOf(laneSchema) }) )
+	                		let normalize_json = normalize(json, { lanes: arrayOf(laneSchema) });
+	                		return(normalize_json);
 	                	})
                     
                     return normal;

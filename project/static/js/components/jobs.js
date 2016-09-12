@@ -61,8 +61,8 @@ class Job extends React.Component{
         		<Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card z-depth-1 hoverable" style={styles}>
         			
                     <div className="card-body">
-            			<p className="job-name center-align">{this.props.job.name}</p>
-            	    	<p className="company-name center-align">{this.props.job.company}</p>
+            			<h2 className="job-name center-align">{this.props.job.name}</h2>
+            	    	<h3 className="company-name center-align">{this.props.job.company}</h3>
 
             	    	<div className="job-details">
             	    		<p className="left-align">{this.props.job.salary}</p>
@@ -101,7 +101,7 @@ class Job extends React.Component{
                                 this.props.loginPopupShow();
                             } 
                         }}>
-                    	<i className="material-icons">&#xE87E;</i>  {/*favorite border*/}
+                    	<i className="material-icons hoverable">&#xE87E;</i>  {/*favorite border*/}
                 	</a> 
             	</div>
         	</div>
@@ -437,15 +437,15 @@ class JobList extends React.Component{
                         { this.items() }
                     </PinterestGrid>
 
-                    {/*
+	                {/*
                     <a href='#' className={loadClasses} style={{top: this.state.height}} onClick={(e) => {
                         e.preventDefault();
                         this.load();
                     }}>
                         More
                     </a>
-                    */}
-
+					*/}
+					
     			</div>				
     		);
         } // if isLoaded END

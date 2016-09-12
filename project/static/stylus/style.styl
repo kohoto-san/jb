@@ -11,13 +11,20 @@ $sagfi-bg-mixin(){
 body
     background-color: bc;
 
-nav ul a,
-nav .brand-logo
-    color #000;
-    color darken(#fff, 50%); //#808080
-    
-    @media (min-width: 993px)
-        padding-left: 20px;
+nav
+    position relative;
+
+    .brand-logo
+        margin 0;
+
+    ul a,
+    .brand-logo a
+        color #000;
+        color darken(#fff, 50%); //#808080
+        line-height 64px;
+        
+        @media (min-width: 993px)
+            padding-left: 20px;
 
 #productcat
     
@@ -176,6 +183,7 @@ nav .brand-logo
 
     .job-company
         display block;
+        margin 0;
     
     .job-details
         p
@@ -187,12 +195,19 @@ nav .brand-logo
         padding-left 0;
 
     .job-text
+        overflow hidden;
+        transition all 3s;
+        max-height 0;
+
         p
             margin 10px 0;
         ul li
             list-style-type disc;
             margin 10px 30px;
     
+    .job-text-loaded
+        max-height 5000px;
+
     .btn-like
         margin-left 20px;
     
@@ -217,7 +232,7 @@ nav .brand-logo
 .job_list
     position relative;
 
-job-actions-right = 10px;
+job-actions-right = 0px;
 
 .autogrid
     .grid__item
@@ -259,16 +274,28 @@ job-actions-right = 10px;
             border-radius 50%;
             border 1px solid #000;
             color #000;
+            transition all 0.3s;
 
             ../ .is_liked i
-                    background-color darken(#fff, 15%);
+                    // background-color darken(#fff, 15%);
+                    // background-color bc;
+
+                    border 0;
+                    color #fff;
+                    background-color lighten($sagfi-blue, 20%);
+                    
+                    
         
             &:first-child
                 margin-right 10px;
             
             &:hover
-                background-color darken(#fff, 15%);
-            
+                // background-color darken(#fff, 15%);
+                border 0;
+                color #fff;
+                background-color lighten($sagfi-blue, 20%);
+                
+
 .grid .lane
     // @extend .job;
     width 20%;

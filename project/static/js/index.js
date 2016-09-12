@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { Router, Route, browserHistory, hashHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { apiMiddleware } from 'redux-api-middleware';
+import { Schema, arrayOf, valuesOf, normalize } from 'normalizr';
 
 // import reducers from './reducers'
 // import * as reducers from './reducers'
@@ -22,6 +23,9 @@ import { init, addJob, addLane, attachToLane, getUser, getLanes } from './action
 
 const token = localStorage.getItem('sagfi_token') || null;
 
+import merge from 'lodash/merge'
+
+
 /*
 
 let parsedData = undefined;
@@ -35,7 +39,27 @@ if( ! token ){
 // Create an enhanced history that syncs navigation events with the store
 import configureStore from './store/configureStore'
 // const store = configureStore(parsedData);
-const store = configureStore(undefined);
+// const store = configureStore(undefined);
+
+const laneSchema = new Schema('lanes', { idAttribute: 'id' }),
+      jobSchema = new Schema('jobs', { idAttribute: 'id' });
+
+laneSchema.define({
+    jobs: valuesOf(jobSchema),
+});
+
+const rawInitData = window.initialState;
+let initData = normalize(rawInitData, { lanes: arrayOf(laneSchema) })
+let entitiesState = { lanes: [], jobs: [], totalLikes: 0 };
+let newEntitiesState = {
+    lanes: initData.entities.lanes,
+    jobs: initData.entities.jobs,
+    totalLikes: rawInitData.totalLikes
+}
+
+let normalInitData = merge({}, entitiesState, newEntitiesState);
+
+const store = configureStore({entities: normalInitData});
 const history = syncHistoryWithStore(browserHistory, store)
 
 /*
@@ -68,7 +92,7 @@ const userAuth = (nextState, replace, callback) => {
 
     if(token){
         store.dispatch( getUser() );
-        store.dispatch( getLanes() );
+        // store.dispatch( getLanes() );
     }
 
     callback();
@@ -78,7 +102,7 @@ const userAuth = (nextState, replace, callback) => {
 ReactDOM.render(
     <Provider store={store}>
         { /* Tell the Router to use our enhanced history */ }
-        <Router history={history}>
+        <Router history={history} onUpdate={() => window.scrollTo(0, 0)} >
 
             <Route path="/" component={App} onEnter={userAuth}>
                 <IndexRoute component={VisibleJobs} />

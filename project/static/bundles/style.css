@@ -1,14 +1,21 @@
 body {
   background-color: #fafafa;
 }
-nav ul a,
+nav {
+  position: relative;
+}
 nav .brand-logo {
+  margin: 0;
+}
+nav ul a,
+nav .brand-logo a {
   color: #000;
   color: #808080;
+  line-height: 64px;
 }
 @media (min-width: 993px) {
   nav ul a,
-  nav .brand-logo {
+  nav .brand-logo a {
     padding-left: 20px;
   }
 }
@@ -155,6 +162,7 @@ nav .brand-logo {
 }
 .full-job .job-company {
   display: block;
+  margin: 0;
 }
 .full-job .job-details p {
   color: rgba(0,0,0,0.87);
@@ -164,12 +172,20 @@ nav .brand-logo {
 .full-job .job-skills {
   padding-left: 0;
 }
+.full-job .job-text {
+  overflow: hidden;
+  transition: all 3s;
+  max-height: 0;
+}
 .full-job .job-text p {
   margin: 10px 0;
 }
 .full-job .job-text ul li {
   list-style-type: disc;
   margin: 10px 30px;
+}
+.full-job .job-text-loaded {
+  max-height: 5000px;
 }
 .full-job .btn-like {
   margin-left: 20px;
@@ -220,7 +236,7 @@ nav .brand-logo {
 .grid__item .job-actions {
   position: absolute;
   bottom: 25px;
-  right: 10px;
+  right: 0px;
 }
 .grid__item .job-actions i {
   vertical-align: middle;
@@ -228,15 +244,20 @@ nav .brand-logo {
   border-radius: 50%;
   border: 1px solid #000;
   color: #000;
+  transition: all 0.3s;
 }
 .grid__item .job-actions .is_liked i {
-  background-color: #d9d9d9;
+  border: 0;
+  color: #fff;
+  background-color: rgba(47,189,252,0.7);
 }
 .grid__item .job-actions i:first-child {
   margin-right: 10px;
 }
 .grid__item .job-actions i:hover {
-  background-color: #d9d9d9;
+  border: 0;
+  color: #fff;
+  background-color: rgba(47,189,252,0.7);
 }
 .grid .lane {
   width: 20%;
