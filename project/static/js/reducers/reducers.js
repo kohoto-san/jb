@@ -5,39 +5,16 @@ import merge from 'lodash/merge'
 import * as types from '../constants/ActionTypes';
 
 
-function data(state=[], action){
-
-    switch(action.type){
-        case 'INIT':
-            // console.log('case type')
-            // console.log(action)
-            return action;
-
-        default:
-            return state
-    }
-
-    /*
-    console.log("ACTION")
-    console.log(action)
-
-    if( action.type == 'INIT' ){
-        return action;
-    }
-    else{
-        return state;
-    }
-    */
-
-}
-
-function loginPopup(state={isShow: false}, action){
+function loginPopup(state={isShow: false, isAuthProcess: false}, action){
     switch(action.type){
         case 'LOGIN_POPUP_SHOW':
-            return { isShow: true }
+            return { isShow: true, isAuthProcess: state.isAuthProcess }
 
         case 'LOGIN_POPUP_CLOSE':
-            return { isShow: false }
+            return { isShow: false, isAuthProcess: state.isAuthProcess }
+
+        case 'AUTH_REQUEST':
+            return { isShow: false, isAuthProcess: true }
 
         default:
             return state
@@ -660,7 +637,7 @@ function allJobs(state=[], action){
 
 
 
-export {entities, allJobs, user, data, loginPopup}
+export {entities, allJobs, user, loginPopup}
 
 
 

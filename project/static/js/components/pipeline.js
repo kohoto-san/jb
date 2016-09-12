@@ -295,7 +295,8 @@ class Pipeline extends React.Component{
 
 	shouldComponentUpdate(nextProps, nextState) {
         return(
-            this.props.entities !== nextProps.entities
+            this.props.entities !== nextProps.entities ||
+            this.props.isAuthProcess !== nextProps.isAuthProcess
         );
     }
 
@@ -328,16 +329,35 @@ class Pipeline extends React.Component{
 	render() {
 		// alert(JSON.stringify(this.props.entities, null, 4));
 
-		return (
-			<div id="grid" className="grid row">
-				{/*
-				<div className="col s10 offset-s1">
-					{this.renderLanes()}
+		if(this.props.isAuthProcess){
+			return(
+				<div style={{textAlign: 'center'}}>
+                    <div className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			);
+		}
+		else{
+			return (
+				<div id="grid" className="grid row">
+					{/*
+					<div className="col s10 offset-s1">
+						{this.renderLanes()}
+					</div>
+					*/}
+						{this.renderLanes()}
 				</div>
-				*/}
-					{this.renderLanes()}
-			</div>
-		);
+			);
+		}
 	}
 }
 

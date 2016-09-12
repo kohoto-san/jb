@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "226b075914a94915eb18"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "58cbdf6499145b7498e3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -40411,6 +40411,7 @@
 
 	exports.oAuthSignInComplete = oAuthSignInComplete;
 	exports.getUser = getUser;
+	exports.authRequest = authRequest;
 	exports.auth = auth;
 
 	var _isomorphicFetch = __webpack_require__(349);
@@ -40666,6 +40667,12 @@
 	    });
 	}
 
+	function authRequest(key) {
+	    return {
+	        type: 'AUTH_REQUEST'
+	    };
+	}
+
 	// export function auth ({provider, params, endpointKey}) {
 	function auth() {
 
@@ -40683,6 +40690,7 @@
 
 	        // let url = getOAuthUrl({provider, params, currentEndpointKey});
 
+	        dispatch(authRequest());
 	        var url = '/auth/token/';
 	        var provider = 'twitter';
 
@@ -40691,11 +40699,10 @@
 	        authenticate({ provider: provider, url: url }).then(function (key) {
 	            localStorage.setItem('sagfi_token', key);
 	            document.cookie = 'sagfi_token=' + key;
+	            window.location.reload();
 
-	            // browserHistory.push('/');
-
-	            dispatch(getUser());
-	            dispatch((0, _index.getLanes)());
+	            // dispatch(getUser());
+	            // dispatch(getLanes());
 	            // dispatch(loginPopupClose());
 
 	            // dispatch(oAuthSignInComplete(key));
@@ -41598,7 +41605,7 @@
 	    _createClass(JobList, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return this.state.jobs !== nextState.jobs || this.state.height !== nextState.height || !this.state.isLoaded;
+	            return this.state.jobs !== nextState.jobs || this.state.height !== nextState.height || !this.state.isLoaded || this.props.isAuthProcess !== nextProps.isAuthProcess;
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -41680,7 +41687,7 @@
 	                // 'disabled': this.props.isLiked
 	            });
 
-	            if (this.state.isLoaded) {
+	            if (this.state.isLoaded && !this.props.isAuthProcess) {
 	                return _react3.default.createElement(
 	                    'div',
 	                    { className: 'container' },
@@ -51923,7 +51930,8 @@
 		var likes = new Set(likes_arr);
 
 		return {
-			likes: likes_arr
+			likes: likes_arr,
+			isAuthProcess: state.loginPopup.isAuthProcess
 			// jobs: state.allJobs,
 			// jobs: ownProps.params.jobs
 		};
@@ -51984,7 +51992,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 
 	    return {
-	        entities: state.entities
+	        entities: state.entities,
+	        isAuthProcess: state.loginPopup.isAuthProcess
 	        // jobs: state.entities.jobs,
 	        // lanes: state.entities.lanes
 	    };
@@ -52419,7 +52428,7 @@
 		}, {
 			key: 'shouldComponentUpdate',
 			value: function shouldComponentUpdate(nextProps, nextState) {
-				return this.props.entities !== nextProps.entities;
+				return this.props.entities !== nextProps.entities || this.props.isAuthProcess !== nextProps.isAuthProcess;
 			}
 		}, {
 			key: 'renderLanes',
@@ -52461,11 +52470,43 @@
 			key: 'render',
 			value: function render() {
 
-				return _react3.default.createElement(
-					'div',
-					{ id: 'grid', className: 'grid row' },
-					this.renderLanes()
-				);
+				if (
+				// alert(JSON.stringify(this.props.entities, null, 4));
+				this.props.isAuthProcess) {
+					return _react3.default.createElement(
+						'div',
+						{ style: { textAlign: 'center' } },
+						_react3.default.createElement(
+							'div',
+							{ className: 'preloader-wrapper big active' },
+							_react3.default.createElement(
+								'div',
+								{ className: 'spinner-layer spinner-blue-only' },
+								_react3.default.createElement(
+									'div',
+									{ className: 'circle-clipper left' },
+									_react3.default.createElement('div', { className: 'circle' })
+								),
+								_react3.default.createElement(
+									'div',
+									{ className: 'gap-patch' },
+									_react3.default.createElement('div', { className: 'circle' })
+								),
+								_react3.default.createElement(
+									'div',
+									{ className: 'circle-clipper right' },
+									_react3.default.createElement('div', { className: 'circle' })
+								)
+							)
+						)
+					);
+				} else {
+					return _react3.default.createElement(
+						'div',
+						{ id: 'grid', className: 'grid row' },
+						this.renderLanes()
+					);
+				}
 			}
 		}]);
 
@@ -57886,131 +57927,161 @@
 					'job-text-loaded': Object.keys(this.state.job).length
 				});
 
-				return _react3.default.createElement(
-					'div',
-					{ className: 'container' },
-					_react3.default.createElement(
+				if (this.props.isAuthProcess) {
+					return _react3.default.createElement(
 						'div',
-						{ id: 'grid', className: 'full-job grid row' },
+						{ style: { textAlign: 'center' } },
 						_react3.default.createElement(
 							'div',
-							{ className: 'col s12 l10 offset-l1' },
+							{ className: 'preloader-wrapper big active' },
 							_react3.default.createElement(
 								'div',
-								{ className: 'card' },
+								{ className: 'spinner-layer spinner-blue-only' },
 								_react3.default.createElement(
 									'div',
-									{ className: 'card-content' },
-									_react3.default.createElement(
-										'h2',
-										{ className: 'job-name center-align' },
-										this.state.job.name
-									),
-									_react3.default.createElement(
-										'h3',
-										{ className: 'job-company card-title center-align' },
-										this.state.job.company
-									),
+									{ className: 'circle-clipper left' },
+									_react3.default.createElement('div', { className: 'circle' })
+								),
+								_react3.default.createElement(
+									'div',
+									{ className: 'gap-patch' },
+									_react3.default.createElement('div', { className: 'circle' })
+								),
+								_react3.default.createElement(
+									'div',
+									{ className: 'circle-clipper right' },
+									_react3.default.createElement('div', { className: 'circle' })
+								)
+							)
+						)
+					);
+				} else {
+					return _react3.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react3.default.createElement(
+							'div',
+							{ id: 'grid', className: 'full-job grid row' },
+							_react3.default.createElement(
+								'div',
+								{ className: 'col s12 l10 offset-l1' },
+								_react3.default.createElement(
+									'div',
+									{ className: 'card' },
 									_react3.default.createElement(
 										'div',
-										{ className: 'job-details' },
+										{ className: 'card-content' },
 										_react3.default.createElement(
-											'p',
-											{ className: 'left-align' },
-											this.state.job.salary
+											'h2',
+											{ className: 'job-name center-align' },
+											this.state.job.name
 										),
 										_react3.default.createElement(
-											'p',
-											{ className: 'right-align' },
-											this.state.job.exp
+											'h3',
+											{ className: 'job-company card-title center-align' },
+											this.state.job.company
+										),
+										_react3.default.createElement(
+											'div',
+											{ className: 'job-details' },
+											_react3.default.createElement(
+												'p',
+												{ className: 'left-align' },
+												this.state.job.salary
+											),
+											_react3.default.createElement(
+												'p',
+												{ className: 'right-align' },
+												this.state.job.exp
+											)
+										),
+										_react3.default.createElement('div', { className: jobTextClasses, dangerouslySetInnerHTML: this.renderText() })
+									)
+								),
+								_react3.default.createElement(
+									'div',
+									{ className: 'card' },
+									_react3.default.createElement(
+										'div',
+										{ className: 'card-content' },
+										_react3.default.createElement(
+											'div',
+											{ className: 'job-keywords' },
+											this.state.keywords.map(function (keyword) {
+												return keyword['name'];
+											}).join(', ')
+										),
+										_react3.default.createElement(
+											'div',
+											{ className: 'job-skills' },
+											this.state.skills.map(function (skill, index) {
+												return _react3.default.createElement(
+													'span',
+													{ key: skill.id },
+													' ',
+													skill.name,
+													' '
+												);
+											})
 										)
-									),
-									_react3.default.createElement('div', { className: jobTextClasses, dangerouslySetInnerHTML: this.renderText() })
-								)
-							),
-							_react3.default.createElement(
-								'div',
-								{ className: 'card' },
+									)
+								),
 								_react3.default.createElement(
 									'div',
-									{ className: 'card-content' },
+									{ className: 'card' },
 									_react3.default.createElement(
 										'div',
-										{ className: 'job-keywords' },
-										this.state.keywords.map(function (keyword) {
-											return keyword['name'];
-										}).join(', ')
-									),
-									_react3.default.createElement(
-										'div',
-										{ className: 'job-skills' },
-										this.state.skills.map(function (skill, index) {
-											return _react3.default.createElement(
-												'span',
-												{ key: skill.id },
-												' ',
-												skill.name,
-												' '
-											);
-										})
+										{ className: 'card-content share-btns-wrapper' },
+										_react3.default.createElement(
+											'span',
+											null,
+											'Share'
+										),
+										_react3.default.createElement(
+											'a',
+											{ onClick: function onClick(e) {
+													return _this3.share(e, 'http://twitter.com/share?text=');
+												}, href: '#', target: '_blank' },
+											_react3.default.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
+										),
+										_react3.default.createElement(
+											'a',
+											{ onClick: function onClick(e) {
+													return _this3.share(e, 'https://www.facebook.com/sharer/sharer.php?u=');
+												}, href: '#', target: '_blank' },
+											_react3.default.createElement('i', { className: 'fa fa-facebook', 'aria-hidden': 'true' })
+										)
 									)
-								)
-							),
-							_react3.default.createElement(
-								'div',
-								{ className: 'card' },
+								),
 								_react3.default.createElement(
-									'div',
-									{ className: 'card-content share-btns-wrapper' },
-									_react3.default.createElement(
-										'span',
-										null,
-										'Share'
-									),
-									_react3.default.createElement(
-										'a',
-										{ onClick: function onClick(e) {
-												return _this3.share(e, 'http://twitter.com/share?text=');
-											}, href: '#', target: '_blank' },
-										_react3.default.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
-									),
-									_react3.default.createElement(
-										'a',
-										{ onClick: function onClick(e) {
-												return _this3.share(e, 'https://www.facebook.com/sharer/sharer.php?u=');
-											}, href: '#', target: '_blank' },
-										_react3.default.createElement('i', { className: 'fa fa-facebook', 'aria-hidden': 'true' })
-									)
-								)
-							),
-							_react3.default.createElement(
-								'a',
-								{ className: 'btn-apply waves-effect btn', href: this.state.job.url, target: '_blank', rel: 'nofollow' },
-								'Apply'
-							),
-							_react3.default.createElement(
-								'a',
-								{ className: likeClasses, href: '#', onClick: function onClick(e) {
-										e.preventDefault();
-										if (localStorage.getItem('sagfi_token')) {
+									'a',
+									{ className: 'btn-apply waves-effect btn', href: this.state.job.url, target: '_blank', rel: 'nofollow' },
+									'Apply'
+								),
+								_react3.default.createElement(
+									'a',
+									{ className: likeClasses, href: '#', onClick: function onClick(e) {
+											e.preventDefault();
+											if (localStorage.getItem('sagfi_token')) {
 
-											if (_this3.props.isLiked) {
-												// this.props.onDislike();
+												if (_this3.props.isLiked) {
+													// this.props.onDislike();
+												} else {
+													// this.setState({ isLiked: true });
+													_this3.props.onLike(_this3.state.job.id);
+												}
 											} else {
-												// this.setState({ isLiked: true });
-												_this3.props.onLike(_this3.state.job.id);
+												_this3.props.loginPopupShow();
 											}
-										} else {
-											_this3.props.loginPopupShow();
-										}
-									} },
-								'Like'
-							)
+										} },
+									'Like'
+								)
+							),
+							' '
 						),
 						' '
-					),
-					' '
-				);
+					); // return
+				}
 			}
 		}]);
 
@@ -58026,7 +58097,8 @@
 
 		return {
 			isLiked: likes_arr.length > 0,
-			slug: ownProps.params.slug
+			slug: ownProps.params.slug,
+			isAuthProcess: state.loginPopup.isAuthProcess
 		};
 	};
 
@@ -60063,7 +60135,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.loginPopup = exports.data = exports.user = exports.allJobs = exports.entities = undefined;
+	exports.loginPopup = exports.user = exports.allJobs = exports.entities = undefined;
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
@@ -60087,43 +60159,19 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	function data() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	    var action = arguments[1];
-
-
-	    switch (action.type) {
-	        case 'INIT':
-	            // console.log('case type')
-	            // console.log(action)
-	            return action;
-
-	        default:
-	            return state;
-	    }
-
-	    /*
-	    console.log("ACTION")
-	    console.log(action)
-	     if( action.type == 'INIT' ){
-	        return action;
-	    }
-	    else{
-	        return state;
-	    }
-	    */
-	}
-
 	function loginPopup() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { isShow: false } : arguments[0];
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? { isShow: false, isAuthProcess: false } : arguments[0];
 	    var action = arguments[1];
 
 	    switch (action.type) {
 	        case 'LOGIN_POPUP_SHOW':
-	            return { isShow: true };
+	            return { isShow: true, isAuthProcess: state.isAuthProcess };
 
 	        case 'LOGIN_POPUP_CLOSE':
-	            return { isShow: false };
+	            return { isShow: false, isAuthProcess: state.isAuthProcess };
+
+	        case 'AUTH_REQUEST':
+	            return { isShow: false, isAuthProcess: true };
 
 	        default:
 	            return state;
@@ -60733,7 +60781,6 @@
 	exports.entities = entities;
 	exports.allJobs = allJobs;
 	exports.user = user;
-	exports.data = data;
 	exports.loginPopup = loginPopup;
 
 	// export { jobs, lanes }

@@ -8,7 +8,8 @@ import { move, attachToLane, attachToLaneServer, getLanes, loginPopupShow, disli
 const mapStateToProps = (state) => {
 
     return{
-        entities: state.entities
+        entities: state.entities,
+        isAuthProcess: state.loginPopup.isAuthProcess
         // jobs: state.entities.jobs,
         // lanes: state.entities.lanes
     }

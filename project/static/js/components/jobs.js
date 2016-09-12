@@ -351,7 +351,8 @@ class JobList extends React.Component{
         return(
             this.state.jobs !== nextState.jobs ||
             this.state.height !== nextState.height ||
-            !this.state.isLoaded
+            !this.state.isLoaded ||
+            this.props.isAuthProcess !== nextProps.isAuthProcess
         );
     }
 
@@ -423,7 +424,7 @@ class JobList extends React.Component{
             // 'disabled': this.props.isLiked
         });
 
-        if(this.state.isLoaded){
+        if(this.state.isLoaded && !this.props.isAuthProcess){
     		return (
     			<div className="container">                    
 
@@ -445,7 +446,7 @@ class JobList extends React.Component{
                         More
                     </a>
 					*/}
-					
+
     			</div>				
     		);
         } // if isLoaded END

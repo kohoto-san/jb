@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
     const likes = new Set(likes_arr);
 
 	return{
-		likes: likes_arr
+		likes: likes_arr,
+		isAuthProcess: state.loginPopup.isAuthProcess
 		// jobs: state.allJobs,
 		// jobs: ownProps.params.jobs
 	}

@@ -148,100 +148,119 @@ class JobDetails extends React.Component{
             'job-text-loaded': Object.keys(this.state.job).length
         });
 
-		return (
-			<div className="container">
-				<div id="grid" className="full-job grid row">
+		if(this.props.isAuthProcess){
+			return(
+				<div style={{textAlign: 'center'}}>
+	                <div className="preloader-wrapper big active">
+	                    <div className="spinner-layer spinner-blue-only">
+	                        <div className="circle-clipper left">
+	                            <div className="circle"></div>
+	                        </div><div className="gap-patch">
+	                            <div className="circle"></div>
+	                        </div><div className="circle-clipper right">
+	                            <div className="circle"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        );
+        }
+        else{
+			return (
+				<div className="container">
+					<div id="grid" className="full-job grid row">
 
-					<div className="col s12 l10 offset-l1">
-						<div className="card">
-							<div className="card-content">
+						<div className="col s12 l10 offset-l1">
+							<div className="card">
+								<div className="card-content">
 
-								<h2 className="job-name center-align">{this.state.job.name}</h2>
-								<h3 className="job-company card-title center-align">{this.state.job.company}</h3>
-								
-								<div className="job-details">
-				    	    		<p className="left-align">{this.state.job.salary}</p>
-				    	    		<p className="right-align">{this.state.job.exp}</p>
-				    	    	</div>
+									<h2 className="job-name center-align">{this.state.job.name}</h2>
+									<h3 className="job-company card-title center-align">{this.state.job.company}</h3>
+									
+									<div className="job-details">
+					    	    		<p className="left-align">{this.state.job.salary}</p>
+					    	    		<p className="right-align">{this.state.job.exp}</p>
+					    	    	</div>
 
-								<div className={jobTextClasses} dangerouslySetInnerHTML={ this.renderText() }></div>
+									<div className={jobTextClasses} dangerouslySetInnerHTML={ this.renderText() }></div>
 
-							</div>
-						</div>
-
-						<div className="card">
-							<div className="card-content">
-								<div className="job-keywords">
-									{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
 								</div>
+							</div>
+
+							<div className="card">
+								<div className="card-content">
+									<div className="job-keywords">
+										{this.state.keywords.map( keyword => (keyword['name']) ).join(', ')}
+									</div>
 
 
-								<div className="job-skills">
-									{this.state.skills.map(function(skill, index) {
-					                        return(<span key={skill.id}> {skill.name} </span>);
-					                    }
-					                )}
+									<div className="job-skills">
+										{this.state.skills.map(function(skill, index) {
+						                        return(<span key={skill.id}> {skill.name} </span>);
+						                    }
+						                )}
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div className="card">
-							<div className="card-content share-btns-wrapper">
-								<span>Share</span>
+							<div className="card">
+								<div className="card-content share-btns-wrapper">
+									<span>Share</span>
 
-				                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
-				                    <i className="fa fa-twitter" aria-hidden="true"></i>
-				                    {/* Twitter */}
-				                </a>
-				            
-				                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
-				                	<i className="fa fa-facebook" aria-hidden="true"></i>
-				                	{/* Facebook */}
-				                </a>
+					                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
+					                    <i className="fa fa-twitter" aria-hidden="true"></i>
+					                    {/* Twitter */}
+					                </a>
+					            
+					                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
+					                	<i className="fa fa-facebook" aria-hidden="true"></i>
+					                	{/* Facebook */}
+					                </a>
 
 
-								{/*
-								<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
-				                    <i class="fa fa-vk fa-2x"></i>
-				                </a>
-				            
-				                <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
-				                    <i class="fa fa-twitter fa-2x"></i>
-				                </a>
-				            
-				                <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
-				                    <i class="fa fa-facebook fa-2x"></i>
-				                </a>
-				                */}
+									{/*
+									<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">
+					                    <i class="fa fa-vk fa-2x"></i>
+					                </a>
+					            
+					                <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
+					                    <i class="fa fa-twitter fa-2x"></i>
+					                </a>
+					            
+					                <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+					                    <i class="fa fa-facebook fa-2x"></i>
+					                </a>
+					                */}
 
+								</div>
 							</div>
-						</div>
 
-						<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank" rel="nofollow">
-							Apply
-						</a>
+							<a className="btn-apply waves-effect btn" href={this.state.job.url} target="_blank" rel="nofollow">
+								Apply
+							</a>
 
-						<a className={likeClasses} href="#" onClick={(e) => {
-                            e.preventDefault();
-                            if( localStorage.getItem('sagfi_token') ){
-                               
-                                if(this.props.isLiked){
-                                    // this.props.onDislike();
-                                }
-                                else{
-                                    // this.setState({ isLiked: true });
-	                                this.props.onLike(this.state.job.id);
-                                }
-                            }
-                            else{
-                                this.props.loginPopupShow();
-                            } 
-                        }}>Like</a>
-					
-					</div> {/* \col */}
-				</div> {/* \grid */}
-			</div>
-		);
+							<a className={likeClasses} href="#" onClick={(e) => {
+	                            e.preventDefault();
+	                            if( localStorage.getItem('sagfi_token') ){
+	                               
+	                                if(this.props.isLiked){
+	                                    // this.props.onDislike();
+	                                }
+	                                else{
+	                                    // this.setState({ isLiked: true });
+		                                this.props.onLike(this.state.job.id);
+	                                }
+	                            }
+	                            else{
+	                                this.props.loginPopupShow();
+	                            } 
+	                        }}>Like</a>
+						
+						</div> {/* \col */}
+					</div> {/* \grid */}
+				</div>
+			); // return
+		}
 	}
 }
 
@@ -258,7 +277,8 @@ const mapStateToProps = (state, ownProps) => {
 
 	return{
 		isLiked: likes_arr.length > 0,
-		slug: ownProps.params.slug
+		slug: ownProps.params.slug,
+        isAuthProcess: state.loginPopup.isAuthProcess
 	}
 }
 

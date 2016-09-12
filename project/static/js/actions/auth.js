@@ -236,6 +236,13 @@ export function getUser() {
     };
 }
 
+export function authRequest(key) {
+    return { 
+        type: 'AUTH_REQUEST'
+    };
+}
+
+
 // export function auth ({provider, params, endpointKey}) {
 export function auth () {
 
@@ -253,20 +260,22 @@ export function auth () {
 
         // let url = getOAuthUrl({provider, params, currentEndpointKey});
 
+        dispatch(authRequest());
         let url = '/auth/token/';
         let provider = 'twitter';
 
-        let oauthToken
+        let oauthToken;
 
         authenticate({provider, url})
             .then(function (key) {
                 localStorage.setItem('sagfi_token', key);
                 document.cookie = `sagfi_token=${key}`;
-                
-                // browserHistory.push('/');
+                window.location.reload();
 
-                dispatch(getUser());
-                dispatch(getLanes());
+
+
+                // dispatch(getUser());
+                // dispatch(getLanes());
                 // dispatch(loginPopupClose());
 
                 // dispatch(oAuthSignInComplete(key));
