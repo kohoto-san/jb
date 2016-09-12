@@ -37,9 +37,23 @@ class Job extends React.Component{
     }
     */
 
+    heartIconRender(){
+		if(this.state.isLiked){
+			return(
+		        <i className="material-icons">&#xE87D;</i> //favorite
+	    	);
+		}
+	    else{
+	    	return(
+	        	<i className="material-icons">&#xE87E;</i>  // favorite border
+	    	);
+	    }
+    }
+
     render() {
 
         let likeClasses = ClassNames({
+            'hoverable': true,
             'like': true,
             'is_liked': this.state.isLiked
         });
@@ -84,25 +98,26 @@ class Job extends React.Component{
                 </Link> {/* .card*/}
 
         		<div className="job-actions hide-on-med-and-down">
-                    {/* <a href="#" className="like"> */}
-                    <a href="#" className={likeClasses} onClick={(e) => {
-                            e.preventDefault();
-                            if( localStorage.getItem('sagfi_token') ){
-                                if(this.state.isLiked){
-                                    this.setState({ isLiked: false });
-                                    this.props.onDislike();
-                                }
-                                else{
-                                    this.setState({ isLiked: true });
-                                    this.props.onLike();
-                                }
-                            }
-                            else{
-                                this.props.loginPopupShow();
-                            } 
-                        }}>
-                    	<i className="material-icons hoverable">&#xE87E;</i>  {/*favorite border*/}
-                	</a> 
+	                    {/* <a href="#" className="like"> */}
+	                    <a href="#" className={likeClasses} onClick={(e) => {
+	                            e.preventDefault();
+	                            if( localStorage.getItem('sagfi_token') ){
+	                                if(this.state.isLiked){
+	                                    this.setState({ isLiked: false });
+	                                    this.props.onDislike();
+	                                }
+	                                else{
+	                                    this.setState({ isLiked: true });
+	                                    this.props.onLike();
+	                                }
+	                            }
+	                            else{
+	                                this.props.loginPopupShow();
+	                            } 
+	                        }}>
+
+	                        {this.heartIconRender()}
+	                	</a>
             	</div>
         	</div>
         );

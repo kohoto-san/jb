@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "58cbdf6499145b7498e3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "047d9defcec830e79118"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -41224,11 +41224,31 @@
 	        */
 
 	    }, {
+	        key: 'heartIconRender',
+	        value: function heartIconRender() {
+	            if (this.state.isLiked) {
+	                return _react3.default.createElement(
+	                    'i',
+	                    { className: 'material-icons' },
+	                    ''
+	                ) //favorite
+	                ;
+	            } else {
+	                return _react3.default.createElement(
+	                    'i',
+	                    { className: 'material-icons' },
+	                    ''
+	                ) // favorite border
+	                ;
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
 
 	            var likeClasses = (0, _classnames2.default)({
+	                'hoverable': true,
 	                'like': true,
 	                'is_liked': this.state.isLiked
 	            });
@@ -41315,12 +41335,7 @@
 	                                    _this2.props.loginPopupShow();
 	                                }
 	                            } },
-	                        _react3.default.createElement(
-	                            'i',
-	                            { className: 'material-icons hoverable' },
-	                            ''
-	                        ),
-	                        '  '
+	                        this.heartIconRender()
 	                    )
 	                )
 	            );

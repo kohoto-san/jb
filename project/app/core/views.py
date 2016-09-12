@@ -52,6 +52,10 @@ def get_metajobs(request):
         token = None
         metaJobs = []
 
+    print(local_token)
+    print(token)
+    print(metaJobs)
+
     return metaJobs
 
 

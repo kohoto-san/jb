@@ -93,7 +93,7 @@ class MetaJob(models.Model):
         verbose_name_plural = "MetaJobs"
 
     def __str__(self):
-        return self.job.name
+        return self.job.name + ' —— by ' + self.lane.user.username
 
 
 @receiver(user_signed_up, dispatch_uid="some.unique.string.id.for.allauth.user_signed_up")

@@ -238,26 +238,27 @@ nav .brand-logo a {
   bottom: 25px;
   right: 0px;
 }
-.grid__item .job-actions i {
-  vertical-align: middle;
+.grid__item .job-actions .like {
   padding: 10px;
   border-radius: 50%;
+  display: block;
+  margin-right: 10px;
   border: 1px solid #000;
-  color: #000;
   transition: all 0.3s;
 }
-.grid__item .job-actions .is_liked i {
+.grid__item .job-actions .like.is_liked {
+  background-color: rgba(47,189,252,0.7);
+  background-color: rgba(47,189,252,0.7);
+  border: 0;
+  color: #fff;
+}
+.grid__item .job-actions .like:hover {
   border: 0;
   color: #fff;
   background-color: rgba(47,189,252,0.7);
 }
-.grid__item .job-actions i:first-child {
-  margin-right: 10px;
-}
-.grid__item .job-actions i:hover {
-  border: 0;
-  color: #fff;
-  background-color: rgba(47,189,252,0.7);
+.grid__item .job-actions .like i {
+  vertical-align: middle;
 }
 .grid .lane {
   width: 20%;

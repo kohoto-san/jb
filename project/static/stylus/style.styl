@@ -268,32 +268,51 @@ job-actions-right = 0px;
         position: absolute;
         bottom: 25px;
         right: job-actions-right;
-        i
-            vertical-align middle;
+        
+        .like
             padding 10px;
             border-radius 50%;
+            display block;
+            margin-right 10px;
             border 1px solid #000;
-            color #000;
             transition all 0.3s;
-
-            ../ .is_liked i
-                    // background-color darken(#fff, 15%);
-                    // background-color bc;
-
-                    border 0;
-                    color #fff;
-                    background-color lighten($sagfi-blue, 20%);
-                    
-                    
-        
-            &:first-child
-                margin-right 10px;
             
+            &.is_liked
+                background-color rgba(47,189,252,0.7);
+                background-color lighten($sagfi-blue, 20%);
+                border 0;
+                color #fff;
+
             &:hover
-                // background-color darken(#fff, 15%);
                 border 0;
                 color #fff;
                 background-color lighten($sagfi-blue, 20%);
+
+            i
+                vertical-align middle;
+                // padding 10px;
+                // border-radius 50%;
+                // color #000;
+                // transition all 0.3s;
+
+                // ../ .is_liked i
+                        // background-color darken(#fff, 15%);
+                        // background-color bc;
+
+                        // border 0;
+                        // color #fff;
+                        // background-color lighten($sagfi-blue, 20%);
+                        
+                        
+            
+                // &:first-child
+                    // margin-right 10px;
+                
+                // &:hover
+                    // background-color darken(#fff, 15%);
+                    // border 0;
+                    // color #fff;
+                    // background-color lighten($sagfi-blue, 20%);
                 
 
 .grid .lane
