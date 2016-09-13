@@ -1,4 +1,5 @@
 node_modules
+staticfiles
 .env
 # Dockerfile
 runtime.txt
