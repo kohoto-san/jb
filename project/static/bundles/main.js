@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "66faff49f0696c77651c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b2e93b77ec1f30b14a45"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -58155,14 +58155,14 @@
 											{ onClick: function onClick(e) {
 													return _this3.share(e, 'http://twitter.com/share?text=');
 												}, href: '#', target: '_blank' },
-											_react3.default.createElement('i', { className: 'fa fa-twitter', 'aria-hidden': 'true' })
+											_react3.default.createElement('i', { className: 'fa fa-twitter' })
 										),
 										_react3.default.createElement(
 											'a',
 											{ onClick: function onClick(e) {
 													return _this3.share(e, 'https://www.facebook.com/sharer/sharer.php?u=');
 												}, href: '#', target: '_blank' },
-											_react3.default.createElement('i', { className: 'fa fa-facebook', 'aria-hidden': 'true' })
+											_react3.default.createElement('i', { className: 'fa fa-facebook' })
 										)
 									)
 								),
