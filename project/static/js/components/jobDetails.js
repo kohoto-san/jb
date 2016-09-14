@@ -208,12 +208,12 @@ class JobDetails extends React.Component{
 									<span>Share</span>
 
 					                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
-					                    <i className="fa fa-twitter" aria-hidden="true"></i>
+					                    <i className="fa fa-twitter"></i>
 					                    {/* Twitter */}
 					                </a>
 					            
 					                <a onClick={(e) => this.share(e, 'https://www.facebook.com/sharer/sharer.php?u=')} href="#" target="_blank">
-					                	<i className="fa fa-facebook" aria-hidden="true"></i>
+					                	<i className="fa fa-facebook"></i>
 					                	{/* Facebook */}
 					                </a>
 
