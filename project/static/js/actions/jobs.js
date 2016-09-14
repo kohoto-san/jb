@@ -50,7 +50,17 @@ export function loginPopupShow(step){
 */
 }
 
+export function contactsPopupClose(){
+	return{
+		type: 'CONTACTS_POPUP_CLOSE',
+	}
+}
 
+export function contactsPopupShow(){
+	return{
+		type: 'CONTACTS_POPUP_SHOW',
+	}
+}
 
 let nextJobId = 11
 let nextLaneId = 0

@@ -58,7 +58,6 @@ class Job extends React.Component{
             'is_liked': this.state.isLiked
         });
 
-        // console.log(this.props.job.skills);
         let styles;
         if(this.props.job.skills.length == 0){
             styles = {paddingBottom: '60px'};
@@ -238,11 +237,11 @@ class PinterestGrid extends React.Component {
     layout() {
 
         if( ! this.state.isRendered){
-            console.log('layout')
+            // console.log('layout')
 
             this.waitForChildren().then(() => {
 
-                console.log('then')
+                // console.log('then')
                 const columnCount = this.getColumnCount();
                 if(columnCount){
 
@@ -431,6 +430,24 @@ class JobList extends React.Component{
         }
 	}
 
+    pinterestRender(){
+        if(window.innerWidth > 800){
+            return(
+                <PinterestGrid gutter={20} setHeight={this.setHeight}>
+                    { this.items() }
+                </PinterestGrid>
+            );
+        }
+        else{
+            return(
+                <div id="grid" className="autogrid job_list grid row">
+                    { this.items() }
+                </div>
+            );
+        }
+
+    }
+
 	render() {
 
         let loadClasses = ClassNames('btn-moreJobs waves-effect btn',
@@ -449,9 +466,7 @@ class JobList extends React.Component{
                     </div>
                     */}
 
-                    <PinterestGrid gutter={20} setHeight={this.setHeight}>
-                        { this.items() }
-                    </PinterestGrid>
+                    {this.pinterestRender()}
 
 	                {/*
                     <a href='#' className={loadClasses} style={{top: this.state.height}} onClick={(e) => {

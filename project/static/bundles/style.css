@@ -46,7 +46,7 @@ nav .brand-logo a {
     transform: rotateZ(140deg);
   }
 }
-.login-popup {
+.popup {
   display: block;
   position: fixed;
   width: 100%;
@@ -54,28 +54,49 @@ nav .brand-logo a {
   background-color: rgba(255,255,255,0.96);
   z-index: 100;
 }
-.login-popup .close {
+.popup .close {
   position: absolute;
   top: 0px;
   right: 0px;
   color: #000;
   width: auto;
 }
-.login-popup .close i {
+.popup .close i {
   font-size: 40px;
 }
-.login-popup .valign-wrapper {
+.popup .valign-wrapper {
   height: 100%;
 }
-.login-popup .valign-wrapper .soc-button {
+.popup .valign-wrapper .soc-button {
   display: block;
   width: 200px;
   color: #fff;
   padding: 10px;
   margin: auto;
 }
-.login-popup .valign-wrapper .twitter {
+.popup .valign-wrapper .twitter {
   background-color: #1da1f2;
+}
+.popup .contacts-popup__content {
+  margin: auto;
+}
+.popup .contacts-popup__content a {
+  color: #000;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 500;
+  line-height: 0.99;
+}
+.popup .contacts-popup__content a:hover {
+  border-bottom: 1px #000 solid;
+}
+.popup .contacts-popup__content a i {
+  margin-right: 5px;
+  font-size: 20px;
+}
+.popup .contacts-popup__content a span {
+  font-weight: 400;
+  color: #039be5;
 }
 .notification-for-mob {
   width: 100%;
@@ -218,6 +239,7 @@ nav .brand-logo a {
   width: 300px;
   min-width: 300px;
   position: relative;
+  margin: auto;
 }
 .grid__item a {
   color: #000;

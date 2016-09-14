@@ -65,7 +65,7 @@ nav
     }
 
 
-.login-popup
+.popup
     display block;
     position fixed;
     width 100%;
@@ -95,6 +95,29 @@ nav
             
         .twitter
             background-color #1da1f2;
+    
+    .contacts-popup__content
+        margin auto;
+        
+        a
+            color #000;
+            display inline-block;
+            margin-top 10px;
+            font-weight 500;
+            line-height .99;
+            
+            &:hover
+                // text-decoration underline;
+                border-bottom 1px #000 solid;
+            
+
+            i
+                margin-right 5px;
+                font-size 20px;
+
+            span
+                font-weight 400;
+                color #039be5;
 
 .notification-for-mob
     width 100%;
@@ -246,6 +269,7 @@ job-actions-right = 0px;
     width: 300px;
     min-width 300px;
     position relative;
+    margin auto;
 
     a
         color #000;

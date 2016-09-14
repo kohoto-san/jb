@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Navbar } from '../components/navbar.js'
 
 // import { likeJob } from '../actions/actions.js'
-import { auth, getUser, loginPopup, loginPopupClose } from '../actions'
+import { auth, getUser, loginPopupClose, contactsPopupClose, contactsPopupShow } from '../actions'
 
 const mapStateToProps = (state) => {
 
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
 		// jobs_count: state.entities.jobs.filter(job => job).length,
 		jobs_count: state.entities.totalLikes,
 		user: state.user,
-		popupIsShow: state.loginPopup.isShow
+		popupIsShow: state.loginPopup.isShow,
+		contactsPopupIsShow: state.loginPopup.isShowContacts
 	}
 }
 
@@ -33,12 +34,16 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(getUser())
 		},
 
-		loginPopup: (step) => {
-			dispatch( loginPopup(step) )
-		},
-
 		loginPopupClose: () => {
 			dispatch( loginPopupClose() )
+		},
+
+		contactsPopupShow: () => {
+			dispatch( contactsPopupShow() )
+		},
+
+		contactsPopupClose: () => {
+			dispatch( contactsPopupClose() )
 		}
 
 	}

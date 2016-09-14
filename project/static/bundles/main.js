@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "047d9defcec830e79118"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "66faff49f0696c77651c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -40095,7 +40095,8 @@
 			// jobs_count: state.entities.jobs.filter(job => job).length,
 			jobs_count: state.entities.totalLikes,
 			user: state.user,
-			popupIsShow: state.loginPopup.isShow
+			popupIsShow: state.loginPopup.isShow,
+			contactsPopupIsShow: state.loginPopup.isShowContacts
 		};
 	};
 
@@ -40118,12 +40119,16 @@
 				dispatch((0, _actions.getUser)());
 			},
 
-			loginPopup: function loginPopup(step) {
-				dispatch((0, _actions.loginPopup)(step));
-			},
-
 			loginPopupClose: function loginPopupClose() {
 				dispatch((0, _actions.loginPopupClose)());
+			},
+
+			contactsPopupShow: function contactsPopupShow() {
+				dispatch((0, _actions.contactsPopupShow)());
+			},
+
+			contactsPopupClose: function contactsPopupClose() {
+				dispatch((0, _actions.contactsPopupClose)());
 			}
 
 		};
@@ -40252,13 +40257,12 @@
 	            if (this.props.popupIsShow) {
 	                return _react3.default.createElement(
 	                    'div',
-	                    { className: 'login-popup' },
+	                    { className: 'popup' },
 	                    _react3.default.createElement(
 	                        'a',
 	                        { href: '#', className: 'close', onClick: function onClick(e) {
 	                                e.preventDefault();
 	                                _this3.props.loginPopupClose();
-	                                // this.props.loginPopup('close');
 	                            } },
 	                        _react3.default.createElement(
 	                            'i',
@@ -40281,6 +40285,66 @@
 	            }
 	        }
 	    }, {
+	        key: 'contactsPopupRender',
+	        value: function contactsPopupRender() {
+	            var _this4 = this;
+
+	            if (this.props.contactsPopupIsShow) {
+	                return _react3.default.createElement(
+	                    'div',
+	                    { className: 'popup' },
+	                    _react3.default.createElement(
+	                        'a',
+	                        { href: '#', className: 'close', onClick: function onClick(e) {
+	                                e.preventDefault();
+	                                _this4.props.contactsPopupClose();
+	                            } },
+	                        _react3.default.createElement(
+	                            'i',
+	                            { className: 'material-icons' },
+	                            'close'
+	                        )
+	                    ),
+	                    _react3.default.createElement(
+	                        'div',
+	                        { className: 'valign-wrapper' },
+	                        _react3.default.createElement(
+	                            'div',
+	                            { className: 'valign contacts-popup__content' },
+	                            _react3.default.createElement(
+	                                'p',
+	                                { style: { fontSize: '40px', margin: '0 0 10px' } },
+	                                'Contact Me'
+	                            ),
+	                            _react3.default.createElement(
+	                                'a',
+	                                { href: 'https://twitter.com/sihaelov', target: '_blank' },
+	                                _react3.default.createElement('i', { className: 'fa fa-twitter' }),
+	                                'Twitter: ',
+	                                _react3.default.createElement(
+	                                    'span',
+	                                    null,
+	                                    '@sihaelov'
+	                                )
+	                            ),
+	                            _react3.default.createElement('br', null),
+	                            _react3.default.createElement(
+	                                'a',
+	                                { href: 'mailto:sihaelov@gmail.com' },
+	                                _react3.default.createElement('i', { className: 'fa fa-envelope' }),
+	                                'Email: ',
+	                                _react3.default.createElement(
+	                                    'span',
+	                                    null,
+	                                    'sihaelov@gmail.com'
+	                                )
+	                            )
+	                        )
+	                    )
+	                );
+	            }
+	        }
+	    }, {
 	        key: 'renderCat',
 	        value: function renderCat() {
 	            if (window.location.href.indexOf('ref=producthunt') !== -1) {
@@ -40290,10 +40354,13 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this5 = this;
+
 	            return _react3.default.createElement(
 	                'div',
 	                null,
 	                this.popup(),
+	                this.contactsPopupRender(),
 	                this.renderCat(),
 	                _react3.default.createElement(
 	                    'div',
@@ -40321,8 +40388,11 @@
 	                                    null,
 	                                    _react3.default.createElement(
 	                                        'a',
-	                                        { href: 'mailto:sihaelov@gmail.com' },
-	                                        'Contact'
+	                                        { href: '#', onClick: function onClick(e) {
+	                                                e.preventDefault();
+	                                                _this5.props.contactsPopupShow();
+	                                            } },
+	                                        'Contacts'
 	                                    )
 	                                ),
 	                                _react3.default.createElement(
@@ -40373,7 +40443,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.getJobs = exports.getLanes = exports.move = exports.hover = exports.attachToLaneServer = exports.attachToLane = exports.addLane = exports.dislikeJob = exports.likeJob = exports.addJob = exports.getUser = exports.auth = exports.loginPopupClose = exports.loginPopupShow = exports.init = undefined;
+	exports.getJobs = exports.getLanes = exports.move = exports.hover = exports.attachToLaneServer = exports.attachToLane = exports.addLane = exports.dislikeJob = exports.likeJob = exports.addJob = exports.getUser = exports.auth = exports.contactsPopupShow = exports.contactsPopupClose = exports.loginPopupClose = exports.loginPopupShow = exports.init = undefined;
 
 	var _auth = __webpack_require__(502);
 
@@ -40384,6 +40454,8 @@
 	exports.init = _jobs.init;
 	exports.loginPopupShow = _jobs.loginPopupShow;
 	exports.loginPopupClose = _jobs.loginPopupClose;
+	exports.contactsPopupClose = _jobs.contactsPopupClose;
+	exports.contactsPopupShow = _jobs.contactsPopupShow;
 	exports.auth = _auth.auth;
 	exports.getUser = _auth.getUser;
 	exports.addJob = _jobs.addJob;
@@ -40756,6 +40828,8 @@
 	exports.init = init;
 	exports.loginPopupClose = loginPopupClose;
 	exports.loginPopupShow = loginPopupShow;
+	exports.contactsPopupClose = contactsPopupClose;
+	exports.contactsPopupShow = contactsPopupShow;
 	exports.addJob = addJob;
 	exports.addLane = addLane;
 	exports.likeJob = likeJob;
@@ -40822,6 +40896,18 @@
 	 		isShow
 	 	}
 	 */
+	}
+
+	function contactsPopupClose() {
+		return {
+			type: 'CONTACTS_POPUP_CLOSE'
+		};
+	}
+
+	function contactsPopupShow() {
+		return {
+			type: 'CONTACTS_POPUP_SHOW'
+		};
 	}
 
 	var nextJobId = 11;
@@ -41253,7 +41339,6 @@
 	                'is_liked': this.state.isLiked
 	            });
 
-	            // console.log(this.props.job.skills);
 	            var styles = void 0;
 	            if (this.props.job.skills.length == 0) {
 	                styles = { paddingBottom: '60px' };
@@ -41478,11 +41563,11 @@
 	            var _this4 = this;
 
 	            if (!this.state.isRendered) {
-	                console.log('layout');
+	                // console.log('layout')
 
 	                this.waitForChildren().then(function () {
 
-	                    console.log('then');
+	                    // console.log('then')
 	                    var columnCount = _this4.getColumnCount();
 	                    if (columnCount) {
 	                        (function () {
@@ -41694,6 +41779,23 @@
 	            }
 	        }
 	    }, {
+	        key: 'pinterestRender',
+	        value: function pinterestRender() {
+	            if (window.innerWidth > 800) {
+	                return _react3.default.createElement(
+	                    PinterestGrid,
+	                    { gutter: 20, setHeight: this.setHeight },
+	                    this.items()
+	                );
+	            } else {
+	                return _react3.default.createElement(
+	                    'div',
+	                    { id: 'grid', className: 'autogrid job_list grid row' },
+	                    this.items()
+	                );
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 
@@ -41706,11 +41808,7 @@
 	                return _react3.default.createElement(
 	                    'div',
 	                    { className: 'container' },
-	                    _react3.default.createElement(
-	                        PinterestGrid,
-	                        { gutter: 20, setHeight: this.setHeight },
-	                        this.items()
-	                    )
+	                    this.pinterestRender()
 	                );
 	            } // if isLoaded END
 	            else {
@@ -60175,18 +60273,24 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function loginPopup() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { isShow: false, isAuthProcess: false } : arguments[0];
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? { isShow: false, isAuthProcess: false, isShowContacts: false } : arguments[0];
 	    var action = arguments[1];
 
 	    switch (action.type) {
 	        case 'LOGIN_POPUP_SHOW':
-	            return { isShow: true, isAuthProcess: state.isAuthProcess };
+	            return { isShow: true, isAuthProcess: state.isAuthProcess, isShowContacts: false };
 
 	        case 'LOGIN_POPUP_CLOSE':
-	            return { isShow: false, isAuthProcess: state.isAuthProcess };
+	            return { isShow: false, isAuthProcess: state.isAuthProcess, isShowContacts: false };
 
 	        case 'AUTH_REQUEST':
-	            return { isShow: false, isAuthProcess: true };
+	            return { isShow: false, isAuthProcess: true, isShowContacts: false };
+
+	        case 'CONTACTS_POPUP_SHOW':
+	            return { isShow: false, isAuthProcess: false, isShowContacts: true };
+
+	        case 'CONTACTS_POPUP_CLOSE':
+	            return { isShow: false, isAuthProcess: false, isShowContacts: false };
 
 	        default:
 	            return state;

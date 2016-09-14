@@ -33,12 +33,11 @@ class Navbar extends React.Component{
         if(this.props.popupIsShow){
             return(
 
-                <div className="login-popup">
+                <div className="popup">
 
                     <a href="#" className="close" onClick={(e) => {
                         e.preventDefault();
                         this.props.loginPopupClose();
-                        // this.props.loginPopup('close');
                     }}>
                         <i className="material-icons">close</i>
                     </a>
@@ -47,6 +46,43 @@ class Navbar extends React.Component{
                         <a href="#" className="valign soc-button twitter" onClick={e => this._auth(e) }>
                             Login via Twitter
                         </a>
+                    </div>
+
+                </div>
+            );
+        }
+    }
+
+    contactsPopupRender(){
+        if(this.props.contactsPopupIsShow){
+            return(
+                <div className="popup">
+
+                    <a href="#" className="close" onClick={(e) => {
+                        e.preventDefault();
+                        this.props.contactsPopupClose();
+                    }}>
+                        <i className="material-icons">close</i>
+                    </a>
+
+                    <div className="valign-wrapper">
+                        <div className="valign contacts-popup__content">
+
+                            <p style={{fontSize: '40px', margin: '0 0 10px'}}>Contact Me</p>
+
+
+                            <a href="https://twitter.com/sihaelov" target="_blank">
+                                 <i className="fa fa-twitter"></i>
+                                 Twitter: <span>@sihaelov</span>
+                            </a>
+
+                            <br />
+
+                            <a href="mailto:sihaelov@gmail.com">
+                                <i className="fa fa-envelope"></i>
+                                Email: <span>sihaelov@gmail.com</span>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
@@ -65,27 +101,10 @@ class Navbar extends React.Component{
             <div>
 
                 {this.popup()}
+                {this.contactsPopupRender()}
 
                 {this.renderCat()}
                 <div style={{marginBottom: '30px'}}>
-
-
-                {/*
-                    <Link to="/my-jobs" className="my-jobs">
-                        <p>
-                            My Jobs
-                            <span id="jobs-counter"> {this.props.jobs_count}</span>     
-                        </p>
-                    </Link>
-
-                    <a href='#' onClick={e => {
-                        e.preventDefault()
-                        this.props.auth()
-                    }}>
-                            Login via Twitter
-                    </a>
-                */}
-
 
                     <nav className="white black-text" style={{textColor: '#000'}}>
                         <div className="nav-wrapper" className="black-text">
@@ -93,23 +112,30 @@ class Navbar extends React.Component{
                             <ul className="right hide-on-med-and-down">
                                 
                                 <li>
+                                    {/*
                                     <a href="mailto:sihaelov@gmail.com">
                                         Contact
+                                    </a>
+                                    */}
+
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        this.props.contactsPopupShow();
+                                    }}>
+                                        Contacts
                                     </a>
                                 </li>
 
                                 <li>
                                     <Link to="/my-jobs" className="my-jobs">
-                                            My Jobs
-                                            <span id="jobs-counter"> {this.props.jobs_count}</span>        
+                                        My Jobs
+                                        <span id="jobs-counter"> {this.props.jobs_count}</span>        
                                     </Link>
                                 </li>
 
                                 <li>
                                     {this.login()}
                                 </li>
-                                    
-                                       
 
                             </ul>
                         </div>

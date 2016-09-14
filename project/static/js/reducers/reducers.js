@@ -5,16 +5,22 @@ import merge from 'lodash/merge'
 import * as types from '../constants/ActionTypes';
 
 
-function loginPopup(state={isShow: false, isAuthProcess: false}, action){
+function loginPopup(state={isShow: false, isAuthProcess: false, isShowContacts: false}, action){
     switch(action.type){
         case 'LOGIN_POPUP_SHOW':
-            return { isShow: true, isAuthProcess: state.isAuthProcess }
+            return { isShow: true, isAuthProcess: state.isAuthProcess, isShowContacts: false }
 
         case 'LOGIN_POPUP_CLOSE':
-            return { isShow: false, isAuthProcess: state.isAuthProcess }
+            return { isShow: false, isAuthProcess: state.isAuthProcess, isShowContacts: false }
 
         case 'AUTH_REQUEST':
-            return { isShow: false, isAuthProcess: true }
+            return { isShow: false, isAuthProcess: true, isShowContacts: false }
+
+        case 'CONTACTS_POPUP_SHOW':
+            return { isShow: false, isAuthProcess: false, isShowContacts: true }
+
+        case 'CONTACTS_POPUP_CLOSE':
+            return { isShow: false, isAuthProcess: false, isShowContacts: false }
 
         default:
             return state
