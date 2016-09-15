@@ -108,7 +108,7 @@ class Navbar extends React.Component{
 
                     <nav className="white black-text" style={{textColor: '#000'}}>
                         <div className="nav-wrapper" className="black-text">
-                            <h1 className="brand-logo"><Link to='/'>Sagfi</Link></h1>
+                            <h1 className="brand-logo"><a href='/'>Sagfi</a></h1>
                             <ul className="right hide-on-med-and-down">
                                 
                                 <li>

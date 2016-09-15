@@ -5,7 +5,7 @@ import $ from 'jquery'
 
 // import { PropTypes } from 'react'
 // import VisibleJobs from '../containers/jobs.js'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 
 
 // const Job = ({onLike, onDislike, job}) => (
@@ -50,6 +50,17 @@ class Job extends React.Component{
 	    }
     }
 
+    setSkill(skill){
+        return(
+            <a key={skill.id} href='#' onClick={(e) => {
+                e.preventDefault();
+                this.props.setSkill(skill.name)
+            }}>
+                {skill.name}
+            </a>
+        );
+    }
+
     render() {
 
         let likeClasses = ClassNames({
@@ -71,9 +82,9 @@ class Job extends React.Component{
                 <Link to={{ pathname: `/job/${job.slug}` }} className="card hoverable z-depth-1">
                 */}
 
-        		<Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card z-depth-1 hoverable" style={styles}>
+        		<div className="card z-depth-1" style={styles}>
         			
-                    <div className="card-body">
+                    <Link to={{ pathname: `/job/${this.props.job.slug}` }} className="card-body">
             			<h2 className="job-name center-align">{this.props.job.name}</h2>
             	    	<h3 className="company-name center-align">{this.props.job.company}</h3>
 
@@ -85,16 +96,13 @@ class Job extends React.Component{
             	    	<div className="job-keywords job-keys">
             	    		{this.props.job.keywords.map( keyword => (keyword['name']) ).join(', ')}
             	    	</div>
-                    </div>
+                    </Link>
 
                     <div className="job-skills job-keys">
-                        {this.props.job.skills.map(function(skill, index) {
-                                return(<span key={skill.id}> {skill.name} </span>);
-                            }
-                        )}
+                        {this.props.job.skills.map( (skill, index) => this.setSkill(skill) )}
                     </div>
 
-                </Link> {/* .card*/}
+                </div> {/* .card*/}
 
         		<div className="job-actions hide-on-med-and-down">
 	                    {/* <a href="#" className="like"> */}
@@ -352,21 +360,27 @@ class JobList extends React.Component{
 
         this.setHeight = this.setHeight.bind(this);
         this.load = this.load.bind(this);
+        this.setSkill = this.setSkill.bind(this);
 
         this.state = {
             jobs: [],
             isLoaded: false,
-            nextUrl: '/jobs/',
-            height: '0px'
+            nextUrl: this.props.location.query.q ?
+                     `/jobs/?q=${this.props.location.query.q}` :
+                     '/jobs/',
+            height: '0px',
+            skill: ''
         };
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+
         return(
             this.state.jobs !== nextState.jobs ||
             this.state.height !== nextState.height ||
             !this.state.isLoaded ||
-            this.props.isAuthProcess !== nextProps.isAuthProcess
+            this.props.isAuthProcess !== nextProps.isAuthProcess ||
+            this.props.location.query.q !== nextProps.location.query.q
         );
     }
 
@@ -375,19 +389,28 @@ class JobList extends React.Component{
         this.load();
 	}
 
+    setSkill(skill){
+        window.location.replace('/?q=' + skill)
+        // this.setState({skill: skill});
+        // browserHistory.push(`?q=${skill}`);
+    }
+
     setHeight(top){
         this.setState({height: top});
     }
 
+
     load(){
         if(this.state.nextUrl){
+
             $.ajax({
                 url: `${this.state.nextUrl}`,
                 dataType: 'json',
                 // cache: false,   //added ?_={timestamp}
                 success: function(jobs) {
                     this.setState({nextUrl: jobs.next});
-                    this.setState({jobs: this.state.jobs.concat(jobs.results)});
+                    this.setState({jobs: jobs.results});
+                    // this.setState({jobs: this.state.jobs.concat(jobs.results)});
                     this.setState({isLoaded: true});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -425,6 +448,7 @@ class JobList extends React.Component{
                     onLike={() => this.props.onLike(job.id) }
     		        onDislike={() => this.props.onDislike(metajobId)}
                     loginPopupShow={() => this.props.loginPopupShow() }
+                    setSkill={ (skill) => this.setSkill(skill) }
     		    />)
     	    })
         }

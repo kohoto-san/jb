@@ -5,7 +5,7 @@ import { JobList } from '../components/jobs.js'
 
 import { likeJob, getJobs, loginPopupShow, dislikeJob } from '../actions'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
 
     // const likes_arr = state.entities.jobs.map(job => { if(job) return job.job_id })
     const likes_arr = state.entities.jobs.map(job => { if(job) return job })
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
 
 	return{
 		likes: likes_arr,
-		isAuthProcess: state.loginPopup.isAuthProcess
+		isAuthProcess: state.loginPopup.isAuthProcess,
+		filterBySkill: ownProps.params.filter
 		// jobs: state.allJobs,
 		// jobs: ownProps.params.jobs
 	}

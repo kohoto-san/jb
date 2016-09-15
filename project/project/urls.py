@@ -44,6 +44,8 @@ urlpatterns = [
     # url(r'', views.home),
     url(r'^$', views.home),
     url(r'^my-jobs/$', views.home),
+    url(r'^q/*', views.home),
+
 
     # url(r'^job/(?P<job_id>\d+)/$', views.job_details_redirect, name='job_details_redirect'),
     url(r'^job/(?P<job_slug>[\w-]+)/*$', views.job_details, name='job_details'),

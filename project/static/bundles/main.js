@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b2e93b77ec1f30b14a45"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a0a3cda76b12cf1b86c8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -718,6 +718,17 @@
 	    callback();
 	};
 
+	var wtf = function wtf(nextState, replace, callback) {
+
+	    console.log('wtf');
+	    console.log('wtf');
+	    console.log('wtf');
+	    console.log('wtf');
+	    console.log('wtf');
+
+	    callback();
+	};
+
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: store },
@@ -730,6 +741,8 @@
 	            _reactRouter.Route,
 	            { path: '/', component: _components2.App, onEnter: userAuth },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _jobs3.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '?q:filter', component: _jobs3.default, onEnter: wtf }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/q/:filter', component: _jobs3.default, onEnter: wtf }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'my-jobs', component: _pipeline.VisiblePipeline }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'job/:slug', component: _jobDetails2.default })
 	        )
@@ -40375,8 +40388,8 @@
 	                                'h1',
 	                                { className: 'brand-logo' },
 	                                _react3.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { to: '/' },
+	                                    'a',
+	                                    { href: '/' },
 	                                    'Sagfi'
 	                                )
 	                            ),
@@ -41329,9 +41342,23 @@
 	            }
 	        }
 	    }, {
+	        key: 'setSkill',
+	        value: function setSkill(skill) {
+	            var _this2 = this;
+
+	            return _react3.default.createElement(
+	                'a',
+	                { key: skill.id, href: '#', onClick: function onClick(e) {
+	                        e.preventDefault();
+	                        _this2.props.setSkill(skill.name);
+	                    } },
+	                skill.name
+	            );
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var likeClasses = (0, _classnames2.default)({
 	                'hoverable': true,
@@ -41349,11 +41376,11 @@
 	                'div',
 	                { className: 'grid__item', style: this.props.style },
 	                _react3.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: { pathname: '/job/' + this.props.job.slug }, className: 'card z-depth-1 hoverable', style: styles },
+	                    'div',
+	                    { className: 'card z-depth-1', style: styles },
 	                    _react3.default.createElement(
-	                        'div',
-	                        { className: 'card-body' },
+	                        _reactRouter.Link,
+	                        { to: { pathname: '/job/' + this.props.job.slug }, className: 'card-body' },
 	                        _react3.default.createElement(
 	                            'h2',
 	                            { className: 'job-name center-align' },
@@ -41390,13 +41417,7 @@
 	                        'div',
 	                        { className: 'job-skills job-keys' },
 	                        this.props.job.skills.map(function (skill, index) {
-	                            return _react3.default.createElement(
-	                                'span',
-	                                { key: skill.id },
-	                                ' ',
-	                                skill.name,
-	                                ' '
-	                            );
+	                            return _this3.setSkill(skill);
 	                        })
 	                    )
 	                ),
@@ -41409,15 +41430,15 @@
 	                        { href: '#', className: likeClasses, onClick: function onClick(e) {
 	                                e.preventDefault();
 	                                if (localStorage.getItem('sagfi_token')) {
-	                                    if (_this2.state.isLiked) {
-	                                        _this2.setState({ isLiked: false });
-	                                        _this2.props.onDislike();
+	                                    if (_this3.state.isLiked) {
+	                                        _this3.setState({ isLiked: false });
+	                                        _this3.props.onDislike();
 	                                    } else {
-	                                        _this2.setState({ isLiked: true });
-	                                        _this2.props.onLike();
+	                                        _this3.setState({ isLiked: true });
+	                                        _this3.props.onLike();
 	                                    }
 	                                } else {
-	                                    _this2.props.loginPopupShow();
+	                                    _this3.props.loginPopupShow();
 	                                }
 	                            } },
 	                        this.heartIconRender()
@@ -41459,14 +41480,14 @@
 	    function PinterestGrid(props) {
 	        _classCallCheck(this, PinterestGrid);
 
-	        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(PinterestGrid).call(this, props));
+	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(PinterestGrid).call(this, props));
 
-	        _this3.state = {
+	        _this4.state = {
 	            styles: [],
 	            isRendered: false,
 	            height: 0
 	        };
-	        return _this3;
+	        return _this4;
 	    }
 
 	    _createClass(PinterestGrid, [{
@@ -41560,7 +41581,7 @@
 	    }, {
 	        key: 'layout',
 	        value: function layout() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            if (!this.state.isRendered) {
 	                // console.log('layout')
@@ -41568,20 +41589,20 @@
 	                this.waitForChildren().then(function () {
 
 	                    // console.log('then')
-	                    var columnCount = _this4.getColumnCount();
+	                    var columnCount = _this5.getColumnCount();
 	                    if (columnCount) {
 	                        (function () {
 
-	                            var gutter = _this4.props.gutter;
+	                            var gutter = _this5.props.gutter;
 	                            // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
-	                            var nodeWidth = _reactDom2.default.findDOMNode(_this4).children[0].firstChild.offsetWidth;
+	                            var nodeWidth = _reactDom2.default.findDOMNode(_this5).children[0].firstChild.offsetWidth;
 
 	                            var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
 	                                return 0;
 	                            });
-	                            var styles = _this4.props.children.map(function (child, i) {
-	                                var node = _reactDom2.default.findDOMNode(_this4).children[i].firstChild;
-	                                var columnIndex = _this4.getShortestColumn(columnHeights);
+	                            var styles = _this5.props.children.map(function (child, i) {
+	                                var node = _reactDom2.default.findDOMNode(_this5).children[i].firstChild;
+	                                var columnIndex = _this5.getShortestColumn(columnHeights);
 	                                var top = columnHeights[columnIndex];
 	                                var left = columnIndex * (nodeWidth + gutter);
 	                                columnHeights[columnIndex] += node.offsetHeight + gutter;
@@ -41593,8 +41614,8 @@
 	                                };
 	                            });
 
-	                            _this4.props.setHeight(columnHeights[columnHeights.length - 1]);
-	                            _this4.setState({ styles: styles, isRendered: true });
+	                            _this5.props.setHeight(columnHeights[columnHeights.length - 1]);
+	                            _this5.setState({ styles: styles, isRendered: true });
 	                        })();
 	                    }
 	                });
@@ -41609,18 +41630,18 @@
 	    }, {
 	        key: 'waitForChildren',
 	        value: function waitForChildren() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            return new Promise(function (resolve) {
-	                _this5.interval = setInterval(function () {
-	                    var ready = _this5.props.children.every(function (child, i) {
-	                        var node = _reactDom2.default.findDOMNode(_this5).children[i].firstChild;
+	                _this6.interval = setInterval(function () {
+	                    var ready = _this6.props.children.every(function (child, i) {
+	                        var node = _reactDom2.default.findDOMNode(_this6).children[i].firstChild;
 	                        return node;
 	                        // return ReactDOM.findDOMNode(this.refs[`child-${i}`]);
 	                    });
 
 	                    if (ready) {
-	                        clearInterval(_this5.interval);
+	                        clearInterval(_this6.interval);
 	                        resolve();
 	                    }
 	                }, 50);
@@ -41635,14 +41656,14 @@
 	    }, {
 	        key: 'getUpdatedChildren',
 	        value: function getUpdatedChildren() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            return _react3.default.Children.map(this.props.children, function (child, i) {
 
 	                var style = child.props.style || {};
 
 	                var newChild = _react3.default.cloneElement(child, {
-	                    style: extend({}, _this6.state.styles[i], child.props.style)
+	                    style: extend({}, _this7.state.styles[i], child.props.style)
 	                });
 
 	                // this.isLoading = false;
@@ -41688,30 +41709,40 @@
 	    function JobList(props) {
 	        _classCallCheck(this, JobList);
 
-	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(JobList).call(this, props));
+	        var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(JobList).call(this, props));
 
-	        _this7.setHeight = _this7.setHeight.bind(_this7);
-	        _this7.load = _this7.load.bind(_this7);
+	        _this8.setHeight = _this8.setHeight.bind(_this8);
+	        _this8.load = _this8.load.bind(_this8);
+	        _this8.setSkill = _this8.setSkill.bind(_this8);
 
-	        _this7.state = {
+	        _this8.state = {
 	            jobs: [],
 	            isLoaded: false,
-	            nextUrl: '/jobs/',
-	            height: '0px'
+	            nextUrl: _this8.props.location.query.q ? '/jobs/?q=' + _this8.props.location.query.q : '/jobs/',
+	            height: '0px',
+	            skill: ''
 	        };
-	        return _this7;
+	        return _this8;
 	    }
 
 	    _createClass(JobList, [{
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return this.state.jobs !== nextState.jobs || this.state.height !== nextState.height || !this.state.isLoaded || this.props.isAuthProcess !== nextProps.isAuthProcess;
+
+	            return this.state.jobs !== nextState.jobs || this.state.height !== nextState.height || !this.state.isLoaded || this.props.isAuthProcess !== nextProps.isAuthProcess || this.props.location.query.q !== nextProps.location.query.q;
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            // this.props.getJobs();
 	            this.load();
+	        }
+	    }, {
+	        key: 'setSkill',
+	        value: function setSkill(skill) {
+	            window.location.replace('/?q=' + skill);
+	            // this.setState({skill: skill});
+	            // browserHistory.push(`?q=${skill}`);
 	        }
 	    }, {
 	        key: 'setHeight',
@@ -41722,13 +41753,15 @@
 	        key: 'load',
 	        value: function load() {
 	            if (this.state.nextUrl) {
+
 	                _jquery2.default.ajax({
 	                    url: '' + this.state.nextUrl,
 	                    dataType: 'json',
 	                    // cache: false,   //added ?_={timestamp}
 	                    success: function (jobs) {
 	                        this.setState({ nextUrl: jobs.next });
-	                        this.setState({ jobs: this.state.jobs.concat(jobs.results) });
+	                        this.setState({ jobs: jobs.results });
+	                        // this.setState({jobs: this.state.jobs.concat(jobs.results)});
 	                        this.setState({ isLoaded: true });
 	                    }.bind(this),
 	                    error: function (xhr, status, err) {
@@ -41740,14 +41773,14 @@
 	    }, {
 	        key: 'items',
 	        value: function items() {
-	            var _this8 = this;
+	            var _this9 = this;
 
 	            // return this.props.jobs.map((job, i) =>{
 	            if (this.state.jobs) {
 	                return this.state.jobs.map(function (job, i) {
 	                    // const isLiked = this.props.likes.has(job.id);
 
-	                    var metajobs_arr = _this8.props.likes.filter(function (likedJob) {
+	                    var metajobs_arr = _this9.props.likes.filter(function (likedJob) {
 	                        if (likedJob) return likedJob.job_id == job.id;
 	                    });
 	                    var isLiked = void 0;
@@ -41766,13 +41799,16 @@
 	                        isLiked: isLiked
 	                        // ref={`child-${i}`}
 	                        , onLike: function onLike() {
-	                            return _this8.props.onLike(job.id);
+	                            return _this9.props.onLike(job.id);
 	                        },
 	                        onDislike: function onDislike() {
-	                            return _this8.props.onDislike(metajobId);
+	                            return _this9.props.onDislike(metajobId);
 	                        },
 	                        loginPopupShow: function loginPopupShow() {
-	                            return _this8.props.loginPopupShow();
+	                            return _this9.props.loginPopupShow();
+	                        },
+	                        setSkill: function setSkill(skill) {
+	                            return _this9.setSkill(skill);
 	                        }
 	                    });
 	                });
@@ -52034,7 +52070,7 @@
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	var mapStateToProps = function mapStateToProps(state) {
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 		// const likes_arr = state.entities.jobs.map(job => { if(job) return job.job_id })
 		var likes_arr = state.entities.jobs.map(function (job) {
@@ -52044,7 +52080,8 @@
 
 		return {
 			likes: likes_arr,
-			isAuthProcess: state.loginPopup.isAuthProcess
+			isAuthProcess: state.loginPopup.isAuthProcess,
+			filterBySkill: ownProps.params.filter
 			// jobs: state.allJobs,
 			// jobs: ownProps.params.jobs
 		};
@@ -57955,6 +57992,8 @@
 
 				if (href.includes('twitter')) {
 					url = href + this.state.job.name + ' at ' + this.state.job.company;
+				} else if (href.includes('linkedin')) {
+					url = href + '&title=' + this.state.job.name + '&url=' + window.location.href;
 				} else {
 					url = href + window.location.href;
 				}
@@ -57995,6 +58034,17 @@
 						'Liked'
 					);
 				}
+			}
+		}, {
+			key: 'renderEmailShare',
+			value: function renderEmailShare() {
+				var emailUrl = 'mailto:?subject=' + this.state.job.name + ' at ' + this.state.job.company + '&body=Hi%2C%0A%0A' + this.state.job.company + ' is hiring a ' + this.state.job.name + '%21%0A%0A' + window.location.href;
+				return _react3.default.createElement(
+					'a',
+					{ href: emailUrl },
+					_react3.default.createElement('i', { className: 'fa fa-envelope' }),
+					' '
+				);
 			}
 		}, {
 			key: 'render',
@@ -58149,6 +58199,14 @@
 											'span',
 											null,
 											'Share'
+										),
+										this.renderEmailShare(),
+										_react3.default.createElement(
+											'a',
+											{ onClick: function onClick(e) {
+													return _this3.share(e, 'https://www.linkedin.com/shareArticle?mini=true&source=Sagfi');
+												}, href: '#', target: '_blank' },
+											_react3.default.createElement('i', { className: 'fa fa-linkedin-square' })
 										),
 										_react3.default.createElement(
 											'a',

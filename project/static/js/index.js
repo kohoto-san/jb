@@ -98,6 +98,16 @@ const userAuth = (nextState, replace, callback) => {
     callback();
 }
 
+const wtf = (nextState, replace, callback) => {
+
+    console.log('wtf')
+    console.log('wtf')
+    console.log('wtf')
+    console.log('wtf')
+    console.log('wtf')
+   
+    callback();
+}
 
 ReactDOM.render(
     <Provider store={store}>
@@ -106,6 +116,9 @@ ReactDOM.render(
 
             <Route path="/" component={App} onEnter={userAuth}>
                 <IndexRoute component={VisibleJobs} />
+                <Route path="?q:filter" component={VisibleJobs} onEnter={wtf} />
+                <Route path="/q/:filter" component={VisibleJobs} onEnter={wtf} />
+
                 <Route path="my-jobs" component={VisiblePipeline} />
                 <Route path="job/:slug" component={JobDetails} />
                 {/*

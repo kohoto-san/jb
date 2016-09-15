@@ -68,6 +68,9 @@ class JobDetails extends React.Component{
             if(href.includes('twitter')){
                 url = href + this.state.job.name + ' at ' + this.state.job.company;
             }
+            else if(href.includes('linkedin')){
+            	url = href + '&title=' + this.state.job.name + '&url=' + window.location.href;
+            }
             else{
 	            url = href + window.location.href;
             }
@@ -102,6 +105,16 @@ class JobDetails extends React.Component{
 	            }}>Liked</a>
 			);
 		}
+	}
+
+	renderEmailShare(){
+		let emailUrl = `mailto:?subject=${this.state.job.name} at ${this.state.job.company}&body=Hi%2C%0A%0A${this.state.job.company} is hiring a ${this.state.job.name}%21%0A%0A${window.location.href}`;
+		return(
+			<a href={emailUrl}>
+	            <i className="fa fa-envelope"></i> {/*email*/}
+            	{/* Email */}
+            </a>
+		);
 	}
 	
 	render() {
@@ -207,6 +220,13 @@ class JobDetails extends React.Component{
 								<div className="card-content share-btns-wrapper">
 									<span>Share</span>
 
+					                {this.renderEmailShare()}
+
+					                <a onClick={(e) => this.share(e, 'https://www.linkedin.com/shareArticle?mini=true&source=Sagfi')} href="#" target="_blank">
+					                	<i className="fa fa-linkedin-square"></i>
+					                	{/* LinkedIn */}
+					                </a>
+
 					                <a onClick={(e) => this.share(e, `http://twitter.com/share?text=` )} href='#' target="_blank">
 					                    <i className="fa fa-twitter"></i>
 					                    {/* Twitter */}
@@ -216,7 +236,7 @@ class JobDetails extends React.Component{
 					                	<i className="fa fa-facebook"></i>
 					                	{/* Facebook */}
 					                </a>
-
+					                
 
 									{/*
 									<a class="vk popup" href="http://vk.com/share.php?url=" target="_blank">

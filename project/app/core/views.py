@@ -183,9 +183,21 @@ class JobListPagination(pagination.PageNumberPagination):
 
 
 class JobList(generics.ListCreateAPIView):
-    queryset = Job.objects.all().order_by('-date')
+    # queryset = Job.objects.all().order_by('-date')
     serializer_class = JobListSerializer
     pagination_class = JobListPagination
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Job.objects.all().order_by('-date')
+
+        tag = self.request.query_params.get('q', None)
+        if tag is not None:
+            queryset = queryset.filter(skills__name=tag)
+        return queryset
 
 
 class JobDetails(generics.RetrieveAPIView):

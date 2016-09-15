@@ -168,10 +168,15 @@ nav
     right-padding = job-actions-right + 46;
     padding 10px 60px 0 10px;
     text-align left;
+    
+    a:hover
+        background-color #eee;
 
 .job-keywords,
 .job-skills
-    span
+    span,
+    a
+        transition all 0.2s;
         display inline-block;
         margin-right 4px;
         margin-top 5px;
@@ -281,12 +286,20 @@ job-actions-right = 0px;
         // padding-bottom 45px;        
 
     .card-body
+        display block;
         padding 10px 15px 10px;
         // text-transform capitalize;
         // height 400px;
+        transition all 0.2s;
     
         p
             margin 10px 0;
+            
+        &:hover
+            background-color bc;
+
+            .job-name
+                text-decoration underline;
         
     .job-actions
         position: absolute;

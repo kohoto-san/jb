@@ -152,8 +152,14 @@ nav .brand-logo a {
   padding: 10px 60px 0 10px;
   text-align: left;
 }
+.job-skills a:hover {
+  background-color: #eee;
+}
 .job-keywords span,
-.job-skills span {
+.job-skills span,
+.job-keywords a,
+.job-skills a {
+  transition: all 0.2s;
   display: inline-block;
   margin-right: 4px;
   margin-top: 5px;
@@ -164,7 +170,9 @@ nav .brand-logo a {
   font-size: 12px;
 }
 .job-keywords span:last-child,
-.job-skills span:last-child {
+.job-skills span:last-child,
+.job-keywords a:last-child,
+.job-skills a:last-child {
   margin-right: 0;
 }
 .job-keywords {
@@ -250,10 +258,18 @@ nav .brand-logo a {
   height: 380px;
 }
 .grid__item .card-body {
+  display: block;
   padding: 10px 15px 10px;
+  transition: all 0.2s;
 }
 .grid__item .card-body p {
   margin: 10px 0;
+}
+.grid__item .card-body:hover {
+  background-color: #fafafa;
+}
+.grid__item .card-body:hover .job-name {
+  text-decoration: underline;
 }
 .grid__item .job-actions {
   position: absolute;
