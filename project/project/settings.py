@@ -68,6 +68,7 @@ INSTALLED_APPS = [
 
     'app.core',
     'app.profiles',
+    'app.jobparser'
 ]
 
 SITE_ID = 1

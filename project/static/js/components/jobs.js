@@ -166,9 +166,16 @@ class PinterestGrid extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        this.layout();
+    componentWillReceiveProps(nextProps) {
+        if(this.props.children.length !== nextProps.children.length){
+            this.setState({isRendered: false});
+            this.layout();
+        }
     }
+
+    // componentDidUpdate() {
+    //     this.layout();
+    // }
 
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -244,12 +251,10 @@ class PinterestGrid extends React.Component {
      */
     layout() {
 
-        if( ! this.state.isRendered){
-            // console.log('layout')
+        // if( ! this.state.isRendered){
 
             this.waitForChildren().then(() => {
 
-                // console.log('then')
                 const columnCount = this.getColumnCount();
                 if(columnCount){
 
@@ -276,7 +281,7 @@ class PinterestGrid extends React.Component {
                     this.setState({ styles: styles, isRendered: true });
                 }
             });
-        }
+        // }
     }
 
     /**
@@ -361,6 +366,7 @@ class JobList extends React.Component{
         this.setHeight = this.setHeight.bind(this);
         this.load = this.load.bind(this);
         this.setSkill = this.setSkill.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
 
         this.state = {
             jobs: [],
@@ -368,7 +374,7 @@ class JobList extends React.Component{
             nextUrl: this.props.location.query.q ?
                      `/jobs/?q=${this.props.location.query.q}` :
                      '/jobs/',
-            height: '0px',
+            height: 0,
             skill: ''
         };
     }
@@ -386,8 +392,32 @@ class JobList extends React.Component{
 
 	componentDidMount() {
         // this.props.getJobs();
+        window.addEventListener("scroll", this.handleScroll);
         this.load();
 	}
+
+
+    //this function will be triggered if user scrolls
+    handleScroll(){
+        var windowHeight = $(window).height();
+        var inHeight = window.innerHeight;
+        var scrollT = $(window).scrollTop();
+        var totalScrolled = scrollT+inHeight;
+
+        if(totalScrolled + 100 > this.state.height){ //user reached at bottom
+            // if(!this.state.loadingFlag){ //to avoid multiple request
+            if(this.state.isLoaded){
+                // this.setState({loadingFlag: true});
+                this.setState({isLoaded: false});
+                this.load();
+                // this.getComment();
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
 
     setSkill(skill){
         window.location.replace('/?q=' + skill)
@@ -402,15 +432,14 @@ class JobList extends React.Component{
 
     load(){
         if(this.state.nextUrl){
-
             $.ajax({
                 url: `${this.state.nextUrl}`,
                 dataType: 'json',
                 // cache: false,   //added ?_={timestamp}
                 success: function(jobs) {
                     this.setState({nextUrl: jobs.next});
-                    this.setState({jobs: jobs.results});
-                    // this.setState({jobs: this.state.jobs.concat(jobs.results)});
+                    // this.setState({jobs: jobs.results});
+                    this.setState({jobs: this.state.jobs.concat(jobs.results)});
                     this.setState({isLoaded: true});
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -454,12 +483,35 @@ class JobList extends React.Component{
         }
 	}
 
+    circleLoadingRender(height){
+
+        if(!this.state.isLoaded){
+            let top = height || this.state.height + 100;
+
+            return(
+                <div style={{textAlign: 'center', position: 'relative', top: top}}>
+                    <div className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div><div className="gap-patch">
+                                <div className="circle"></div>
+                            </div><div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     pinterestRender(){
         if(window.innerWidth > 800){
             return(
                 <PinterestGrid gutter={20} setHeight={this.setHeight}>
                     { this.items() }
-                </PinterestGrid>
+                </PinterestGrid>                
             );
         }
         else{
@@ -480,7 +532,8 @@ class JobList extends React.Component{
             // 'disabled': this.props.isLiked
         });
 
-        if(this.state.isLoaded && !this.props.isAuthProcess){
+        // if(this.state.isLoaded && !this.props.isAuthProcess){
+        if(!this.props.isAuthProcess){
     		return (
     			<div className="container">                    
 
@@ -489,35 +542,26 @@ class JobList extends React.Component{
                         { this.items() }
                     </div>
                     */}
+                    { this.circleLoadingRender() }
 
-                    {this.pinterestRender()}
+                    { this.pinterestRender() }
 
-	                {/*
+
+                    {/*
                     <a href='#' className={loadClasses} style={{top: this.state.height}} onClick={(e) => {
                         e.preventDefault();
                         this.load();
                     }}>
                         More
                     </a>
-					*/}
-
+                    */}
     			</div>				
     		);
         } // if isLoaded END
         else{
             return(
-                <div style={{textAlign: 'center'}}>
-                    <div className="preloader-wrapper big active">
-                        <div className="spinner-layer spinner-blue-only">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    { this.pinterestRender(1) }
                 </div>
             );
         }

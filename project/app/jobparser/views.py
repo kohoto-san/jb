@@ -1,3 +1,8 @@
+from django.shortcuts import render
+
+# Create your views here.
+
+
 import requests
 from datetime import datetime
 # import xml.etree.ElementTree

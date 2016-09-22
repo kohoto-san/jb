@@ -31,11 +31,34 @@ class Keyword(models.Model):
         return self.name
 
 
+class Company(models.Model):
+
+    name = models.CharField(max_length=250)
+    domain = models.URLField()
+
+    alexa_rank = models.IntegerField()
+    top_country = models.CharField(max_length=250)
+    month_visitors = models.IntegerField(default=0)
+
+    def get_upload_path(instance, filename):
+        return os.path.join('logos', str(instance.id) + filename[-4:])
+
+    logo = models.ImageField(upload_to=get_upload_path, default="default.png")
+
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companys"
+
+    def __str__(self):
+        pass
+
+
 class Job(models.Model):
+
+    company_name = models.CharField(max_length=250)
 
     date = models.DateTimeField(default=timezone.now)
     name = models.CharField(max_length=250)
-    company = models.CharField(max_length=250)
     salary = models.CharField(max_length=250, blank=True, null=True)
     exp = models.CharField(max_length=250, blank=True, null=True)
     text = models.TextField()

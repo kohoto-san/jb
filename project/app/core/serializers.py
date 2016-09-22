@@ -18,7 +18,7 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ('id', 'slug', 'name', 'company', 'salary', 'exp', 'text', 'skills', 'keywords', 'url', 'source')
+        fields = ('id', 'slug', 'name', 'company_name', 'salary', 'exp', 'text', 'skills', 'keywords', 'url', 'source')
 
 
 class JobListSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class JobListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ('id', 'slug', 'name', 'company', 'salary', 'exp', 'skills', 'keywords')
+        fields = ('id', 'slug', 'name', 'company_name', 'salary', 'exp', 'skills', 'keywords')
 
 
 class LaneSerializer(serializers.ModelSerializer):

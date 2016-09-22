@@ -14,17 +14,17 @@ from rest_framework import generics, viewsets, pagination, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from . import parseJobs
 from django.http import HttpResponse
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import JSONRenderer
+from rest_framework import filters
 
 
 def getMetaJobs(request, user):
     jobs = MetaJob.objects.filter(lane__user=user).order_by('lane')
 
     data = jobs.values('id', 'job__slug', 'position', 'lane_id', 'lane__name',
-                       'job_id', 'job__name', 'job__company', 'job__salary', 'job__exp')
+                       'job_id', 'job__name', 'job__company_name', 'job__salary', 'job__exp')
     lanes = Lane.objects.filter(user=user).values('name', 'id')
 
     result = {'lanes': [], 'totalLikes': len(jobs)}
@@ -145,7 +145,7 @@ class MetaJobList(APIView):
             'lane__name': job.lane.name,
             'job_id': job.job_id,
             'job__name': job.job.name,
-            'job__company': job.job.company,
+            'job__company': job.job.company_name,
             'job__salary': job.job.salary,
             'job__exp': job.job.exp
         }
@@ -183,10 +183,22 @@ class JobListPagination(pagination.PageNumberPagination):
 
 
 class JobList(generics.ListCreateAPIView):
-    # queryset = Job.objects.all().order_by('-date')
+    '''
+    tag = request.query_params.get('q', None)
+
+    if tag is not None:
+        queryset = Job.objects.filter(skills__name=tag).order_by('-date')
+    else:
+        queryset = Job.objects.all().order_by('-date')
+    '''
+
+    queryset = Job.objects.all().order_by('-date')
     serializer_class = JobListSerializer
     pagination_class = JobListPagination
 
+    # filter_backends = (filters.DjangoFilterBackend,)
+
+    '''
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
@@ -198,6 +210,7 @@ class JobList(generics.ListCreateAPIView):
         if tag is not None:
             queryset = queryset.filter(skills__name=tag)
         return queryset
+    '''
 
 
 class JobDetails(generics.RetrieveAPIView):

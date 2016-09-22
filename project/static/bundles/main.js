@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a0a3cda76b12cf1b86c8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9c644c9a6dd6c7291c34"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -41498,10 +41498,18 @@
 	            }
 	        }
 	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            this.layout();
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (this.props.children.length !== nextProps.children.length) {
+	                this.setState({ isRendered: false });
+	                this.layout();
+	            }
 	        }
+
+	        // componentDidUpdate() {
+	        //     this.layout();
+	        // }
+
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
@@ -41583,43 +41591,41 @@
 	        value: function layout() {
 	            var _this5 = this;
 
-	            if (!this.state.isRendered) {
-	                // console.log('layout')
+	            // if( ! this.state.isRendered){
 
-	                this.waitForChildren().then(function () {
+	            this.waitForChildren().then(function () {
 
-	                    // console.log('then')
-	                    var columnCount = _this5.getColumnCount();
-	                    if (columnCount) {
-	                        (function () {
+	                var columnCount = _this5.getColumnCount();
+	                if (columnCount) {
+	                    (function () {
 
-	                            var gutter = _this5.props.gutter;
-	                            // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
-	                            var nodeWidth = _reactDom2.default.findDOMNode(_this5).children[0].firstChild.offsetWidth;
+	                        var gutter = _this5.props.gutter;
+	                        // const nodeWidth = ReactDOM.findDOMNode(this.refs['child-0']).offsetWidth;
+	                        var nodeWidth = _reactDom2.default.findDOMNode(_this5).children[0].firstChild.offsetWidth;
 
-	                            var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
-	                                return 0;
-	                            });
-	                            var styles = _this5.props.children.map(function (child, i) {
-	                                var node = _reactDom2.default.findDOMNode(_this5).children[i].firstChild;
-	                                var columnIndex = _this5.getShortestColumn(columnHeights);
-	                                var top = columnHeights[columnIndex];
-	                                var left = columnIndex * (nodeWidth + gutter);
-	                                columnHeights[columnIndex] += node.offsetHeight + gutter;
+	                        var columnHeights = Array.apply(null, Array(columnCount)).map(function (x) {
+	                            return 0;
+	                        });
+	                        var styles = _this5.props.children.map(function (child, i) {
+	                            var node = _reactDom2.default.findDOMNode(_this5).children[i].firstChild;
+	                            var columnIndex = _this5.getShortestColumn(columnHeights);
+	                            var top = columnHeights[columnIndex];
+	                            var left = columnIndex * (nodeWidth + gutter);
+	                            columnHeights[columnIndex] += node.offsetHeight + gutter;
 
-	                                return {
-	                                    position: 'absolute',
-	                                    top: top + 'px',
-	                                    left: left + 'px'
-	                                };
-	                            });
+	                            return {
+	                                position: 'absolute',
+	                                top: top + 'px',
+	                                left: left + 'px'
+	                            };
+	                        });
 
-	                            _this5.props.setHeight(columnHeights[columnHeights.length - 1]);
-	                            _this5.setState({ styles: styles, isRendered: true });
-	                        })();
-	                    }
-	                });
-	            }
+	                        _this5.props.setHeight(columnHeights[columnHeights.length - 1]);
+	                        _this5.setState({ styles: styles, isRendered: true });
+	                    })();
+	                }
+	            });
+	            // }
 	        }
 
 	        /**
@@ -41714,12 +41720,13 @@
 	        _this8.setHeight = _this8.setHeight.bind(_this8);
 	        _this8.load = _this8.load.bind(_this8);
 	        _this8.setSkill = _this8.setSkill.bind(_this8);
+	        _this8.handleScroll = _this8.handleScroll.bind(_this8);
 
 	        _this8.state = {
 	            jobs: [],
 	            isLoaded: false,
 	            nextUrl: _this8.props.location.query.q ? '/jobs/?q=' + _this8.props.location.query.q : '/jobs/',
-	            height: '0px',
+	            height: 0,
 	            skill: ''
 	        };
 	        return _this8;
@@ -41735,7 +41742,35 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            // this.props.getJobs();
+	            window.addEventListener("scroll", this.handleScroll);
 	            this.load();
+	        }
+
+	        //this function will be triggered if user scrolls
+
+	    }, {
+	        key: 'handleScroll',
+	        value: function handleScroll() {
+	            var windowHeight = (0, _jquery2.default)(window).height();
+	            var inHeight = window.innerHeight;
+	            var scrollT = (0, _jquery2.default)(window).scrollTop();
+	            var totalScrolled = scrollT + inHeight;
+
+	            if (totalScrolled + 100 > this.state.height) {
+	                //user reached at bottom
+	                // if(!this.state.loadingFlag){ //to avoid multiple request
+	                if (this.state.isLoaded) {
+	                    // this.setState({loadingFlag: true});
+	                    this.setState({ isLoaded: false });
+	                    this.load();
+	                    // this.getComment();
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            window.removeEventListener("scroll", this.handleScroll);
 	        }
 	    }, {
 	        key: 'setSkill',
@@ -41753,15 +41788,14 @@
 	        key: 'load',
 	        value: function load() {
 	            if (this.state.nextUrl) {
-
 	                _jquery2.default.ajax({
 	                    url: '' + this.state.nextUrl,
 	                    dataType: 'json',
 	                    // cache: false,   //added ?_={timestamp}
 	                    success: function (jobs) {
 	                        this.setState({ nextUrl: jobs.next });
-	                        this.setState({ jobs: jobs.results });
-	                        // this.setState({jobs: this.state.jobs.concat(jobs.results)});
+	                        // this.setState({jobs: jobs.results});
+	                        this.setState({ jobs: this.state.jobs.concat(jobs.results) });
 	                        this.setState({ isLoaded: true });
 	                    }.bind(this),
 	                    error: function (xhr, status, err) {
@@ -41815,6 +41849,42 @@
 	            }
 	        }
 	    }, {
+	        key: 'circleLoadingRender',
+	        value: function circleLoadingRender(height) {
+
+	            if (!this.state.isLoaded) {
+	                var top = height || this.state.height + 100;
+
+	                return _react3.default.createElement(
+	                    'div',
+	                    { style: { textAlign: 'center', position: 'relative', top: top } },
+	                    _react3.default.createElement(
+	                        'div',
+	                        { className: 'preloader-wrapper big active' },
+	                        _react3.default.createElement(
+	                            'div',
+	                            { className: 'spinner-layer spinner-blue-only' },
+	                            _react3.default.createElement(
+	                                'div',
+	                                { className: 'circle-clipper left' },
+	                                _react3.default.createElement('div', { className: 'circle' })
+	                            ),
+	                            _react3.default.createElement(
+	                                'div',
+	                                { className: 'gap-patch' },
+	                                _react3.default.createElement('div', { className: 'circle' })
+	                            ),
+	                            _react3.default.createElement(
+	                                'div',
+	                                { className: 'circle-clipper right' },
+	                                _react3.default.createElement('div', { className: 'circle' })
+	                            )
+	                        )
+	                    )
+	                );
+	            }
+	        }
+	    }, {
 	        key: 'pinterestRender',
 	        value: function pinterestRender() {
 	            if (window.innerWidth > 800) {
@@ -41840,40 +41910,20 @@
 	                // 'disabled': this.props.isLiked
 	            });
 
-	            if (this.state.isLoaded && !this.props.isAuthProcess) {
+	            // if(this.state.isLoaded && !this.props.isAuthProcess){
+	            if (!this.props.isAuthProcess) {
 	                return _react3.default.createElement(
 	                    'div',
 	                    { className: 'container' },
+	                    this.circleLoadingRender(),
 	                    this.pinterestRender()
 	                );
 	            } // if isLoaded END
 	            else {
 	                    return _react3.default.createElement(
 	                        'div',
-	                        { style: { textAlign: 'center' } },
-	                        _react3.default.createElement(
-	                            'div',
-	                            { className: 'preloader-wrapper big active' },
-	                            _react3.default.createElement(
-	                                'div',
-	                                { className: 'spinner-layer spinner-blue-only' },
-	                                _react3.default.createElement(
-	                                    'div',
-	                                    { className: 'circle-clipper left' },
-	                                    _react3.default.createElement('div', { className: 'circle' })
-	                                ),
-	                                _react3.default.createElement(
-	                                    'div',
-	                                    { className: 'gap-patch' },
-	                                    _react3.default.createElement('div', { className: 'circle' })
-	                                ),
-	                                _react3.default.createElement(
-	                                    'div',
-	                                    { className: 'circle-clipper right' },
-	                                    _react3.default.createElement('div', { className: 'circle' })
-	                                )
-	                            )
-	                        )
+	                        null,
+	                        this.pinterestRender(1)
 	                    );
 	                }
 	        } // render END
