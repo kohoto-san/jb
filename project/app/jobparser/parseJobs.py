@@ -7,6 +7,7 @@ import json
 from django.http import HttpResponse
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
+from django.db import DataError
 from urllib.parse import urlparse
 import urllib.request
 from scrapy.selector import Selector
@@ -317,7 +318,7 @@ def saveJob(date, name, company_name, text, job_url, source, skills=[], company_
 
         try:
             job.save()
-        except django.db.utils.DataError:
+        except DataError:
             return
 
         tags.update(set(skills))
