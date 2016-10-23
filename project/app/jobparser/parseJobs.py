@@ -317,7 +317,7 @@ def saveJob(date, name, company_name, text, job_url, source, skills=[], company_
 
         job.save()
 
-        tags.extend(skills)
+        tags.update(set(skills))
         for skill in tags:
             obj, created = Skill.objects.get_or_create(name=skill)
             job.skills.add(obj)
