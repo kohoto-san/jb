@@ -1,0 +1,14 @@
+
+<div id="main-content">
+    {% include "body.html" %}
+
+    <div class="container">                    
+
+        <div id="grid" class="autogrid job_list grid row">
+            {% include "jobs__items.html" with jobs=jobs only %}
+        </div> <!-- /#grid -->
+
+        <a id="btn" class="waves-effect waves-light btn" style="width: 100%; display: block;">Load more</a>
+    </div> <!-- /.container -->
+
+</div> <!-- /#main-content -->

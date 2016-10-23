@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    {{block.super}}
+{% endblock head %}
+
+{% block body %}
+    
+    {% include "jobs__list.html" %}
+
+{% endblock body %}

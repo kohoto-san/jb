@@ -188,7 +188,7 @@ class JobDetails extends React.Component{
 								<div className="card-content">
 
 									<h2 className="job-name center-align">{this.state.job.name}</h2>
-									<h3 className="job-company card-title center-align">{this.state.job.company}</h3>
+									<h3 className="job-company card-title center-align">{this.state.job.company_name}</h3>
 									
 									<div className="job-details">
 					    	    		<p className="left-align">{this.state.job.salary}</p>

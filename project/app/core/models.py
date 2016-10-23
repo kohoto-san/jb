@@ -30,33 +30,112 @@ class Keyword(models.Model):
     def __str__(self):
         return self.name
 
+"""
+class WebsiteTag(models.Model):
+
+    name = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "CompanyTag"
+        verbose_name_plural = "CompanyTags"
+
+    def __str__(self):
+        return self.name
+"""
+
+
+class TechnologyCategory(models.Model):
+
+    name = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "TechnologyCategory"
+        verbose_name_plural = "TechnologysCategories"
+
+    def __str__(self):
+        return self.name
+
+
+class Technology(models.Model):
+
+    name = models.CharField(max_length=250)
+    url = models.CharField(max_length=250)
+    category = models.ForeignKey(TechnologyCategory)
+
+    # description = models.CharField(max_length=250)
+    # scope = models.CharField(max_length=250)            # Web/Frontend; Mobile/iOS
+
+    class Meta:
+        verbose_name = "Technology"
+        verbose_name_plural = "Technologies"
+
+    def __str__(self):
+        return self.name
+
+"""
+class SocProfile(models.Model):
+
+    soc_name = models.CharField(max_length=250)
+
+    # twitter, facebook, linkedin, github, blog, rss_url
+
+    profile_url = models.CharField(max_length=250)
+    profile_description = models.CharField(max_length=250)
+
+    class Meta:
+        verbose_name = "SocProfile"
+        verbose_name_plural = "SocProfiles"
+
+    def __str__(self):
+        pass
+"""
+
 
 class Company(models.Model):
 
     name = models.CharField(max_length=250)
     domain = models.URLField()
+    description = models.CharField(max_length=250, blank=True, null=True)
+    date_founded = models.DateField(blank=True, null=True)
+    location = models.CharField(max_length=250, blank=True, null=True)
 
-    alexa_rank = models.IntegerField()
-    top_country = models.CharField(max_length=250)
-    month_visitors = models.IntegerField(default=0)
+    alexa_rank = models.CharField(max_length=250, blank=True, null=True)
+    top_country = models.CharField(max_length=250, blank=True, null=True)
+    top_country_rank = models.CharField(max_length=250, blank=True, null=True)
+    month_visitors = models.CharField(max_length=250, blank=True, null=True)
+    team_size = models.CharField(max_length=250, blank=True, null=True)
+
+    technologies = models.ManyToManyField(Technology)
+
+    # tags = models.ManyToManyField(WebsiteTag)
+
+    # twitter_username
+    # number_tweets
+    # number_following
+    # number_followers
+    # twitter_description
+
+    # facebook
 
     def get_upload_path(instance, filename):
         return os.path.join('logos', str(instance.id) + filename[-4:])
 
-    logo = models.ImageField(upload_to=get_upload_path, default="default.png")
+    # logo = models.ImageField(upload_to=get_upload_path, default="default.png", blank=True, null=True)
 
     class Meta:
         verbose_name = "Company"
-        verbose_name_plural = "Companys"
+        verbose_name_plural = "Companies"
 
     def __str__(self):
-        pass
+        return self.name
 
 
 class Job(models.Model):
 
     company_name = models.CharField(max_length=250)
+    company = models.ForeignKey(Company, blank=True, null=True)
 
+    scope = models.CharField(max_length=250, blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     name = models.CharField(max_length=250)
     salary = models.CharField(max_length=250, blank=True, null=True)

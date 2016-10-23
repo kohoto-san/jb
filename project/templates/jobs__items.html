@@ -1,0 +1,38 @@
+{% for job in jobs %}
+    <div class="grid__item">
+
+        <div class="card z-depth-1">
+            
+            <a href="/job/{{job.slug}}" class="card-body">
+                <h2 class="job-name center-align">{{job.name}}</h2>
+                <h3 class="company-name center-align">{{job.company_name}}</h3>
+
+                <div class="job-details">
+                    <p class="left-align">
+                        {% if job.salary %} {{job.salary}} {% endif %}
+                    </p>
+
+                    <p class="right-align">
+                        {% if job.exp %} {{job.exp}} {% endif %}
+                    </p>
+                </div>
+
+                <div class="job-keywords job-keys">
+                    {% for keyword in job.keywords.all %}
+                        {{keyword}}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            </a>
+
+            <div class="job-skills job-keys">
+                {% for skill in job.skills.all %}
+                    <a href='/?q={{skill.name}}'>
+                        {{skill.name}}
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div> <!-- /.card -->
+        
+    </div> <!-- /.grid__item -->
+{% endfor %}

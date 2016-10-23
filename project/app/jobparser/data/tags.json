@@ -1,0 +1,242 @@
+
+[
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["html", "div", "divs", "nested-divs", "div-layouts", "html-comments", "span", "html-attributes", "html-tag", "html5", "xhtml5", "time-tag"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["jquery", "jquery-core", "jquery-live", "jquery-ui"]
+	},
+
+	{
+		"scopes": ["Mobile/iOS"],
+		"names": ["ios", "iphone-os", "apple-ios", "ios-sdk"]
+	},
+
+	{
+		"scopes": ["Mobile/Android"],
+		"names": ["android", "android-application", "android-ui", "android-api", "android-device", "android-mobile", "android-sdk", "android-framework", "android-studio"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["mysql", "mysql-query", "my-sql", "mysql-table", "mysqld", "mysqlclient", "mysql-server", "mysqldump"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["python", "python-shell", "python-interpreter", "pythonic", "python-2.7", "python-3.x", "python-3", "py3k", "python3k", "python3"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["php", "php-oop", "php-cli", "php-date", "php5", "php-frameworks", "php.ini", "hypertext-preprocessor", "php-fpm", "php-mail", "php-errors", "php-functions", "php-readfile", "php-cgi", "php-session", "phtml", "php-mode"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["c#", "csharp", "c#-language", "c-sharp", "c#.net", "visual-c#", ".cs-file", "c#-4.0", "c#-4-0"]
+	},
+
+	{
+		"scopes": ["Web/Backend", "Mobile/Android"],
+		"names": ["java", "java-se", ".java", "j2se", "core-java", "java-libraries", "jdk", "jre", "oraclejdk", "jpa"]
+	},
+
+	{
+		"scopes": ["Web/FullStack", "Web/Backend", "Web/Frontend", "Mobile/CrossPlatform", "Mobile/iOS", "Mobile/Android"],
+		"names": ["javascript" ,"classic-javascript", "javascript-library", "javascript-alert", "javascript-dom", "javascript-disabled", "ecmascript", "js", ".js", "javascript-execution", "vanilla-javascript", "javascript-module", "javascript-runtime"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["css", "cascading-style-sheet","css-layout","css-attributes","css-background-image","css-validation","box-model","css-display","css-centering","min-height","min-width","max-height","max-width","style.css-template-file","css-overflow","css-line-height","alternate-stylesheets","css-box-model","inline-block","font-weight","css-height","css-classes","css2","css-columns","css-inheritance","css-reset","css-menu"]
+	},
+
+	{
+		"scopes": ["Web/Backend"], 
+		"names": ["msdasql", "sql-server-7"]
+	},
+
+	{
+		"scopes": ["Web/Backend"], 
+		"names": ["database-caching"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["sql", "select-statement","sqlselect","sql-select","sql-syntax","sql-statement","sql-query","sql-insert","sql-in","sql-update"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["asp.net", "aspx","asp.net-website","asp-net","aspdotnet"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": [".net", "dot-net","dotnet",".net-framework"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["asp.net-mvc", "asp-mvc","aspnet-mvc","aspnet.mvc","asp.net.mvc","asp-net-mvc","asp.mvc","mvc.net"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["asp.net-mvc-3", "asp.net-mvc-3-validation","mvc3", "asp.net-mvc-4", "mvc4"]
+	},
+
+	{
+		"scopes": ["Mobile/iOS"],
+		"names": ["objective-c", "objc"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["ruby", "ruby-on-rails", "ror","rails", "rails-authorization", "ruby-on-rails-3", "rails3", "ror3", "ruby-on-rails-4"]
+	},
+
+	{
+		"scopes": ["Mobile/iOS"],
+		"names": ["iphone", "iphone-development","iphone-sdk","iphone-programming","iphone-app","iphone-web","iphone-ios"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["angularjs", "angular.js","angular"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["sql-server", "ms-sql-server","mssql","sql-srever"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["node.js", "nodejs","io.js"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["django", "django-openid-auth", "django-multiwidget"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["database", "databases","db","database-structure","dbms"]
+	},
+
+	{
+		"scopes": ["Mobile/iOS"],
+		"names": ["swift", "swift-language","swift-ios","swift1.2"]
+	},
+
+	{
+		"scopes": ["Mobile/iOS"],
+		"names": ["xcode", "xcode-ide"]
+	},
+
+	{
+		"scopes": ["Mobile/Android"],
+		"names": ["eclipse"]
+	},
+
+	{
+		"scopes": ["Web/FullStack", "Web/Backend", "Web/Frontend"],
+		"names": ["wordpress", "wordpress-permission","wordpress-plugin-dev","wordpress-mu","wordpress-filter","wordpress-widget","wordpress-loop","wordpress-plugin","wpdb","wp-query","wordpress-theme-customize"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["spring", "spring-framework", "spring-mvc", "jsf"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["mongodb", "mongo","mongod"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["twitter-bootstrap"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["postgresql", "pgsql","postgres","sql-postgres"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["css3", "css-border-image","css-border-radius","css-box-shadow","css-text-overflow","css-text-shadow"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["codeigniter", "codeigniter-routing","codeigniter-form-helper","codeigniter-validation","codeigniter-activerecord","codeigniter-pagination","codeigniter-url"]
+	},
+
+	{
+		"scopes": ["Mobile/CrossPlatform", "Mobile/iOS", "Mobile/Android"],
+		"names": ["cordova", "phonegap"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["laravel"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["symfony2", "symfony"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["tsql", "transact-sql"]
+	},
+
+	{
+		"scopes": ["Mobile/Android"],
+		"names": ["android-layout", "android-fragments"]
+	},
+
+	{
+		"scopes": ["Mobile/iOS"],
+		"names": ["ipad", "ipad-sdk","ipad-ui","ipad-splitview", "cocoa-touch"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["cakephp", "cake"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["express", "expressjs","express.js"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["grails", "groovygrails"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["dom", "htmldocument","html-dom"]
+	},
+
+	{
+		"scopes": ["Web/Frontend"],
+		"names": ["reactjs", "react", "react.js", "react js"]
+	},
+
+	{
+		"scopes": ["Web/Backend"],
+		"names": ["meteor", "meteorjs","meteor.js"]
+	}
+]

@@ -1,69 +1,61 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load staticfiles %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    {% load staticfiles %}
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+{% block head %}
+    {{block.super}}
+{% endblock head %}
 
+{% block body-wrapper %}
+<body class="survey-body">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% block body %}
 
+        <div id="main-content">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+            <div class="suvey-wrapper-bordes">
+                <div class="survey-wrapper valign-wrapper">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+                    <div class="valign">
+                        <div class="step step-1" data-step="1" style="display: block; margin-top: 0;">
+                            <h4><a href="#">Designer</a></h4>
+                            <h4><a href="#">Marketolog</a></h4>
+                            <h4><a href="#">Programmer</a></h4>
+                        </div>
 
+                        <div class="step step-2 survey__team-size" data-step="2">
+                            <h2>Size of company</h2>
+                            <h4><a href="#">1-10</a></h4>
+                            <h4 style="text-align: right;"><a href="#">10-50</a></h4>
 
-    <title>Sagfi</title>
-    <meta property="title" content="Sagfi" />
-    <meta property="description" content="A smart aggregator of remote jobs with AI" />
-    <meta property="canonical" content="http://sagfi.com/" />
+                            <br />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Sagfi" />
-    <meta property="og:description" content="A smart aggregator of remote jobs with AI" />
-    <meta property="og:image" content="http://sagfi.com{% static 'logo.png' %}" />
-    <meta property="og:site_name" content="Sagfi.com" />
-    <meta property="og:url" content="http://sagfi.com/" />
+                            <h4><a href="#">50-200</a></h4>
+                            <h4 style="text-align: right;"><a href="#">>200</a></h4>
+                        </div>
+                    </div>
 
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:title" content="Sagfi" />
-    <meta property="twitter:description" content="A smart aggregator of remote jobs with AI" />
-    <meta property="twitter:image" content="http://sagfi.com{% static 'twitter_op.png' %}" />
-    <meta property="twitter:url" content="http://sagfi.com/" />
-    <meta name="twitter:creator" content="@sihaelov" />
+                </div>
+            </div>
 
-</head>
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
 
+        </div> <!-- /#main-content -->
 
-<body>
+    {% endblock body %}
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-64063502-6', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    {% load render_bundle from webpack_loader %}
-    <div id="app"></div>
-
-    <script>
-        window.initialState = {{metaJobs|safe}}
-    </script>
-
-    {% render_bundle 'main' %}
-
-
+    {% block base-scipts %}
+        {{ block.super }}
+    {% endblock base-scipts %}
 
 </body>
-</html>
+{% endblock body-wrapper %}

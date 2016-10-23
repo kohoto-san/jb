@@ -1,3 +1,78 @@
+.preloader-wrapper {
+  display: none;
+  margin: auto;
+}
+body.survey-body {
+  background-color: #fff;
+  border: 25px solid #fff;
+}
+body.survey-body .suvey-wrapper-bordes {
+  border: 25px solid #fff;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+body.survey-body .survey-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-weight: 500;
+  background-color: rgba(3,169,244,0.7);
+  text-align: center;
+/*
+        @keyframes rotateSlideOut
+            0% { }
+            25% { opacity: .5; -webkit-transform: translateZ(-500px); transform: translateZ(-500px); }
+            75% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(-200%); transform: translateZ(-500px) translateX(-200%); }
+            100% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(-200%); transform: translateZ(-500px) translateX(-200%); }
+        */
+}
+body.survey-body .survey-wrapper .step {
+  display: none;
+}
+body.survey-body .survey-wrapper >.valign {
+  margin: auto;
+}
+body.survey-body .survey-wrapper >.valign h4 a {
+  transition: all 0.2s;
+  color: #fff;
+  font-weight: 300;
+  line-height: 1em;
+  font-size: 1.5em;
+}
+body.survey-body .survey-wrapper >.valign h4 a:hover {
+  opacity: 0.6;
+}
+body.survey-body .survey-wrapper >.valign .survey__team-size h4 {
+  display: inline-block;
+  margin-left: 30px;
+  width: 160px;
+  margin: auto;
+  text-align: left;
+}
+body.survey-body .survey-wrapper.survey-rotateSlideOut {
+  -webkit-animation: rotateSlideOut 1s both ease;
+  animation: rotateSlideOut 1s both ease;
+}
+@-webkit-keyframes rotateSlideOut {
+  25% {
+    opacity: 0.5;
+    -webkit-transform: scale(0.9) translateX(0);
+  }
+  75% {
+    opacity: 0.5;
+    -webkit-transform: scale(0.8) translateX(-100%);
+  }
+  100% {
+    opacity: 0.5;
+    -webkit-transform: scale(0.7) translateX(-200%);
+  }
+}
 body {
   background-color: #fafafa;
 }
@@ -45,6 +120,9 @@ nav .brand-logo a {
   40%, 60% {
     transform: rotateZ(140deg);
   }
+}
+.container {
+  margin-top: 30px;
 }
 .popup {
   display: block;
@@ -149,7 +227,7 @@ nav .brand-logo a {
 }
 .job-skills {
   padding: 20px 0;
-  padding: 10px 60px 0 10px;
+  padding: 10px 10px 0;
   text-align: left;
 }
 .job-skills a:hover {
@@ -201,11 +279,6 @@ nav .brand-logo a {
 .full-job .job-skills {
   padding-left: 0;
 }
-.full-job .job-text {
-  overflow: hidden;
-  transition: all 3s;
-  max-height: 0;
-}
 .full-job .job-text p {
   margin: 10px 0;
 }
@@ -213,8 +286,17 @@ nav .brand-logo a {
   list-style-type: disc;
   margin: 10px 30px;
 }
-.full-job .job-text-loaded {
-  max-height: 5000px;
+.full-job .job-text h4 {
+  font-size: 1.6rem;
+}
+.full-job .job-text h3 {
+  font-size: 1.9rem;
+}
+.full-job .job-text h2 {
+  font-size: 2.1rem;
+}
+.full-job .job-text h1 {
+  font-size: 2.3rem;
 }
 .full-job .btn-like {
   margin-left: 20px;
@@ -254,49 +336,24 @@ nav .brand-logo a {
 }
 .grid__item .card {
   display: block;
-  padding-bottom: 25px;
   height: 380px;
 }
-.grid__item .card-body {
+.grid__item .card .job-skills {
+  padding-bottom: 18px;
+}
+.grid__item .card .card-body {
   display: block;
   padding: 10px 15px 10px;
   transition: all 0.2s;
 }
-.grid__item .card-body p {
+.grid__item .card .card-body p {
   margin: 10px 0;
 }
-.grid__item .card-body:hover {
+.grid__item .card .card-body:hover {
   background-color: #fafafa;
 }
-.grid__item .card-body:hover .job-name {
+.grid__item .card .card-body:hover .job-name {
   text-decoration: underline;
-}
-.grid__item .job-actions {
-  position: absolute;
-  bottom: 25px;
-  right: 0px;
-}
-.grid__item .job-actions .like {
-  padding: 10px;
-  border-radius: 50%;
-  display: block;
-  margin-right: 10px;
-  border: 1px solid #000;
-  transition: all 0.3s;
-}
-.grid__item .job-actions .like.is_liked {
-  background-color: rgba(47,189,252,0.7);
-  background-color: rgba(47,189,252,0.7);
-  border: 0;
-  color: #fff;
-}
-.grid__item .job-actions .like:hover {
-  border: 0;
-  color: #fff;
-  background-color: rgba(47,189,252,0.7);
-}
-.grid__item .job-actions .like i {
-  vertical-align: middle;
 }
 .grid .lane {
   width: 20%;

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9c644c9a6dd6c7291c34"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b3a343a78ced8b5d9f90"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -58192,7 +58192,7 @@
 										_react3.default.createElement(
 											'h3',
 											{ className: 'job-company card-title center-align' },
-											this.state.job.company
+											this.state.job.company_name
 										),
 										_react3.default.createElement(
 											'div',

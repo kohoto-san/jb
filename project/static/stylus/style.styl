@@ -8,6 +8,82 @@ $sagfi-bg-mixin(){
     background-color $sagfi-blue;
 }
 
+.preloader-wrapper
+    display none;
+    margin auto;
+
+body.survey-body
+
+    background-color #fff;
+    border 25px solid #fff;
+
+    .suvey-wrapper-bordes
+        border 25px solid #fff;
+        position fixed;
+        left 0;
+        right 0;
+        top 0;
+        bottom 0;
+
+    .survey-wrapper
+        position absolute;
+        // bottom 25px;
+        // top 25px;
+        // right 25px;
+        // left 25px;
+            
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        
+
+        $sagfi-bg-mixin()
+        text-align center;
+        
+        .step
+            display none;
+
+        >.valign
+            margin auto;
+
+            h4 a
+                transition all 0.2s;
+                color #fff;
+                font-weight 300;
+                line-height 1em;
+                font-size 1.5em;
+                
+                &:hover
+                    opacity 0.6;
+            
+            .survey__team-size
+                h4
+                    display inline-block;
+                    margin-left 30px;
+                    width 160px;
+                    margin auto;
+                    text-align left;
+
+        &.survey-rotateSlideOut
+            -webkit-animation: rotateSlideOut 1s both ease;
+            animation: rotateSlideOut 1s both ease;
+
+        @-webkit-keyframes rotateSlideOut
+            0% { }
+            25% { opacity: .5; -webkit-transform: scale(0.9) translateX(0); }
+            75% { opacity: .5; -webkit-transform: scale(0.8) translateX(-100%); }
+            100% { opacity: .5; -webkit-transform: scale(0.7) translateX(-200%); }
+
+        /*
+        @keyframes rotateSlideOut
+            0% { }
+            25% { opacity: .5; -webkit-transform: translateZ(-500px); transform: translateZ(-500px); }
+            75% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(-200%); transform: translateZ(-500px) translateX(-200%); }
+            100% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(-200%); transform: translateZ(-500px) translateX(-200%); }
+        */
+
+
 body
     background-color: bc;
 
@@ -64,6 +140,9 @@ nav
         }
     }
 
+
+.container
+    margin-top 30px;
 
 .popup
     display block;
@@ -165,8 +244,7 @@ nav
 
 .job-skills
     padding 20px 0;
-    right-padding = job-actions-right + 46;
-    padding 10px 60px 0 10px;
+    padding 10px 10px 0;
     text-align left;
     
     a:hover
@@ -174,6 +252,7 @@ nav
 
 .job-keywords,
 .job-skills
+    
     span,
     a
         transition all 0.2s;
@@ -201,7 +280,7 @@ nav
 
 
 .full-job
-    
+
     > .col
         max-width 700px !important;
 
@@ -223,19 +302,21 @@ nav
         padding-left 0;
 
     .job-text
-        overflow hidden;
-        transition all 3s;
-        max-height 0;
-
         p
             margin 10px 0;
         ul li
             list-style-type disc;
             margin 10px 30px;
+        
+        h4
+            font-size 1.6rem;
+        h3
+            font-size 1.9rem;
+        h2
+            font-size 2.1rem;
+        h1
+            font-size 2.3rem;
     
-    .job-text-loaded
-        max-height 5000px;
-
     .btn-like
         margin-left 20px;
     
@@ -260,8 +341,6 @@ nav
 .job_list
     position relative;
 
-job-actions-right = 0px;
-
 .autogrid
     .grid__item
         .card
@@ -281,76 +360,29 @@ job-actions-right = 0px;
 
     .card
         display block;
-        padding-bottom 25px;
+        // padding-bottom 25px;
         height 380px;
         // padding-bottom 45px;        
 
-    .card-body
-        display block;
-        padding 10px 15px 10px;
-        // text-transform capitalize;
-        // height 400px;
-        transition all 0.2s;
-    
-        p
-            margin 10px 0;
-            
-        &:hover
-            background-color bc;
+        .job-skills
+            padding-bottom 18px;
 
-            .job-name
-                text-decoration underline;
-        
-    .job-actions
-        position: absolute;
-        bottom: 25px;
-        right: job-actions-right;
-        
-        .like
-            padding 10px;
-            border-radius 50%;
+        .card-body
             display block;
-            margin-right 10px;
-            border 1px solid #000;
-            transition all 0.3s;
-            
-            &.is_liked
-                background-color rgba(47,189,252,0.7);
-                background-color lighten($sagfi-blue, 20%);
-                border 0;
-                color #fff;
-
+            padding 10px 15px 10px;
+            // text-transform capitalize;
+            // height 400px;
+            transition all 0.2s;
+        
+            p
+                margin 10px 0;
+                
             &:hover
-                border 0;
-                color #fff;
-                background-color lighten($sagfi-blue, 20%);
+                background-color bc;
 
-            i
-                vertical-align middle;
-                // padding 10px;
-                // border-radius 50%;
-                // color #000;
-                // transition all 0.3s;
+                .job-name
+                    text-decoration underline;
 
-                // ../ .is_liked i
-                        // background-color darken(#fff, 15%);
-                        // background-color bc;
-
-                        // border 0;
-                        // color #fff;
-                        // background-color lighten($sagfi-blue, 20%);
-                        
-                        
-            
-                // &:first-child
-                    // margin-right 10px;
-                
-                // &:hover
-                    // background-color darken(#fff, 15%);
-                    // border 0;
-                    // color #fff;
-                    // background-color lighten($sagfi-blue, 20%);
-                
 
 .grid .lane
     // @extend .job;

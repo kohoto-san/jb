@@ -9,4 +9,4 @@ class Command(BaseCommand):
 
     # def handle_noargs(self, **options):
     def handle(self, *args, **options):
-        parseJobsManager.parseJobs()
+        parseJobsManager.parseJobsManager()

@@ -1,0 +1,84 @@
+{% block body %}
+
+    {% block popup %}
+        <div id="popupContacts" class="popup" style="display: none">
+
+            <a href="#" id="popupContactsClose" class="close">
+            <!--
+            onClick={(e) => {
+                e.preventDefault();
+                this.props.contactsPopupClose();
+            }}
+            -->
+                <i class="material-icons">close</i>
+            </a>
+
+            <div class="valign-wrapper">
+                <div class="valign contacts-popup__content">
+
+                    <p style="font-size: 40px; margin: 0 0 10px;">Contact Me</p>
+
+
+                    <a href="https://twitter.com/sihaelov" target="_blank">
+                         <i class="fa fa-twitter"></i>
+                         Twitter: <span>@sihaelov</span>
+                    </a>
+
+                    <br />
+
+                    <a href="mailto:sihaelov@gmail.com">
+                        <i class="fa fa-envelope"></i>
+                        Email: <span>sihaelov@gmail.com</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    {% endblock popup %}
+
+    {% block navbar %}
+        <div>
+            <div style="marginBottom: 30px">
+
+                <nav class="white black-text" style="textColor: #000">
+                    <div class="nav-wrapper" class="black-text">
+                        <h1 class="brand-logo"><a href='/'>Sagfi</a></h1>
+                        <ul class="right hide-on-med-and-down">
+                            
+                            <li>
+
+                                <a href="#" id="popupContactsShow">
+                                <!--
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    this.props.contactsPopupShow();
+                                }}
+                                -->
+                                    Contacts
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+
+            </div>
+
+
+        </div>
+    {% endblock navbar %}
+
+    <script type="text/javascript">
+
+        $('#popupContactsShow').click(function(e){
+            e.preventDefault();
+            $('#popupContacts').show();
+        });
+
+        $('#popupContactsClose').click(function(e){
+            e.preventDefault();
+            $('#popupContacts').hide();
+        });
+
+    </script>
+{% endblock body %}

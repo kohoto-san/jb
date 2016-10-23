@@ -1,73 +1,131 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load staticfiles %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block head %}
+    {{block.super}}
+{% endblock head %}
+
+{% block body %}
     
-    {% load staticfiles %}
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    {{block.super}}
 
+    {% include "body.html" %}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <div class="container">
+        <div id="grid" class="full-job grid row">
 
+            <div class="col s12 l10 offset-l1">
+                <div class="card">
+                    <div class="card-content">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+                        <h2 class="job-name center-align">{{job.name}}</h2>
+                        <h3 class="job-company card-title center-align">{{job.company_name}}</h3>
+                        
+                        <div class="job-details">
+                            <p class="left-align">
+                                {% if job.salary %} {{job.salary}} {% endif %}
+                            </p>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+                            <p class="right-align">
+                                {% if job.exp %} {{job.exp}} {% endif %}
+                            </p>
+                        </div>
 
-    <title>Sagfi — {{job.name}} at {{job.company}}</title>
+                        <div class="job-text">
+                        {% comment %}
+                            {{job.text|splitbytag|slice:':1'|join:''}}
+                        {% endcomment %}
+                            {{job.text|safe}}
+                        </div>
 
-    <meta property="title" content="Sagfi — {{job.name}} at {{job.company}}" />
-    <meta property="description" content="'A smart aggregator of remote jobs with AI" />
-    <meta property="canonical" content="http://sagfi.com{{request.path}}" />
+                    </div>
+                </div>
 
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Sagfi — {{job.name}} at {{job.company}}" />
-    <meta property="og:description" content="A smart aggregator of remote jobs with AI" />
-    <meta property="og:image" content="http://sagfi.com{% static 'logo.png' %}" />
-    <meta property="og:site_name" content="Sagfi.com" />
-    <meta property="og:url" content="http://sagfi.com{{request.path}}" />
+                <div class="card">
+                    <div class="card-content">
+                        <div class="job-keywords">
+                            {% for keyword in job.keywords.all %}
+                                {{keyword}}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
 
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:title" content="Sagfi — {{job.name}} at {{job.company}}" />
-    <meta property="twitter:description" content="A smart aggregator of remote jobs with AI" />
-    <meta property="twitter:image" content="http://sagfi.com{% static 'twitter_op.png' %}" />
-    <meta property="twitter:url" content="http://sagfi.com{{request.path}}" />
-    <meta name="twitter:creator" content="@sihaelov" />
+                        <div class="job-skills">
+                            {% for skill in job.skills.all %}
+                                <a href='/?q={{skill.name}}'>
+                                    {{skill.name}}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
 
-</head>
+                <div class="card">
+                    <div class="card-content share-btns-wrapper">
+                        <span>Share</span>
 
+                        <a href="mailto:?subject={{job.name}} at {{job.company_name}}&body=Hi%2C%0A%0A{{job.company_name}} is hiring a {{job.name}}%21%0A%0A{{request.build_absolute_uri}}">
+                            <i class="fa fa-envelope"></i>
+                            <!-- Email -->
+                        </a>
 
-<body>
+                        <a class="share-btn" href='https://www.linkedin.com/shareArticle?mini=true&source=Sagfi&title={{job.name}}&url={{request.build_absolute_uri}}' target="_blank">
+                            <i class="fa fa-linkedin-square"></i>
+                            <!-- LinkedIn -->
+                        </a>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+                        <a class="share-btn" href='http://twitter.com/share?text={{job.name}} at {{job.company_name}}&url={{request.build_absolute_uri}}' target="_blank">
+                            <i class="fa fa-twitter"></i>
+                            <!-- Twitter -->
+                        </a>
+                    
+                        <a class="share-btn" href='https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}' target="_blank">
+                            <i class="fa fa-facebook"></i>
+                            <!-- Facebook -->
+                        </a>
+                        
 
-  ga('create', 'UA-64063502-6', 'auto');
-  ga('send', 'pageview');
+                        <!--
+                        <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
+                            <i class="fa fa-twitter fa-2x"></i>
+                        </a>
+                        <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+                            <i class="fa fa-facebook fa-2x"></i>
+                        </a>
+                        -->
 
-</script>
+                    </div>
+                </div>
 
-    {% load render_bundle from webpack_loader %}
-    <div id="app"></div>
+                <a class="btn-apply waves-effect btn" href="{{job.url}}" target="_blank" rel="nofollow">
+                    Apply
+                </a>
+            
+            </div> <!-- /.col -->
+        </div> <!-- /.grid -->
+    </div>
 
-    <script>
-        window.initialState = {{metaJobs|safe}}
+    <script type="text/javascript">
+
+        $('.share-btn').click(function(e){
+
+            e.preventDefault();
+
+            var width  = 575,
+                height = 400,
+                left   = ($(window).width()  - width)  / 2,
+                top    = ($(window).height() - height) / 2,
+                opts   = 'status=1' +
+                         ',width='  + width  +
+                         ',height=' + height +
+                         ',top='    + top    +
+                         ',left='   + left;
+
+            window.open(this.href, 'sharing', opts);
+ 
+            return false;
+        });
+
     </script>
 
-    <script>
-        window.jobDetails = {{job_json|safe}}
-    </script>
 
-    {% render_bundle 'main' %}
-
-
-
-</body>
-</html>
+{% endblock body %}

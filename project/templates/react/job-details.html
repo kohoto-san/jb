@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+    <title>Sagfi — {{job.name}} at {{job.company}}</title>
+
+    <meta property="title" content="Sagfi — {{job.name}} at {{job.company}}" />
+    <meta property="description" content="'A smart aggregator of remote jobs with AI" />
+    <meta property="canonical" content="http://sagfi.com{{request.path}}" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Sagfi — {{job.name}} at {{job.company}}" />
+    <meta property="og:description" content="A smart aggregator of remote jobs with AI" />
+    <meta property="og:image" content="http://sagfi.com{% static 'logo.png' %}" />
+    <meta property="og:site_name" content="Sagfi.com" />
+    <meta property="og:url" content="http://sagfi.com{{request.path}}" />
+
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Sagfi — {{job.name}} at {{job.company}}" />
+    <meta property="twitter:description" content="A smart aggregator of remote jobs with AI" />
+    <meta property="twitter:image" content="http://sagfi.com{% static 'twitter_op.png' %}" />
+    <meta property="twitter:url" content="http://sagfi.com{{request.path}}" />
+    <meta name="twitter:creator" content="@sihaelov" />
+
+</head>
+
+
+<body>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64063502-6', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    {% load render_bundle from webpack_loader %}
+    <div id="app"></div>
+
+    <script>
+        window.initialState = {{metaJobs|safe}}
+    </script>
+
+    <script>
+        window.jobDetails = {{job_json|safe}}
+    </script>
+
+    {% render_bundle 'main' %}
+
+
+
+</body>
+</html>

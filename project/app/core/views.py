@@ -14,7 +14,10 @@ from rest_framework import generics, viewsets, pagination, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.loader import render_to_string
+
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import JSONRenderer
 from rest_framework import filters
@@ -56,18 +59,52 @@ def get_metajobs(request):
 
 
 def home(request):
+    return render(request, 'homepage.html')
+
+
+def jobs_list(request):
     metaJobs = get_metajobs(request)
-    return render(request, 'homepage.html', {'metaJobs': metaJobs})
+    jobs = Job.objects.all().order_by('-date')
+    # jobs = Job.objects.filter(source='GitHub').order_by('-date')
+
+    paginator = Paginator(jobs, 50)
+
+    if request.method == 'GET':
+        if request.is_ajax():
+
+            page = request.GET.get('page')
+            if page:
+                try:
+                    jobs_paginator = paginator.page(page)
+                except PageNotAnInteger:
+                    return HttpResponseBadRequest()
+                except EmptyPage:
+                    return HttpResponseBadRequest()
+
+                context = {'jobs': jobs_paginator.object_list}
+                html = render_to_string('jobs__items.html', context)
+                return HttpResponse(html)
+            else:
+                html = render_to_string('jobs__list.html', {'jobs': jobs})
+                return HttpResponse(html)
+        else:
+            q = request.GET.get('q')
+            if q:
+                jobs = Job.objects.filter(skills__name=q).order_by('-date')[:50]
+                print(jobs)
+
+    return render(request, 'jobs.html', {'metaJobs': metaJobs, 'jobs': paginator.page(1)})
 
 
 def job_details(request, job_slug):
     metaJobs = get_metajobs(request)
 
     job_object = get_object_or_404(Job, slug=job_slug)
-    serializer = JobSerializer(job_object)
-    job_json = JSONRenderer().render(serializer.data)
+    # serializer = JobSerializer(job_object)
+    # job_json = JSONRenderer().render(serializer.data)
+    # return render(request, 'job-details.html', {'metaJobs': metaJobs, 'job_json': job_json, 'job': job_object})
 
-    return render(request, 'job-details.html', {'metaJobs': metaJobs, 'job_json': job_json, 'job': job_object})
+    return render(request, 'job-details.html', {'metaJobs': metaJobs, 'job': job_object})
 
 
 def job_details_redirect(request, job_id):
