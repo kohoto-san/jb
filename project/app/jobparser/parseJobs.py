@@ -238,7 +238,10 @@ def _analyzeCompany(company_name, company_url, company_logo):
                       alexa_rank=alexa_rank, top_country=top_country,
                       top_country_rank=top_country_rank, month_visitors=month_visitors,
                       team_size=team_size)
-    company.save()
+    try:
+        company.save()
+    except DataError:
+        return None
 
     if technologies:
         company.technologies.add(*technologies)
