@@ -315,7 +315,10 @@ def saveJob(date, name, company_name, text, job_url, source, skills=[], company_
                   salary=salary, source=source, scope=scope, url=job_url,
                   company_name=company_name[:250], company=company)
 
-        job.save()
+        try:
+            job.save()
+        except django.db.utils.DataError:
+            return
 
         tags.update(set(skills))
         for skill in tags:
