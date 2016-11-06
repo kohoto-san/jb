@@ -5,8 +5,13 @@ class Tags(object):
 
     def __init__(self):
 
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(BASE_DIR, 'data/tags.json')
+
+        print(path)
+
         try:
-            with open('app/jobparser/data/tags.json', 'r') as fd:
+            with open(path, 'r') as fd:
                 self.list_tags = json.load(fd)
         except IOError as e:
             print("Error opening tags.json: %s" % e)
