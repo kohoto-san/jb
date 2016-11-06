@@ -302,7 +302,10 @@ def _analyzeJob(name, company_name, text, skills, company_url=None, company_logo
 
     same_company = Company.objects.filter(name=company_name)
     print('')
-    print(company_name)
+    try:
+        print(company_name)
+    except UnicodeEncodeError:
+        print('unicode error — id=%s' % str(same_company.first().id))
 
     if same_company:
         print('same_company')
