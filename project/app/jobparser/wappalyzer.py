@@ -166,11 +166,16 @@ class Wappalyzer(object):
         # self.categories = categories
         # self.apps = apps
 
+        CURRENT_DIR = os.path.abspath('.')
+        path = os.path.abspath(os.path.join(CURRENT_DIR, 'app/jobparser/data/apps.json'))
+        print(path)
+
         try:
-            with open('app/jobparser/apps.json', 'r') as fd:
+            with open(path, 'r') as fd:
                 obj = json.load(fd)
         except IOError as e:
             print("Error opening apps.json: %s" % e)
+            return
 
         self.categories = obj['categories']
         self.apps = obj['apps']

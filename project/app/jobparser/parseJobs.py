@@ -277,8 +277,6 @@ def _analyzeCompany(company_name, company_url, company_logo):
     except DataError:
         return None
 
-    print(company.location)
-
     if technologies:
         company.technologies.add(*technologies)
 
