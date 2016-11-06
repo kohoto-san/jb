@@ -305,7 +305,7 @@ def _analyzeJob(name, company_name, text, skills, company_url=None, company_logo
     try:
         print(company_name)
     except UnicodeEncodeError:
-        print('unicode error — %s' % company_name.encode('ascii', 'ignore').decode('ascii'))
+        print('unicode error — %s' % company_name.decode('ascii', 'ignore'))
 
     if same_company:
         print('same_company')
