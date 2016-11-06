@@ -342,7 +342,7 @@ def saveJob(date, name, company_name, text, job_url, source, skills=[], company_
 
     if same_job:
         print('same_job; continue')
-        print(same_job.name)
+        # print(same_job.first().name)
         # return
         # break
     else:
