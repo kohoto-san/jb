@@ -115,7 +115,7 @@ class Company(models.Model):
     description = models.CharField(max_length=250, blank=True, null=True)
     date_founded = models.DateField(blank=True, null=True)
     # location = models.CharField(max_length=250, blank=True, null=True)
-    location = models.ForeignKey(Location, blank=True, null=True)
+    # location = models.ForeignKey(Location, blank=True, null=True)
 
     alexa_rank = models.CharField(max_length=250, blank=True, null=True)
     top_country = models.CharField(max_length=250, blank=True, null=True)
