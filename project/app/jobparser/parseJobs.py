@@ -73,11 +73,11 @@ def _parseWhois(domain):
         location_list = location.split('\n')
         location_result = {'full_location': location[:250]}
         try:
-            location_result['street'] = location_list[0]
-            location_result['city'] = location_list[1]
-            location_result['state_abbreviation'] = location_list[2]
-            location_result['zip_code'] = location_list[3]
-            location_result['country'] = location_list[4]
+            location_result['street'] = location_list[0][:250]
+            location_result['city'] = location_list[1][:250]
+            location_result['state_abbreviation'] = location_list[2][:250]
+            location_result['zip_code'] = location_list[3][:250]
+            location_result['country'] = location_list[4][:250]
         except IndexError:
             pass
     else:
