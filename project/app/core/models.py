@@ -98,7 +98,7 @@ class Location(models.Model):
     city = models.CharField(max_length=250, blank=True, null=True)
     street = models.CharField(max_length=250, blank=True, null=True)
     zip_code = models.CharField(max_length=250, blank=True, null=True)
-    state_abbreviation = models.CharField(max_length=2, blank=True, null=True)
+    state_abbreviation = models.CharField(max_length=250, blank=True, null=True)
 
     class Meta:
         verbose_name = "Location"
