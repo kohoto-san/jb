@@ -8,7 +8,8 @@ var isDev;
 var config = {
   context: __dirname,
   entry: [
-    './project/static/js/index'
+    // './project/static/js/index'
+    './project/static/stylus/style.styl'
   ],
 
   output: {
@@ -34,6 +35,7 @@ var config = {
   module: {
     loaders: [     
 
+      /*
       { test: /\.js?$/, loader: 'babel', exclude: /node_modules/,
         query: {
           plugins: ['transform-decorators-legacy', ],
@@ -41,6 +43,7 @@ var config = {
           cacheDirectory: true,
         }
       },
+      */
 
       { test: /\.styl$/, loader: isDev
         ? "style-loader!css-loader!stylus-loader"
@@ -57,10 +60,11 @@ var config = {
 
   resolve: {
     modulesDirectories: ['node_modules', 'bower_components'],
-    extensions: ['', '.js', '.jsx', '.styl', 'css'],
-    alias: {
-      'react-redux': path.join(__dirname, '/node_modules/react-redux/dist/react-redux.min')
-    }
+    // extensions: ['', '.js', '.jsx', '.styl', 'css'],
+    extensions: ['', '.styl', 'css'],
+    // alias: {
+    //   'react-redux': path.join(__dirname, '/node_modules/react-redux/dist/react-redux.min')
+    // }
   },
 
   cache: true,

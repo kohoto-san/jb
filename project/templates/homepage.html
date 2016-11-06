@@ -3,6 +3,9 @@
 
 {% block head %}
     {{block.super}}
+    <link rel="stylesheet" href="{% static 'component.css' %}">
+    <script type="text/javascript" src="{% static 'js/modernizr.custom.form.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/nlform.js' %}"></script>
 {% endblock head %}
 
 {% block body-wrapper %}
@@ -16,6 +19,73 @@
                 <div class="survey-wrapper valign-wrapper">
 
                     <div class="valign">
+                        
+                        <div class="main clearfix">
+                            <form id="nl-form" class="nl-form">
+                                {% comment %}
+
+                                I am a
+                                <select>
+                                    <option value="1">junior</option>
+                                    <option value="2">middle</option>
+                                    <option value="3">senior</option>
+                                </select>
+
+                                <!--
+                                <div class="nl-field nl-dd">
+                                    <a class="nl-field-toggle">junior</a>
+                                    <ul>
+                                        <li class="nl-dd-checked">junior</li>
+                                        <li>middle</li>
+                                        <li>senior</li>
+                                    </ul>
+                                </div>
+                                -->
+
+                                <select>
+                                    <option value="1" selected>Web</option>
+                                </select>
+
+                                <select>
+                                    <option value="1" selected>Frontend</option>
+                                    <option value="2" selected>Backend</option>
+                                    <option value="3" selected>Fullstack</option>
+                                </select>
+                                developer.
+                                <br />I am comfortable work in a
+                                <select>
+                                    <option value="1" selected>Small (1-10)</option>
+                                    <option value="2">Medium (10-100)</option>
+                                    <option value="3">Big (>100)</option>
+                                </select>
+                                <br /> team on a project that has
+
+                                <select>
+                                    <option value="1" selected>Highload</option>
+                                    <option value="2">Mediumload</option>
+                                    <option value="3">Lowload</option>
+                                </select>
+
+                                <!--
+                                in <input type="text" value="" placeholder="any city" data-subline="For example: <em>Los Angeles</em> or <em>New York</em>"/>
+                                -->
+                                {% endcomment %}
+                                
+
+
+                                {% comment %}
+                                <div class="nl-submit-wrap">
+                                    <button class="nl-submit" type="submit">Find a restaurant</button>
+                                </div>
+                                {% endcomment %}
+
+
+                                <div class="nl-overlay"></div>
+                            </form>
+                        </div> <!-- /.main -->
+
+                        
+                        {% comment %}
                         <div class="step step-1" data-step="1" style="display: block; margin-top: 0;">
                             <h4><a href="#">Designer</a></h4>
                             <h4><a href="#">Marketolog</a></h4>
@@ -32,6 +102,8 @@
                             <h4><a href="#">50-200</a></h4>
                             <h4 style="text-align: right;"><a href="#">>200</a></h4>
                         </div>
+                        {% endcomment %}
+
                     </div>
 
                 </div>
@@ -50,6 +122,86 @@
             </div>
 
         </div> <!-- /#main-content -->
+
+        <script>
+            var nlform = new NLForm( document.getElementById( 'nl-form' ) );
+        </script>
+
+
+        <script type="text/javascript">
+
+            var text = [
+                {text: 'I am a', type: 'text'},
+                {text: ['junior', 'middle', 'senior'], type: 'list'},
+                {text: ['Web'], type: 'list'},
+                {text: ['Frontend', 'Backend', 'Fullstack'], type: 'list'},
+                {text: 'developer.<br />I am comfortable work in a', type: 'text'},
+                {text: ['Small (1-10)', 'Medium (10-100)', 'Big (>100)'], type: 'list'},
+                {text: '<br /> team on a project that has', type: 'text'},
+                {text: ['Highload', 'Mediumload', 'Lowload'], type: 'list'},
+            ];
+
+            var n = 0;
+            var element = $("#nl-form");
+
+            function writeStart (chars) {
+                // text = document.getElementById("nl-form").value;
+                // text = element.html();
+                timerWrite = setInterval("writeChar()", 100);
+                n = 0;
+            }
+
+            function writeChar(chars) {
+
+
+                for (let char of chars) {
+                    setTimeout('element.append(char)', 100);
+                }
+
+
+                // if(n >= text.length){
+                //     clearInterval(timerWrite);
+                //     // setTimeout(writeStart, 500);
+                // }
+                // else{
+                //     var meta_html = element.html();
+                //     element.html(meta_html + text.charAt(n));
+                //     n += 1;
+                // }
+
+            }
+
+            function writeList(elements){
+                select = $('<select></select>')
+                for (let item of elements) {
+                    meta = $('<option value=' + item + '>' + item + '</option>');
+                    select.append(meta);
+                }
+
+                element.append(select);
+            }
+
+            function write(){
+                
+                for (let item of text) {
+                    if(item['type'] == 'text'){
+                        // var meta_html = element.html();
+                        // element.html(meta_html + item['text']);
+                        writeChar(item['text']);
+                    }
+
+                    if(item['type'] == 'list'){
+                        writeList(item['text']);
+                    }
+                }
+
+            }
+
+            // write();
+
+            // writeStart();
+
+        </script>
 
     {% endblock body %}
 

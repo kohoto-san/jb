@@ -1,15 +1,4 @@
-{% extends "base.html" %}
 {% load staticfiles %}
-
-{% block head %}
-    {{block.super}}
-{% endblock head %}
-
-{% block body %}
-    
-    {{block.super}}
-
-    {% include "body.html" %}
 
     <div class="container">
         <div id="grid" class="full-job grid row">
@@ -102,7 +91,7 @@
             
             </div> <!-- /.col -->
         </div> <!-- /.grid -->
-    </div>
+    </div> <!-- /.container -->
 
     <script type="text/javascript">
 
@@ -126,6 +115,3 @@
         });
 
     </script>
-
-
-{% endblock body %}

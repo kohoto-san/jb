@@ -10,6 +10,7 @@ class Tags(object):
                 self.list_tags = json.load(fd)
         except IOError as e:
             print("Error opening tags.json: %s" % e)
+            return
 
         self.job_scopes = {}
         self.job_techs = []

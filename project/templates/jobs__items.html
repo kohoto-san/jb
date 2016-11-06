@@ -3,7 +3,7 @@
 
         <div class="card z-depth-1">
             
-            <a href="/job/{{job.slug}}" class="card-body">
+            <a href="/job/{{job.slug}}" class="job-card card-body">
                 <h2 class="job-name center-align">{{job.name}}</h2>
                 <h3 class="company-name center-align">{{job.company_name}}</h3>
 
@@ -31,6 +31,25 @@
                     </a>
                 {% endfor %}
             </div>
+
+            {% comment %}
+
+            <div class="company-details">
+                <p>
+                    {% if job.company.description %} {{job.company.description}} {% endif %}
+                </p>
+                <p>
+                    {% if job.company.location %} {{job.company.location}} {% endif %}
+                </p>
+
+                
+                    {% if job.company.location %} {{job.company.location}} {% endif %}
+
+                {% for tech in job.company.technologies.all %}
+                    <p> {{tech.name}} </p>
+                {% endfor %}
+            </div>
+            {% endcomment %}
 
         </div> <!-- /.card -->
         

@@ -91,13 +91,31 @@ class SocProfile(models.Model):
 """
 
 
+class Location(models.Model):
+
+    full_location = models.CharField(max_length=250)
+    country = models.CharField(max_length=250, blank=True, null=True)
+    city = models.CharField(max_length=250, blank=True, null=True)
+    street = models.CharField(max_length=250, blank=True, null=True)
+    zip_code = models.CharField(max_length=250, blank=True, null=True)
+    state_abbreviation = models.CharField(max_length=2, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Location"
+        verbose_name_plural = "Locations"
+
+    def __str__(self):
+        return self.full_location
+
+
 class Company(models.Model):
 
     name = models.CharField(max_length=250)
     domain = models.URLField()
     description = models.CharField(max_length=250, blank=True, null=True)
     date_founded = models.DateField(blank=True, null=True)
-    location = models.CharField(max_length=250, blank=True, null=True)
+    # location = models.CharField(max_length=250, blank=True, null=True)
+    location = models.ForeignKey(Location, blank=True, null=True)
 
     alexa_rank = models.CharField(max_length=250, blank=True, null=True)
     top_country = models.CharField(max_length=250, blank=True, null=True)

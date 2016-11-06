@@ -172,6 +172,38 @@
     });
     */
 
+    $('#main-content').on('click', '.job-card', function(e) {
+        e.preventDefault();
+
+        // var url = $(this).find('a.card-body').attr('href');
+        var url = $(this).attr('href');
+        $('body').addClass('job-show');
+        $('#job-details-ajax .preloader').show();
+
+        $.ajax({
+            url: url + '?ajax=true',
+            // cache: false
+        }).done(function (response) {
+            // $mainContent.hide();
+            // $('#job-details-ajax').fadeIn({duration: 200});
+            $('#job-details-ajax .preloader').hide();
+            $('#job-details-ajax .job-content').html(response);
+            // bindButtons();
+
+            history.pushState({content_url: url}, '', url);
+        });
+    });
+
+    $('#job-details-ajax .close').click(function(e){
+        e.preventDefault();
+        $('#job-details-ajax .job-content').html('');
+        $('.job-show').removeClass('job-show');
+        history.pushState({content_url: '/'}, '', '/');
+
+        // $('#job-details-ajax').hide();
+    });
+
+
 // </JOBS_LIST>
 
 

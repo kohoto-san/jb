@@ -15,7 +15,7 @@ from scrapy.selector import Selector
 import dns.resolver
 from ipwhois import IPWhois
 
-from app.core.models import Job, Skill, Keyword, Company, Technology, TechnologyCategory
+from app.core.models import Job, Skill, Keyword, Company, Technology, TechnologyCategory, Location
 
 from . import nltkutils
 from . import wappalyzer
@@ -69,7 +69,21 @@ def _parseWhois(domain):
                 else:
                     break
 
-    return location, phone
+    if location:
+        location_list = location.split('\n')
+        location_result = {'full_location': location[:250]}
+        try:
+            location_result['street'] = location_list[0]
+            location_result['city'] = location_list[1]
+            location_result['state_abbreviation'] = location_list[2]
+            location_result['zip_code'] = location_list[3]
+            location_result['country'] = location_list[4]
+        except IndexError:
+            pass
+    else:
+        location_result = None
+
+    return location_result, phone
 
 
 def _parseLinkedin(company_name):
@@ -88,8 +102,13 @@ def _parseLinkedin(company_name):
 
     linkedin_url = results['url']
 
-    team_size = re.findall(r'\d+,\d+\+|\d+-\d+', results['subLine'])
+    team_size_list = re.findall(r'\d+,\d+\+|\d+-\d+', results['subLine'])
     category = re.split(';', results['subLine'])[0]
+
+    try:
+        team_size = team_size_list[0]
+    except IndexError:
+        team_size = None
 
     return team_size
     # return linkedin_logo, linkedin_url, team_size, category
@@ -131,7 +150,12 @@ def _parseTraffic(url):
     sw_index = sw_html.find('"TotalLastMonthVisits"')
     sw_html = sw_html[sw_index:]
     sw_html = sw_html[:sw_html.find(',')]
-    sw_visitors = sw_html.replace('"', '').split(':')
+    sw_visitors_raw = sw_html.replace('"', '').split(':')
+
+    try:
+        sw_visitors = sw_visitors_raw[1]
+    except IndexError:
+        sw_visitors = None
 
     return alexa_rank_result, alexa_top_country_result, alexa_top_country_rank_result, sw_visitors
 
@@ -214,10 +238,12 @@ def _getCompanyUrl(company_name):
 
 def _analyzeCompany(company_name, company_url, company_logo):
 
-    company_url = urlparse(company_url).hostname
+    company_domain = urlparse(company_url).hostname
 
-    if not company_url:
-        company_url = urlparse('http://%s' % company_url).hostname
+    if not company_domain:
+        company_domain = urlparse('http://%s' % company_url).hostname
+
+    company_url = company_domain
 
     try:
         requests.get("http://%s" % company_url)
@@ -226,13 +252,21 @@ def _analyzeCompany(company_name, company_url, company_logo):
         return None
 
     description = _getMetaTags(company_url)
-    location, phone = _parseWhois(company_url)
+    location_raw, phone = _parseWhois(company_url)
     alexa_rank, top_country, top_country_rank, month_visitors = _parseTraffic(company_url)
     technologies = _getTechnologies(company_url)
 
     team_size = _parseLinkedin(company_name)
 
-    company_url = "http://%s" % company_url
+    if location_raw:
+        location = Location(**location_raw)
+        location.save()
+    else:
+        location = None
+
+    if company_url:
+        company_url = "http://%s" % company_url
+
     company = Company(name=company_name, domain=company_url,
                       description=description, location=location,
                       alexa_rank=alexa_rank, top_country=top_country,
@@ -243,6 +277,8 @@ def _analyzeCompany(company_name, company_url, company_logo):
     except DataError:
         return None
 
+    print(company.location)
+
     if technologies:
         company.technologies.add(*technologies)
 
@@ -250,6 +286,7 @@ def _analyzeCompany(company_name, company_url, company_logo):
 
 
 def _analyzeJob(name, company_name, text, skills, company_url=None, company_logo=None):
+
     lvls = ['junior', 'middle', 'senior']
     total_text = ''.join([name, text])
 
@@ -307,13 +344,13 @@ def saveJob(date, name, company_name, text, job_url, source, skills=[], company_
 
     if same_job:
         print('same_job; continue')
-        print(same_job)
+        print(same_job.name)
         # return
         # break
     else:
 
         salary, exp, tags, scope, company = _analyzeJob(name, company_name, text, skills, company_url, company_logo)
-        print(name)
+        # print(name)
 
         job = Job(date=date, name=name[:250], exp=exp, text=text,
                   salary=salary, source=source, scope=scope, url=job_url,

@@ -54,6 +54,35 @@
     {% block body %}
     {% endblock body %}
 
+    {% block job-details %}
+        {# <div id="job-details-ajax" style="display: none;"> #}
+        <div id="job-details-ajax">
+            <a href="#" class="close">
+                <i class="material-icons">close</i>
+
+            </a>
+
+            <div class="preloader valign-wrapper">
+                <div class="valign">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="job-content"></div>
+        </div>
+    {% endblock job-details %}
+
     {% block base-scipts %}
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

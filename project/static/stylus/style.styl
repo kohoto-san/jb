@@ -8,9 +8,50 @@ $sagfi-bg-mixin(){
     background-color $sagfi-blue;
 }
 
-.preloader-wrapper
-    display none;
-    margin auto;
+.survey-body
+    .preloader-wrapper
+        display none;
+        margin auto;
+
+#job-details-ajax
+    visibility hidden;
+
+body.job-show
+    overflow hidden;
+
+    #job-details-ajax
+        visibility visible;
+
+        position fixed;
+        width 100%;
+        top 0;
+        left 0;
+        right 0;
+        bottom 0;
+        overflow-x hidden;
+        overflow-y scroll;
+        // background-color rgba(255, 255, 255, 96%);
+        background-color rgba(#fafafa, 95%);
+
+        .preloader.valign-wrapper
+            text-align center;
+            height 100vh;
+            >.valign
+                margin auto;
+
+        .close
+            position absolute;
+            top 10px;
+            left 10px;
+            color #000;
+            width auto;
+
+            i
+                font-size: 40px;
+                
+            &:hover
+                opacity 0.4;
+        
 
 body.survey-body
 

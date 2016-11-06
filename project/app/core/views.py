@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
+from django.db.models import Q
 
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import JSONRenderer
@@ -63,9 +64,35 @@ def home(request):
 
 
 def jobs_list(request):
-    metaJobs = get_metajobs(request)
-    jobs = Job.objects.all().order_by('-date')
-    # jobs = Job.objects.filter(source='GitHub').order_by('-date')
+    # metaJobs = get_metajobs(request)
+
+    # exp=junior&scope=Web/Frontend&team=medium&load=highload
+
+    team_sizes = {'small': [1, 10], 'medium': [11, 100], 'big': [101, 999999]}
+    # load_sizes = {'highload': }
+
+    exp = request.GET.get('exp')
+    scope = request.GET.get('scope')
+    try:
+        team_size = team_sizes[request.GET.get('team')]
+    except KeyError:
+        team_sizes = [1, 999999]
+
+    # from django.db.models import Q
+    # len(Job.objects.filter( Q(company__team_size__range=(1, 1000)) ))
+
+    if exp or scope:
+        jobs = Job.objects.filter(
+            Q(exp=None) | Q(exp__iexact=exp),
+            Q(scope=None) | Q(scope__iexact=scope),
+            # Q()
+        ).order_by('-date')
+
+    q = request.GET.get('q')
+    if q:
+        jobs = Job.objects.filter(skills__name=q).order_by('-date')
+    else:
+        jobs = Job.objects.all().order_by('-date')
 
     paginator = Paginator(jobs, 50)
 
@@ -87,13 +114,8 @@ def jobs_list(request):
             else:
                 html = render_to_string('jobs__list.html', {'jobs': jobs})
                 return HttpResponse(html)
-        else:
-            q = request.GET.get('q')
-            if q:
-                jobs = Job.objects.filter(skills__name=q).order_by('-date')[:50]
-                print(jobs)
 
-    return render(request, 'jobs.html', {'metaJobs': metaJobs, 'jobs': paginator.page(1)})
+    return render(request, 'jobs.html', {'jobs': paginator.page(1)})
 
 
 def job_details(request, job_slug):
@@ -104,7 +126,21 @@ def job_details(request, job_slug):
     # job_json = JSONRenderer().render(serializer.data)
     # return render(request, 'job-details.html', {'metaJobs': metaJobs, 'job_json': job_json, 'job': job_object})
 
-    return render(request, 'job-details.html', {'metaJobs': metaJobs, 'job': job_object})
+    if request.method == 'GET':
+
+        is_ajax = request.GET.get('ajax')
+        # print(is_ajax)
+
+        if is_ajax:
+            # print('ajax')
+            template = 'job-details/job-details-ajax.html'
+        else:
+            # print('no ajax')
+            template = 'job-details/job-details.html'
+
+        # if request.is_ajax:
+
+        return render(request, template, {'metaJobs': metaJobs, 'job': job_object})
 
 
 def job_details_redirect(request, job_id):

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block head %}
+    {{block.super}}
+{% endblock head %}
+
+
+{% block body %}
+    
+    {{block.super}}
+    {% include "body.html" %}
+
+    {% include "job-details/job-details-ajax.html" %}
+
+{% endblock body %}

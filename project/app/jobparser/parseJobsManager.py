@@ -15,7 +15,7 @@ def parseJobsManager():
         - Weekend and off-hour work may be necessary on occasion. 
         - All other duties as assigned."""
 
-    # parseJobs._analyzeJob('Sr. Frontend Enginer', 'GitHub', text, skills=None)
+    parseJobs._analyzeJob('Sr. Frontend Enginer', 'Namecheap', text, skills=None)
 
-    sources.stackoverflow()
-    sources.github()
+    # sources.stackoverflow()
+    # sources.github()
