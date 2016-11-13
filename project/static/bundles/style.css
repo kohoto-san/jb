@@ -2,7 +2,12 @@
   display: none;
   margin: auto;
 }
+.preloader-wrapper {
+  margin: auto;
+  display: block;
+}
 #job-details-ajax {
+  z-index: 5;
   visibility: hidden;
 }
 body.job-show {
@@ -74,6 +79,7 @@ body.survey-body .survey-wrapper .step {
   display: none;
 }
 body.survey-body .survey-wrapper >.valign {
+  max-width: 85%;
   margin: auto;
 }
 body.survey-body .survey-wrapper >.valign h4 a {
@@ -221,16 +227,6 @@ nav .brand-logo a {
   font-weight: 500;
   background-color: rgba(3,169,244,0.7);
 }
-.share-btns-wrapper {
-  font-size: 20px;
-}
-.share-btns-wrapper a {
-  padding: 10px;
-  color: #000;
-}
-.share-btns-wrapper a:hover {
-  opacity: 0.5;
-}
 .my-jobs {
   text-align: right;
 }
@@ -249,7 +245,6 @@ nav .brand-logo a {
 .job-details {
   font-size: 16px;
   padding: 0 20px;
-  margin-bottom: 10px;
 }
 .job-details p {
   display: inline-block;
@@ -259,13 +254,8 @@ nav .brand-logo a {
 .job-details .right-align {
   float: right;
 }
-.job-keys {
-  text-align: center;
-  border-top: 1px solid #bdbdbd;
-}
 .job-skills {
-  padding: 20px 0;
-  padding: 10px 10px 0;
+  padding: 0 10px;
   text-align: left;
 }
 .job-skills a:hover {
@@ -298,12 +288,64 @@ nav .brand-logo a {
   text-align: left;
   padding-left: 15px;
 }
-.full-job > .col {
+.full-job {
+  padding-bottom: 50px;
+}
+.full-job >.job-header {
+  background-color: #fff;
+  width: 100%;
+  padding-top: 20px;
+  border-bottom: 1px solid #bdbdbd;
+}
+.full-job > .job-main {
   max-width: 700px !important;
+  border-right: 1px solid #bdbdbd;
+}
+.full-job .job-main,
+.full-job .right-column {
+  display: inline-block;
+}
+.full-job .company-card {
+  border-bottom: 1px solid #bdbdbd;
+}
+.full-job .company-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+.full-job .company-card p {
+  margin: 5px 0;
+}
+.full-job .company-card .company-domain {
+  font-size: 13px;
+}
+.full-job .company-card .company-domain i {
+  padding-right: 5px;
+}
+.full-job .job-keys {
+  border-bottom: 1px solid #bdbdbd;
+  padding: 0 20px 10px;
+}
+.full-job .apply-card >.btn-apply {
+  display: block;
+  margin-top: 10px;
+}
+.full-job .apply-card .share-btns-wrapper {
+  font-size: 20px;
+}
+.full-job .apply-card .share-btns-wrapper span {
+  display: block;
+  padding-left: 10px;
+}
+.full-job .apply-card .share-btns-wrapper a {
+  padding: 10px;
+  color: #000;
+}
+.full-job .apply-card .share-btns-wrapper a:hover {
+  opacity: 0.5;
 }
 .full-job .job-name {
   margin: 0 0 10px;
-  font-size: 2.5rem;
+  font-size: 2.1rem;
 }
 .full-job .job-company {
   display: block;
@@ -313,6 +355,9 @@ nav .brand-logo a {
   color: rgba(0,0,0,0.87);
   font-size: 20px;
   font-weight: 300;
+}
+.full-job .job-details p:first-child {
+  border-right: 1px solid #bdbdbd;
 }
 .full-job .job-skills {
   padding-left: 0;
@@ -325,16 +370,16 @@ nav .brand-logo a {
   margin: 10px 30px;
 }
 .full-job .job-text h4 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 .full-job .job-text h3 {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
 }
 .full-job .job-text h2 {
-  font-size: 2.1rem;
+  font-size: 1.9rem;
 }
 .full-job .job-text h1 {
-  font-size: 2.3rem;
+  font-size: 2.1rem;
 }
 .full-job .btn-like {
   margin-left: 20px;
@@ -358,14 +403,16 @@ nav .brand-logo a {
   margin-bottom: 30px;
 }
 .job_list {
+  margin-top: 30px;
   position: relative;
 }
 .autogrid .grid__item .card {
   height: auto;
 }
 .grid__item {
-  width: 300px;
-  min-width: 300px;
+  min-width: 320px;
+  max-width: 350px;
+  width: 320px;
   position: relative;
   margin: auto;
 }
@@ -376,22 +423,105 @@ nav .brand-logo a {
   display: block;
   height: 380px;
 }
-.grid__item .card .job-skills {
-  padding-bottom: 18px;
-}
 .grid__item .card .card-body {
   display: block;
-  padding: 10px 15px 10px;
+  padding: 10px 15px 0;
   transition: all 0.2s;
 }
 .grid__item .card .card-body p {
   margin: 10px 0;
 }
-.grid__item .card .card-body:hover {
-  background-color: #fafafa;
+.grid__item .card .company-location {
+  text-transform: capitalize;
 }
-.grid__item .card .card-body:hover .job-name {
-  text-decoration: underline;
+.grid__item .card .company-details {
+  padding: 10px 15px 0;
+  word-break: break-word;
+}
+.grid__item .card .view-job {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 500;
+  height: 70px;
+  line-height: 70px;
+  text-transform: uppercase;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+.grid__item .card .view-job span {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid #bdbdbd;
+  padding-top: 20px;
+}
+.grid__item .card .view-job:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #55a8fd;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  -moz-transform: translate3d(0, 110%, 0);
+  -o-transform: translate3d(0, 110%, 0);
+  -ms-transform: translate3d(0, 110%, 0);
+  -webkit-transform: translate3d(0, 110%, 0);
+  transform: translate3d(0, 110%, 0);
+}
+.grid__item .card:hover .view-job {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+.grid__item .card:hover .view-job span {
+  border-top: none;
+}
+.grid__item .card:hover .view-job:after {
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.grid__item .card .footer {
+  background-color: #e6e6e6;
+  border-top: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
+  height: 50px;
+  font-size: 20px;
+  position: relative;
+  padding: 0 40px;
+  text-align: center;
+}
+.grid__item .card .footer a {
+  position: absolute;
+  top: 7px;
+}
+.grid__item .card .footer a i {
+  font-size: 40px;
+}
+.grid__item .card .footer .right {
+  right: 0px;
+}
+.company-technology {
+  line-height: 50px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.company-technology img {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  height: 28px;
+  vertical-align: middle;
 }
 .grid .lane {
   width: 20%;

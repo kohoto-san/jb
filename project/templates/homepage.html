@@ -4,8 +4,10 @@
 {% block head %}
     {{block.super}}
     <link rel="stylesheet" href="{% static 'component.css' %}">
-    <script type="text/javascript" src="{% static 'js/modernizr.custom.form.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/nlform.js' %}"></script>
+    {% comment %}
+        <script type="text/javascript" src="{% static 'js/modernizr.custom.form.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/nlform.js' %}"></script>
+    {% endcomment %}
 {% endblock head %}
 
 {% block body-wrapper %}
@@ -32,7 +34,7 @@
                                 </select>
 
                                 <!--
-                                <div class="nl-field nl-dd">
+                                <div class="nl-field nl-dd nl-field-open">
                                     <a class="nl-field-toggle">junior</a>
                                     <ul>
                                         <li class="nl-dd-checked">junior</li>
@@ -123,90 +125,23 @@
 
         </div> <!-- /#main-content -->
 
-        <script>
-            var nlform = new NLForm( document.getElementById( 'nl-form' ) );
-        </script>
-
-
-        <script type="text/javascript">
-
-            var text = [
-                {text: 'I am a', type: 'text'},
-                {text: ['junior', 'middle', 'senior'], type: 'list'},
-                {text: ['Web'], type: 'list'},
-                {text: ['Frontend', 'Backend', 'Fullstack'], type: 'list'},
-                {text: 'developer.<br />I am comfortable work in a', type: 'text'},
-                {text: ['Small (1-10)', 'Medium (10-100)', 'Big (>100)'], type: 'list'},
-                {text: '<br /> team on a project that has', type: 'text'},
-                {text: ['Highload', 'Mediumload', 'Lowload'], type: 'list'},
-            ];
-
-            var n = 0;
-            var element = $("#nl-form");
-
-            function writeStart (chars) {
-                // text = document.getElementById("nl-form").value;
-                // text = element.html();
-                timerWrite = setInterval("writeChar()", 100);
-                n = 0;
-            }
-
-            function writeChar(chars) {
-
-
-                for (let char of chars) {
-                    setTimeout('element.append(char)', 100);
-                }
-
-
-                // if(n >= text.length){
-                //     clearInterval(timerWrite);
-                //     // setTimeout(writeStart, 500);
-                // }
-                // else{
-                //     var meta_html = element.html();
-                //     element.html(meta_html + text.charAt(n));
-                //     n += 1;
-                // }
-
-            }
-
-            function writeList(elements){
-                select = $('<select></select>')
-                for (let item of elements) {
-                    meta = $('<option value=' + item + '>' + item + '</option>');
-                    select.append(meta);
-                }
-
-                element.append(select);
-            }
-
-            function write(){
-                
-                for (let item of text) {
-                    if(item['type'] == 'text'){
-                        // var meta_html = element.html();
-                        // element.html(meta_html + item['text']);
-                        writeChar(item['text']);
-                    }
-
-                    if(item['type'] == 'list'){
-                        writeList(item['text']);
-                    }
-                }
-
-            }
-
-            // write();
-
-            // writeStart();
-
-        </script>
-
     {% endblock body %}
+
+    {% block job-details %}
+        {{ block.super }}
+    {% endblock job-details %}
+
 
     {% block base-scipts %}
         {{ block.super }}
+        
+        <script type="text/javascript" src="{% static 'js/nlform.jq.js' %}"></script>
+
+        <script>
+            // var nlform = new NLForm( document.getElementById( 'nl-form' ) );
+            var nlform = new NLForm($('#nl-form'));
+        </script>
+
     {% endblock base-scipts %}
 
 </body>

@@ -81,18 +81,20 @@ def jobs_list(request):
     # from django.db.models import Q
     # len(Job.objects.filter( Q(company__team_size__range=(1, 1000)) ))
 
+    print(scope)
+
     if exp or scope:
         jobs = Job.objects.filter(
             Q(exp=None) | Q(exp__iexact=exp),
             Q(scope=None) | Q(scope__iexact=scope),
             # Q()
         ).order_by('-date')
-
-    q = request.GET.get('q')
-    if q:
-        jobs = Job.objects.filter(skills__name=q).order_by('-date')
     else:
         jobs = Job.objects.all().order_by('-date')
+
+    q = request.GET.get('q')
+    # if q:
+    #     jobs = Job.objects.filter(skills__name=q).order_by('-date')
 
     paginator = Paginator(jobs, 50)
 
@@ -112,7 +114,7 @@ def jobs_list(request):
                 html = render_to_string('jobs__items.html', context)
                 return HttpResponse(html)
             else:
-                html = render_to_string('jobs__list.html', {'jobs': jobs})
+                html = render_to_string('jobs__list.html', {'jobs': paginator.page(1)})
                 return HttpResponse(html)
 
     return render(request, 'jobs.html', {'jobs': paginator.page(1)})

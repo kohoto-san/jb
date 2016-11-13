@@ -1,11 +1,27 @@
+{% load staticfiles %}
+
 {% for job in jobs %}
     <div class="grid__item">
 
-        <div class="card z-depth-1">
+        <div class="card z-depth-1 hoverable">
             
-            <a href="/job/{{job.slug}}" class="job-card card-body">
+            {# <a href="/job/{{job.slug}}" class="job-card card-body"> #}
+            <div class="job-card card-body">
                 <h2 class="job-name center-align">{{job.name}}</h2>
                 <h3 class="company-name center-align">{{job.company_name}}</h3>
+
+                {% comment %}
+                    {% if job.company.location %}
+                    <p class="company-location center-align">
+                            <i class="fa fa-map-marker"></i>
+                            {% if job.company.location.city %}
+                                {{job.company.location.city}}, {{job.company.location.country}}
+                            {% else %}
+                                {{job.company.location.full_location}}
+                            {% endif %}
+                    </p>
+                    {% endif %}
+                {% endcomment %}
 
                 <div class="job-details">
                     <p class="left-align">
@@ -17,41 +33,92 @@
                     </p>
                 </div>
 
+                {% comment %}
                 <div class="job-keywords job-keys">
                     {% for keyword in job.keywords.all %}
                         {{keyword}}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </div>
-            </a>
+                {% endcomment %}
+
+            </div> {# /.job-card card-body #}
 
             <div class="job-skills job-keys">
                 {% for skill in job.skills.all %}
                     <a href='/?q={{skill.name}}'>
                         {{skill.name}}
                     </a>
+                    
+                    <!--
+                    <div class="chip">
+                        {{skill.name}}
+                    </div>
+                    -->
+
                 {% endfor %}
             </div>
 
-            {% comment %}
 
             <div class="company-details">
                 <p>
                     {% if job.company.description %} {{job.company.description}} {% endif %}
                 </p>
-                <p>
-                    {% if job.company.location %} {{job.company.location}} {% endif %}
-                </p>
 
-                
-                    {% if job.company.location %} {{job.company.location}} {% endif %}
+            </div> <!-- /.company-details -->
 
+            {% comment %}
+            <div class="job-skills job-keys">
                 {% for tech in job.company.technologies.all %}
-                    <p> {{tech.name}} </p>
+                    <a href='/?q={{skill.name}}'>
+                        {{tech.name}}
+                        <!--
+                        {{tech.name}}{% if not forloop.last %}, {% endif %}
+                        -->
+                    </a>
                 {% endfor %}
             </div>
             {% endcomment %}
 
+
+            {% comment %}
+                <a class="waves-effect btn-large" style="display: block;
+                background-color: rgba(3,169,244,0.7);
+                font-weight: 500;
+                padding: 0 50px;
+                height: 42px;
+                line-height: 42px;
+                color: #fff;
+                ">button</a>
+            {% endcomment %}
+
+            {% comment %}
+              {% if job.company.technologies.all %}
+                <div class="footer">
+                    {% for tech in job.company.technologies.all %}
+                        {% if forloop.counter <= 5 %}
+                            <div class="company-technology">    
+                                <img src="{% static 'tech-icons/' %}{{tech.icon}}" class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="{{tech.name}}" />
+                                {# <span>{{tech.name}}</span> #}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <!--
+                    <a href="#" class="right righ-align">
+                        <i class="material-icons">&#xE315;</i> {# keyboard_arrow_right  #}
+                    </a>
+                    <a href="#" class="left left-align">
+                        <i class="material-icons">&#xE314;</i> {# keyboard_arrow_left  #}
+                    </a>
+                    -->
+                </div>
+              {% endif %}
+            {% endcomment %}
+
+            <a href="/job/{{job.slug}}" class="view-job">
+                <span>View Job</span>
+            </a>
+
         </div> <!-- /.card -->
-        
     </div> <!-- /.grid__item -->
 {% endfor %}

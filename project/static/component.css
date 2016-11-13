@@ -39,6 +39,7 @@
 .nl-field {
 	display: inline-block;
 	position: relative;
+    padding: 0 10px;
 }
 
 .nl-field.nl-field-open {

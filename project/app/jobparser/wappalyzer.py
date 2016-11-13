@@ -166,14 +166,8 @@ class Wappalyzer(object):
         # self.categories = categories
         # self.apps = apps
 
-        # CURRENT_DIR = os.path.abspath('.')
-        # path = os.path.abspath(os.path.join(CURRENT_DIR, 'app/jobparser/data/apps.json'))
-        # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         path = os.path.join(BASE_DIR, 'data/apps.json')
-
-        print(path)
 
         try:
             with open(path, 'r') as fd:

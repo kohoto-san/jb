@@ -176,7 +176,9 @@ def _getTechnologies(company_url):
             # tech_obj, tech_created = TechnologyCategory.objects.get_or_create(name=tech_cats)
 
         cat_obj, cat_created = TechnologyCategory.objects.get_or_create(name=tech['categories'][0])
-        tech, tech_created = Technology.objects.get_or_create(name=tech['name'], url=tech['website'], category=cat_obj)
+        tech, tech_created = Technology.objects.get_or_create(
+            name=tech['name'], url=tech['website'], icon=tech['icon'], category=cat_obj)
+
         technologies.append(tech)
 
     return technologies

@@ -1,24 +1,42 @@
 {% load staticfiles %}
 
     <div class="container">
-        <div id="grid" class="full-job grid row">
+        <div class="full-job grid row card">
 
-            <div class="col s12 l10 offset-l1">
-                <div class="card">
+            <div class="job-header">
+                <h2 class="job-name center-align">{{job.name}}</h2>
+                {# <h3 class="job-company card-title center-align">{{job.company_name}}</h3> #}
+
+                <div class="job-details center-align">
+                    <p>
+                        {% if job.salary %} {{job.salary}} {% endif %}
+                    </p>
+
+                    <p>
+                        {% if job.exp %} {{job.exp}} {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="job-main col s12 l9">
+
+                <div class="job-keys">
+                    <div class="job-keywords">
+                        {% for keyword in job.keywords.all %}
+                            {{keyword}}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="job-skills">
+                        {% for skill in job.skills.all %}
+                            <a href='/?q={{skill.name}}'>
+                                {{skill.name}}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
                     <div class="card-content">
-
-                        <h2 class="job-name center-align">{{job.name}}</h2>
-                        <h3 class="job-company card-title center-align">{{job.company_name}}</h3>
-                        
-                        <div class="job-details">
-                            <p class="left-align">
-                                {% if job.salary %} {{job.salary}} {% endif %}
-                            </p>
-
-                            <p class="right-align">
-                                {% if job.exp %} {{job.exp}} {% endif %}
-                            </p>
-                        </div>
 
                         <div class="job-text">
                         {% comment %}
@@ -28,27 +46,53 @@
                         </div>
 
                     </div>
-                </div>
+            
+            </div> <!-- /.col -->
 
-                <div class="card">
-                    <div class="card-content">
-                        <div class="job-keywords">
-                            {% for keyword in job.keywords.all %}
-                                {{keyword}}{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
+            <div class="right-column col l3">
+                <div class="company-card">
+                    <h2>{{job.company.name}}</h2>
+
+                    {% if job.company.domain %}
+                        <a href="{{job.company.domain}}" class="company-domain">
+                            <i class="fa fa-link"></i>{{job.company.domain}}
+                        </a>
+                    {% endif %}
+
+                    {% if job.company.alexa_rank %}
+                        <p><i class="fa fa-info-circle"></i> Alexa rank: {{job.company.alexa_rank}}</p>
+                    {% endif %}
+
+                    {% if job.company.top_country %}
+                        <p><i class="fa fa-globe"></i> Most popular in {{job.company.top_country}}</p>
+                    {% endif %}
+
+                    {% if job.company.month_visitors %}
+                        <p><i class="fa fa-users"></i> Month visitors: ~{{job.company.month_visitors}}</p>
+                    {% endif %}
+
+                    {% if job.company.team_size %}
+                        <p><i class="fa fa-building"></i> Employees: {{job.company.team_size}}</p>
+                    {% endif %}
+
+                    {% if job.company.description %}
+                        <p>{{job.company.description}}</p>
+                    {% endif %}
+
+                    {% for tech in job.company.technologies.all %}
+                        <div class="company-technology">    
+                            <img src="{% static 'tech-icons/' %}{{tech.icon}}" class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="{{tech.name}}" />
+                            {# <span>{{tech.name}}</span> #}
                         </div>
+                    {% endfor %}
 
-                        <div class="job-skills">
-                            {% for skill in job.skills.all %}
-                                <a href='/?q={{skill.name}}'>
-                                    {{skill.name}}
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+                </div> {# /.company-card #}
 
-                <div class="card">
+                <div class="apply-card">
+                    <a class="btn-apply waves-effect btn" href="{{job.url}}" target="_blank" rel="nofollow">
+                        Apply
+                    </a>
+
                     <div class="card-content share-btns-wrapper">
                         <span>Share</span>
 
@@ -71,25 +115,13 @@
                             <i class="fa fa-facebook"></i>
                             <!-- Facebook -->
                         </a>
-                        
-
-                        <!--
-                        <a class="twitter popup" href="http://twitter.com/share?text={{post.title}}" target="_blank">
-                            <i class="fa fa-twitter fa-2x"></i>
-                        </a>
-                        <a class="facebook popup" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
-                            <i class="fa fa-facebook fa-2x"></i>
-                        </a>
-                        -->
-
                     </div>
-                </div>
 
-                <a class="btn-apply waves-effect btn" href="{{job.url}}" target="_blank" rel="nofollow">
-                    Apply
-                </a>
-            
-            </div> <!-- /.col -->
+                </div> {# /.apply-card #}
+
+
+            </div> {# /.right-column #}
+
         </div> <!-- /.grid -->
     </div> <!-- /.container -->
 

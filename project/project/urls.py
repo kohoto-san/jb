@@ -42,10 +42,10 @@ urlpatterns = [
 
 
     # url(r'', views.home),
-    # url(r'^$', views.home),
-    # url(r'^remote-jobs/$', views.jobs_list),
+    url(r'^$', views.home),
+    url(r'^remote-jobs/$', views.jobs_list),
 
-    url(r'^$', views.jobs_list),
+    # url(r'^$', views.jobs_list),
     url(r'^my-jobs/$', views.home),
     url(r'^q/*', views.home),
 

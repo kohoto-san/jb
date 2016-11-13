@@ -61,6 +61,7 @@ class Technology(models.Model):
     name = models.CharField(max_length=250)
     url = models.CharField(max_length=250)
     category = models.ForeignKey(TechnologyCategory)
+    icon = models.CharField(max_length=250)
 
     # description = models.CharField(max_length=250)
     # scope = models.CharField(max_length=250)            # Web/Frontend; Mobile/iOS

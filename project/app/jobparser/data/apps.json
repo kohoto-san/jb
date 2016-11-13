@@ -160,7 +160,7 @@
 				36
 			],
 			"env": "^adroll_",
-			"icon": "AdRoll.png",
+			"icon": "AdRoll.svg",
 			"script": "(?:a|s)\\.adroll\\.com",
 			"website": "adroll.com"
 		},
@@ -447,7 +447,7 @@
 			"headers": {
 				"Server": "(?:Apache(?:$|/([\\d.]+)|[^/-])|(?:^|\b)HTTPD)\\;version:\\1"
 			},
-			"icon": "Apache.svg",
+			"icon": "Apache.png",
 			"website": "apache.org"
 		},
 		"Apache HBase": {

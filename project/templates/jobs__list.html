@@ -1,14 +1,30 @@
+{% load staticfiles %}
 
 <div id="main-content">
     {% include "body.html" %}
 
-    <div class="container">                    
+    <div class="row">                    
 
-        <div id="grid" class="autogrid job_list grid row">
+        <div id="grid" class="autogrid job_list grid col s10 offset-s1">
             {% include "jobs__items.html" with jobs=jobs only %}
         </div> <!-- /#grid -->
 
-        <a id="btn" class="waves-effect waves-light btn" style="width: 100%; display: block;">Load more</a>
+        <a id="btn" class="waves-effect waves-light btn" style="width: 100%; display: block; visibility: hidden;">Load more</a>
+
+        <div class="preloader-more-jobs preloader-wrapper big active" style="display: none;">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+
     </div> <!-- /.container -->
+
+    <script type="text/javascript" src="{% static 'js/load-jobs.js' %}"></script>
 
 </div> <!-- /#main-content -->

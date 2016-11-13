@@ -9,8 +9,6 @@ class Tags(object):
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         path = os.path.join(BASE_DIR, 'data/tags.json')
 
-        print(path)
-
         try:
             with open(path, 'r') as fd:
                 self.list_tags = json.load(fd)
