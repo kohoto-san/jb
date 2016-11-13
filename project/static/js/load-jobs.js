@@ -47,6 +47,9 @@ function load(){
         }) // success || done
                 
         .fail(function() {
+            all_post = true;
+            loading('on');
+
             // $('#load_posts').prepend('<p>Упс...Кажется все посты уже загружены.</p>')
             // $('#load_posts a').addClass('disabled');
         }); // fail

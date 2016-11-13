@@ -96,12 +96,12 @@ def jobs_list(request):
         ).order_by('-date')
 
     if tags_str:
-        tags = tags_str.split(' ')
-        print(tags)
+        # tags = tags_str.split(' ')
+        # print(tags)
         jobs = jobs.filter(
-            Q(skills__name__in=tags),
+            Q(skills__name=tags_str),
         ).order_by('-date')
-        print(jobs)
+        # print(jobs)
 
     # q = request.GET.get('q')
     # if q:
