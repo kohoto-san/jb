@@ -14,6 +14,45 @@
         });
     }
 
+    $('body').on('click', '.job-skills a', function(e) {
+        e.preventDefault();
+        
+        try{
+            var prev_url = history.state.prev_url;
+        }
+        catch(err){
+            var prev_url = null;
+        }
+
+
+        var current_url = document.location.href;
+        var skill = $(this).text().replace(/[^A-Z0-9\-]/ig, "");
+
+        var url = '';
+
+        if(current_url.indexOf('/remote-jobs') !== -1){
+            url = current_url;
+        }
+        else if(prev_url.indexOf('/remote-jobs') !== -1){
+            url = prev_url;
+        }
+        else{
+            document.location.href = '/remote-jobs/?tags=' + skill;
+        }
+
+        var position_tag = url.lastIndexOf('tags=');
+
+        if(position_tag !== -1){
+            url = url.substring(0, position_tag);
+            document.location.href = url + 'tags=' + skill;
+        }
+        else{
+            document.location.href = url + '&tags=' + skill;
+        }
+
+
+    });
+
 // </GLOBAL>
 
 // <HOMEPAGE>
@@ -125,7 +164,15 @@
         });
     });
 
+    // $('#job-details-ajax').click(function(e){
+    //     closeJob(e);
+    // });
+
     $('#job-details-ajax .close').click(function(e){
+        closeJob(e);
+    });
+
+    function closeJob(e){
         e.preventDefault();
         $('#job-details-ajax .job-content').html('');
         $('.job-show').removeClass('job-show');
@@ -134,7 +181,7 @@
         history.pushState({content_url: prev_url, prev_url: document.location.href}, '', prev_url);
 
         // $('#job-details-ajax').hide();
-    });
+    }
 
 
 // </JOBS_LIST>

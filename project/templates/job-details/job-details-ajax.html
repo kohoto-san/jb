@@ -50,43 +50,50 @@
             </div> <!-- /.col -->
 
             <div class="right-column col l3">
-                <div class="company-card">
-                    <h2>{{job.company.name}}</h2>
 
-                    {% if job.company.domain %}
-                        <a href="{{job.company.domain}}" class="company-domain">
-                            <i class="fa fa-link"></i>{{job.company.domain}}
-                        </a>
-                    {% endif %}
+                {% if job.company %}
+                
+                    <div class="company-card">
+                        <h2>{{job.company.name}}</h2>
 
-                    {% if job.company.alexa_rank %}
-                        <p><i class="fa fa-info-circle"></i> Alexa rank: {{job.company.alexa_rank}}</p>
-                    {% endif %}
+                        {% if job.company.domain %}
+                            <a href="{{job.company.domain}}" class="company-domain">
+                                <i class="fa fa-link"></i>{{job.company.domain}}
+                            </a>
+                        {% endif %}
 
-                    {% if job.company.top_country %}
-                        <p><i class="fa fa-globe"></i> Most popular in {{job.company.top_country}}</p>
-                    {% endif %}
+                        {% if job.company.alexa_rank %}
+                            <p><i class="fa fa-info-circle"></i> Alexa rank: {{job.company.alexa_rank}}</p>
+                        {% endif %}
 
-                    {% if job.company.month_visitors %}
-                        <p><i class="fa fa-users"></i> Month visitors: ~{{job.company.month_visitors}}</p>
-                    {% endif %}
+                        {% if job.company.top_country %}
+                            <p><i class="fa fa-globe"></i> Most popular in {{job.company.top_country}}</p>
+                        {% endif %}
 
-                    {% if job.company.team_size %}
-                        <p><i class="fa fa-building"></i> Employees: {{job.company.team_size}}</p>
-                    {% endif %}
+                        {% if job.company.month_visitors %}
+                            <p><i class="fa fa-users"></i> Month visitors: ~{{job.company.month_visitors}}</p>
+                        {% endif %}
 
-                    {% if job.company.description %}
-                        <p>{{job.company.description}}</p>
-                    {% endif %}
+                        {% if job.company.team_size %}
+                            <p><i class="fa fa-building"></i> Employees: {{job.company.team_size}}</p>
+                        {% endif %}
 
-                    {% for tech in job.company.technologies.all %}
-                        <div class="company-technology">    
-                            <img src="{% static 'tech-icons/' %}{{tech.icon}}" class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="{{tech.name}}" />
-                            {# <span>{{tech.name}}</span> #}
-                        </div>
-                    {% endfor %}
+                        {% if job.company.description %}
+                            <p>{{job.company.description}}</p>
+                        {% endif %}
 
-                </div> {# /.company-card #}
+                        {% for tech in job.company.technologies.all %}
+                            <div class="company-technology">    
+                                <img src="{% static 'tech-icons/' %}{{tech.icon}}" class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="{{tech.name}}" />
+                                {# <span>{{tech.name}}</span> #}
+                            </div>
+                        {% endfor %}
+
+                    </div> {# /.company-card #}
+
+                {% endif %}
+
+
 
                 <div class="apply-card">
                     <a class="btn-apply waves-effect btn" href="{{job.url}}" target="_blank" rel="nofollow">

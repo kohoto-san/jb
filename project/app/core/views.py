@@ -73,6 +73,8 @@ def jobs_list(request):
 
     exp = request.GET.get('exp')
     scope = request.GET.get('scope')
+    tags_str = request.GET.get('tags')
+
     try:
         team_size = team_sizes[request.GET.get('team')]
     except KeyError:
@@ -81,18 +83,27 @@ def jobs_list(request):
     # from django.db.models import Q
     # len(Job.objects.filter( Q(company__team_size__range=(1, 1000)) ))
 
-    print(scope)
+    jobs = Job.objects.all().order_by('-date')
 
-    if exp or scope:
-        jobs = Job.objects.filter(
+    if exp:
+        jobs = jobs.filter(
             Q(exp=None) | Q(exp__iexact=exp),
-            Q(scope=None) | Q(scope__iexact=scope),
-            # Q()
         ).order_by('-date')
-    else:
-        jobs = Job.objects.all().order_by('-date')
 
-    q = request.GET.get('q')
+    if scope:
+        jobs = jobs.filter(
+            Q(scope=None) | Q(scope__iexact=scope),
+        ).order_by('-date')
+
+    if tags_str:
+        tags = tags_str.split(' ')
+        print(tags)
+        jobs = jobs.filter(
+            Q(skills__name__in=tags),
+        ).order_by('-date')
+        print(jobs)
+
+    # q = request.GET.get('q')
     # if q:
     #     jobs = Job.objects.filter(skills__name=q).order_by('-date')
 
