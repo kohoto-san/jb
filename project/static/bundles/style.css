@@ -32,6 +32,9 @@ body.job-show #job-details-ajax .preloader.valign-wrapper {
 body.job-show #job-details-ajax .preloader.valign-wrapper >.valign {
   margin: auto;
 }
+body.job-show #job-details-ajax .job-content {
+  margin-top: 50px;
+}
 body.job-show #job-details-ajax .close {
   position: absolute;
   top: 10px;
@@ -45,10 +48,6 @@ body.job-show #job-details-ajax .close i {
 body.job-show #job-details-ajax .close:hover {
   opacity: 0.4;
 }
-body.survey-body {
-  background-color: #fff;
-  border: 25px solid #fff;
-}
 body.survey-body .suvey-wrapper-bordes {
   border: 25px solid #fff;
   position: fixed;
@@ -56,6 +55,11 @@ body.survey-body .suvey-wrapper-bordes {
   right: 0;
   top: 0;
   bottom: 0;
+}
+@media (max-width: 500px) {
+  body.survey-body .suvey-wrapper-bordes {
+    border: 0;
+  }
 }
 body.survey-body .survey-wrapper {
   position: absolute;
@@ -81,6 +85,11 @@ body.survey-body .survey-wrapper .step {
 body.survey-body .survey-wrapper >.valign {
   max-width: 85%;
   margin: auto;
+}
+@media (max-width: 500px) {
+  body.survey-body .survey-wrapper >.valign {
+    max-width: 100%;
+  }
 }
 body.survey-body .survey-wrapper >.valign h4 a {
   transition: all 0.2s;

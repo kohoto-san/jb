@@ -13,16 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-
-    {% comment %}
-    <script type="text/javascript" src="{% static 'modernizr.custom.js' %}"></script>
-    {% endcomment %}
-    <script type="text/javascript" src="{% static 'js/modernizr-custom.my.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 
     <title>Sagfi</title>
     <meta property="title" content="Sagfi" />
@@ -43,7 +34,6 @@
     <meta property="twitter:url" content="http://sagfi.com/" />
     <meta name="twitter:creator" content="@sihaelov" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 
     {% load render_bundle from webpack_loader %}
     {% render_bundle 'main' 'css' %}
@@ -104,6 +94,14 @@
             });
             */
         </script>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+        {% comment %}
+        <script type="text/javascript" src="{% static 'modernizr.custom.js' %}"></script>
+        {% endcomment %}
+        <script type="text/javascript" src="{% static 'js/modernizr-custom.my.js' %}"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
         <script type="text/javascript" src="{% static 'script.js' %}"></script>

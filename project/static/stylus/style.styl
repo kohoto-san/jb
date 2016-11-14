@@ -44,6 +44,9 @@ body.job-show
             height 100vh;
             >.valign
                 margin auto;
+        
+        .job-content
+            margin-top 50px;
 
         .close
             position absolute;
@@ -51,6 +54,8 @@ body.job-show
             left 10px;
             color #000;
             width auto;
+            
+            // @media (max-width value)
 
             i
                 font-size: 40px;
@@ -61,8 +66,7 @@ body.job-show
 
 body.survey-body
 
-    background-color #fff;
-    border 25px solid #fff;
+    $mobileWidth = 500px;
 
     .suvey-wrapper-bordes
         border 25px solid #fff;
@@ -71,6 +75,9 @@ body.survey-body
         right 0;
         top 0;
         bottom 0;
+
+        @media (max-width: $mobileWidth)
+            border 0;
 
     .survey-wrapper
         position absolute;
@@ -94,6 +101,9 @@ body.survey-body
         >.valign
             max-width 85%;
             margin auto;
+            
+            @media (max-width: $mobileWidth)
+                max-width 100%;            
 
             h4 a
                 transition all 0.2s;
