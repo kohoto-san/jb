@@ -49,9 +49,19 @@
         else{
             document.location.href = url + '&tags=' + skill;
         }
-
-
     });
+
+
+    $('#popupContactsShow').click(function(e){
+        e.preventDefault();
+        $('#popupContacts').show();
+    });
+
+    $('#popupContactsClose').click(function(e){
+        e.preventDefault();
+        $('#popupContacts').hide();
+    });
+
 
 // </GLOBAL>
 

@@ -250,7 +250,11 @@
                     $('.survey-body').removeClass('survey-body');
                     $('.preloader-wrapper').hide();
                     $('#main-content').html(data);
-                    $.masonryInit();
+
+                    if($(window).width() > 800){
+                        $.masonryInit();
+                    };
+
                 }) // success || done
                         
                 .fail(function() {
